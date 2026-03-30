@@ -74,7 +74,8 @@ module.exports = async function handler(req, res) {
     const enrollment = await hubspotRequest('POST', '/automation/v4/sequences/enrollments', {
       sequenceId: 796519659,
       contactId: contactId,
-      userId: 67082377
+      userId: 67082377,
+      senderEmail: 'antoine.caupert@recisio.com'
     });
     console.log('Sequence enrollment:', enrollment.status, JSON.stringify(enrollment.data));
 
