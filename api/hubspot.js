@@ -111,7 +111,7 @@ module.exports = async function handler(req, res) {
     });
     console.log('Association:', assoc.status);
 
-    return res.status(200).json({ ok: true, contactId, dealId, enrolled: enrollment.status < 400, enrollmentStatus: enrollment.status, enrollmentDetail: enrollment.data });
+    return res.status(200).json({ ok: true, contactId, dealId, enrolled: enrollment.status < 400 });
 
   } catch (err) {
     console.error('HubSpot error:', err.message);
