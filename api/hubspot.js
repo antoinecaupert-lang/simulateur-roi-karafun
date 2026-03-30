@@ -126,7 +126,31 @@ module.exports = async function handler(req, res) {
     });
     console.log('Association:', assoc.status);
 
-    return res.status(200).json({ ok: true, contactId, dealId, enrolled: enrollment.status < 400 });
+    // 5. Créer le line item (abonnement KaraFun Business 12 mois)
+    let lineItemId = null;
+    if (nb) {
+      const lineItem = await hubspotRequest('POST', '/crm/v3/objects/line_items', {
+        properties: {
+          hs_product_id: '88115536119',
+          name: 'Abonnement KaraFun Business 12 mois',
+          quantity: String(Number(nb)),
+          price: '199',
+          recurringbillingfrequency: 'monthly',
+          hs_term_in_months: '12'
+        }
+      });
+      if (lineItem.status < 400) {
+        lineItemId = lineItem.data.id;
+        await hubspotRequest('POST', '/crm/v3/associations/deals/line_items/batch/create', {
+          inputs: [{ from: { id: dealId }, to: { id: lineItemId }, type: 'deal_to_line_item' }]
+        });
+        console.log('Line item created and associated:', lineItemId);
+      } else {
+        console.warn('Line item creation failed:', lineItem.status, JSON.stringify(lineItem.data));
+      }
+    }
+
+    return res.status(200).json({ ok: true, contactId, dealId, lineItemId, enrolled: enrollment.status < 400 });
 
   } catch (err) {
     console.error('HubSpot error:', err.message);
