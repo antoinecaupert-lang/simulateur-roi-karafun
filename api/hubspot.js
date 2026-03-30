@@ -1,31 +1,16 @@
-// api/hubspot.js — Vercel Edge Function
-export const config = { runtime: 'edge' };
+module.exports = async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-export default async function handler(request) {
-  const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type'
-  };
-
-  if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 200, headers: corsHeaders });
-  }
-  if (request.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers: corsHeaders });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const token = process.env.HUBSPOT_TOKEN;
-  if (!token) {
-    return new Response(JSON.stringify({ error: 'Config manquante' }), { status: 500, headers: corsHeaders });
-  }
+  if (!token) return res.status(500).json({ error: 'Config manquante' });
 
-  const body = await request.json();
-  const { firstname, lastname, email, phone, city, stage, roi, revM, net, invest, pbkY, nb, qualification } = body;
-
-  if (!email || !firstname || !lastname) {
-    return new Response(JSON.stringify({ error: 'Champs requis manquants' }), { status: 400, headers: corsHeaders });
-  }
+  const { firstname, lastname, email, phone, city, stage, roi, revM, net, invest, pbkY, nb, qualification } = req.body || {};
+  if (!email || !firstname || !lastname) return res.status(400).json({ error: 'Champs requis' });
 
   const roiSummary = [
     'ROI : ' + (roi ? Number(roi).toFixed(1) + '%' : 'N/A'),
@@ -40,33 +25,44 @@ export default async function handler(request) {
   ].join(' | ');
 
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 8000);
-
-    const response = await fetch('https://api.hubapi.com/crm/v3/objects/contacts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-      body: JSON.stringify({
-        properties: { firstname, lastname, email, phone: phone || '', city: city || '', message: roiSummary }
-      }),
-      signal: controller.signal
+    const https = require('https');
+    const body = JSON.stringify({
+      properties: { firstname, lastname, email, phone: phone || '', city: city || '', message: roiSummary }
     });
-    clearTimeout(timeout);
 
-    const data = await response.json();
-    console.log('HubSpot status:', response.status, JSON.stringify(data));
+    const result = await new Promise((resolve, reject) => {
+      const options = {
+        hostname: 'api.hubapi.com',
+        path: '/crm/v3/objects/contacts',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token,
+          'Content-Length': Buffer.byteLength(body)
+        },
+        timeout: 7000
+      };
+      const reqHttp = https.request(options, (r) => {
+        let raw = '';
+        r.on('data', (c) => raw += c);
+        r.on('end', () => {
+          try { resolve({ status: r.statusCode, data: JSON.parse(raw) }); }
+          catch (e) { resolve({ status: r.statusCode, data: raw }); }
+        });
+      });
+      reqHttp.on('timeout', () => { reqHttp.destroy(); reject(new Error('HubSpot timeout')); });
+      reqHttp.on('error', reject);
+      reqHttp.write(body);
+      reqHttp.end();
+    });
 
-    if (!response.ok) {
-      return new Response(JSON.stringify({ error: 'Contact failed', detail: data }), { status: 500, headers: corsHeaders });
-    }
+    console.log('HubSpot:', result.status, JSON.stringify(result.data));
 
-    return new Response(JSON.stringify({ ok: true, contactId: data.id }), { status: 200, headers: corsHeaders });
+    if (result.status >= 400) return res.status(500).json({ error: 'Contact failed', detail: result.data });
+    return res.status(200).json({ ok: true, contactId: result.data.id });
 
   } catch (err) {
     console.error('HubSpot error:', err.message);
-    return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: corsHeaders });
+    return res.status(500).json({ error: err.message });
   }
-}
+};
