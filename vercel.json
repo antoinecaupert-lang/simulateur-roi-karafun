@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     { "src": "index.html", "use": "@vercel/static" },
-    { "src": "api/*.js", "use": "@vercel/node" }
+    { "src": "api/*.js", "use": "@vercel/node", "config": { "runtime": "nodejs18.x" } }
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1" },
