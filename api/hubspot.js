@@ -9,6 +9,11 @@ module.exports = async function handler(req, res) {
   const token = process.env.HUBSPOT_TOKEN;
   if (!token) return res.status(500).json({ error: 'Config manquante' });
 
+  // DEBUG TEMPORAIRE — à supprimer après vérification
+  if (req.method === 'POST' && req.body && req.body.debug === 'token') {
+    return res.status(200).json({ tokenPreview: token.substring(0, 20) + '...' });
+  }
+
   const { firstname, lastname, email, phone, city, stage, roi, revM, net, invest, pbkY, nb, qualification } = req.body || {};
   if (!email || !firstname || !lastname) return res.status(400).json({ error: 'Champs requis' });
 
