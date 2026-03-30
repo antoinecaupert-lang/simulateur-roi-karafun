@@ -113,7 +113,7 @@ module.exports = async function handler(req, res) {
     console.log('Deal created:', dealId);
 
     // 4. Associer le deal au contact
-    const assoc = await hubspotRequest('PUT', `/crm/v3/associations/deals/contacts/batch/create`, {
+    const assoc = await hubspotRequest('POST', `/crm/v3/associations/deals/contacts/batch/create`, {
       inputs: [{ from: { id: dealId }, to: { id: contactId }, type: 'deal_to_contact' }]
     });
     console.log('Association:', assoc.status);
