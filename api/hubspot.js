@@ -31,6 +31,9 @@ module.exports = async function handler(req, res) {
   ].join('\n');
 
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+
     const response = await fetch('https://api.hubapi.com/crm/v3/objects/contacts', {
       method: 'POST',
       headers: {
@@ -46,8 +49,10 @@ module.exports = async function handler(req, res) {
           city: city || '',
           message: roiSummary
         }
-      })
+      }),
+      signal: controller.signal
     });
+    clearTimeout(timeout);
 
     const data = await response.json();
 
