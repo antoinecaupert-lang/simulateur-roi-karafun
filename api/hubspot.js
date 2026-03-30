@@ -48,21 +48,26 @@ export default async function handler(req, res) {
     });
     const searchData = await searchRes.json();
 
+    // Résumé ROI dans le champ "message" standard HubSpot
+    const roiSummary = [
+      'ROI annuel : ' + (roi ? roi.toFixed(1) + '%' : 'N/A'),
+      'CA mensuel : ' + (revM ? Math.round(revM) + ' EUR' : 'N/A'),
+      'Net/mois : ' + (net ? Math.round(net) + ' EUR' : 'N/A'),
+      'Investissement : ' + (invest ? Math.round(invest) + ' EUR' : 'N/A'),
+      'Retour invest. : ' + (pbkY && isFinite(pbkY) ? pbkY.toFixed(1) + ' ans' : 'N/A'),
+      'Boxes : ' + (nb || 'N/A'),
+      'Ville : ' + (city || 'N/A'),
+      'Stade : ' + (stage || 'N/A'),
+      'Qualification : ' + (qualification || 'N/A')
+    ].join('\n');
+
     const contactProps = {
       firstname,
       lastname,
       email,
       phone: phone || '',
       city: city || '',
-      // Propriétés custom ROI (à créer dans HubSpot si besoin)
-      roi_annuel: roi ? roi.toFixed(1) : '',
-      ca_mensuel_simule: revM ? Math.round(revM).toString() : '',
-      net_mensuel_simule: net ? Math.round(net).toString() : '',
-      investissement_simule: invest ? Math.round(invest).toString() : '',
-      retour_invest_annees: pbkY && isFinite(pbkY) ? pbkY.toFixed(1) : '',
-      nb_boxes_simule: nb ? nb.toString() : '',
-      stade_projet: stage || '',
-      qualification_lead: qualification || ''
+      message: roiSummary
     };
 
     if (searchData.total > 0) {
