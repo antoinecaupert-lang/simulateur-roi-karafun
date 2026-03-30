@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulateur ROI Karafun Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pink:#E8447A;
+  --purple:#7B5EA7;
+  --grad:linear-gradient(135deg,#7B5EA7 0%,#E8447A 100%);
+  --dark:#0D0D0F;
+  --card:#1E1E26;
+  --border:rgba(255,255,255,0.08);
+  --text:#F5F4FF;
+  --muted:rgba(245,244,255,0.5);
+  --input:rgba(255,255,255,0.06);
+  --accent:#FF6FA8;
+}
+html,body{min-height:100vh;background:var(--dark);font-family:'DM Sans',sans-serif;color:var(--text)}
+body{display:flex;flex-direction:column;align-items:center;padding:40px 16px 60px}
+body::before{content:'';position:fixed;top:-150px;right:-150px;width:600px;height:600px;background:radial-gradient(circle,rgba(123,94,167,0.18) 0%,transparent 65%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;bottom:-100px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(232,68,122,0.12) 0%,transparent 65%);pointer-events:none;z-index:0}
+#app{position:relative;z-index:1;width:100%;max-width:640px;background:#17171C;border-radius:20px;border:1px solid var(--border);overflow:hidden}
+/* Header */
+.hdr{padding:24px 28px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px}
+.logo{width:40px;height:40px;flex-shrink:0}
+.brand{flex:1}
+.bn{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.bs{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.tg{font-size:11px;color:var(--muted);text-align:right;max-width:140px;line-height:1.5}
+/* Steps */
+.step{display:none;padding:24px 28px 28px}
+.step.on{display:block}
+.prog{display:flex;gap:6px;margin-bottom:20px}
+.dot{height:3px;border-radius:2px;flex:1;background:var(--border);transition:background .3s}
+.dot.done,.dot.on{background:var(--pink)}
+.ttl{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:4px}
+.sub{font-size:12px;color:var(--muted);margin-bottom:22px}
+/* Grids */
+.g1{display:grid;gap:12px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+/* Form fields */
+.f{display:flex;flex-direction:column;gap:5px}
+.lbl{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px}
+.hint{font-size:10px;color:rgba(245,244,255,0.3)}
+input[type=text],
+input[type=number],
+input[type=email],
+input[type=tel],
+select{
+  background:var(--input);
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:15px;
+  padding:11px 12px;
+  width:100%;
+  outline:none;
+  transition:border-color .2s,background .2s;
+  -webkit-appearance:none;
+  appearance:none;
+}
+input:focus,select:focus{border-color:var(--pink);background:rgba(232,68,122,0.07)}
+select option{background:#1E1E26}
+/* Prefix/suffix inputs */
+.pw{position:relative}
+.pw .pfx{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted);pointer-events:none}
+.pw input{padding-left:26px}
+.pw .sfx{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);pointer-events:none}
+.pw.rs input{padding-right:40px}
+/* Sliders */
+.sv{display:flex;flex-direction:column;gap:6px}
+.sv-val{font-size:17px;font-weight:600;color:var(--accent);text-align:center}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;background:rgba(255,255,255,0.12);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--pink);cursor:pointer;box-shadow:0 0 0 3px rgba(232,68,122,0.2)}
+.sl{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}
+/* Section headers */
+.sh{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin:18px 0 12px;display:flex;align-items:center;gap:8px}
+.sh::after{content:'';flex:1;height:1px;background:var(--border)}
+/* Buttons */
+.btn{width:100%;padding:13px;background:var(--grad);border:none;border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-top:20px;transition:opacity .2s,transform .1s}
+.btn:hover{opacity:.88}
+.btn:active{transform:scale(.99)}
+.btn-g{background:transparent;border:1px solid var(--border);color:var(--muted);margin-top:8px}
+.btn-g:hover{border-color:var(--pink);color:var(--text);opacity:1}
+.br{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.br .btn,.br .btn-g{margin-top:0}
+/* Lead card */
+.lcard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:18px}
+.lcard-t{font-size:13px;font-weight:600;margin-bottom:6px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lcard-b{font-size:12px;color:var(--muted);line-height:1.6}
+/* Notice / RGPD */
+.notice{background:rgba(123,94,167,0.12);border:1px solid rgba(123,94,167,0.28);border-radius:10px;padding:12px 14px;font-size:11px;color:var(--muted);line-height:1.6;display:flex;gap:8px;align-items:flex-start;margin-bottom:14px}
+/* Checkbox */
+.cbw{display:flex;align-items:flex-start;gap:10px;margin-top:12px}
+input[type=checkbox]{width:15px;height:15px;accent-color:var(--pink);flex-shrink:0;margin-top:2px}
+.cbl{font-size:11px;color:var(--muted);line-height:1.5}
+/* Errors */
+.err{color:#FF6B6B;font-size:11px;margin-top:3px;display:none}
+/* Loading */
+.spin-wrap{text-align:center;padding:50px 20px}
+.spinner{width:40px;height:40px;border-radius:50%;border:3px solid rgba(255,255,255,.08);border-top-color:var(--pink);animation:spin .8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* Results */
+.hero{background:var(--card);border:1px solid rgba(232,68,122,.28);border-radius:16px;padding:24px 18px;text-align:center;margin-bottom:14px}
+.roi-num{display:inline-block;background:var(--grad);color:#fff;font-family:'Playfair Display',serif;font-size:52px;font-weight:900;line-height:1;padding:8px 24px;border-radius:12px;margin:8px 0}
+.roi-lbl{font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
+.roi-sub{font-size:12px;color:var(--muted);margin-top:8px}
+.mets{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.met{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.met-l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+.met-v{font-size:18px;font-weight:600}
+.pos{color:#5DE8A6}
+.neg{color:#FF6B6B}
+.acc{color:var(--accent)}
+/* Charges table */
+.ctab{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:14px}
+.crow{display:flex;justify-content:space-between;padding:9px 14px;font-size:12px;border-bottom:1px solid var(--border)}
+.crow:last-child{border-bottom:none}
+.crow.tot{background:rgba(232,68,122,.08);font-weight:600;font-size:13px}
+.cn{color:var(--muted)}
+/* AI analysis */
+.aibox{background:rgba(123,94,167,.12);border:1px solid rgba(123,94,167,.25);border-radius:10px;padding:16px;margin-bottom:14px}
+.aibox-t{font-size:11px;font-weight:600;color:rgba(180,150,230,.9);margin-bottom:8px}
+.aibox-b{font-size:12px;color:var(--muted);line-height:1.7}
+/* Boissons */
+.boissonbox{background:rgba(232,68,122,0.08);border:1px solid rgba(232,68,122,0.25);border-radius:10px;padding:14px 16px;margin-bottom:14px}
+.boissonbox-t{font-size:11px;font-weight:600;color:var(--accent);margin-bottom:8px}
+.boissonbox-b{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:10px}
+.boisson-met{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+/* CTA */
+.cta-acheter{display:block;width:100%;padding:16px 20px;margin-top:12px;background:linear-gradient(135deg,#FF6B35 0%,#E8447A 100%);border:none;border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;transition:opacity .2s,transform .1s;box-shadow:0 4px 20px rgba(232,68,122,0.35)}
+.cta-acheter:hover{opacity:.9;transform:translateY(-1px)}
+/* Loyer info */
+.loyer-info{font-size:10px;color:var(--accent);margin-top:4px;min-height:14px}
+/* Footer */
+footer{text-align:center;margin-top:24px;font-size:11px;color:rgba(245,244,255,0.2);position:relative;z-index:1}
+footer a{color:rgba(232,68,122,.5);text-decoration:none}
+/* Responsive */
+@media(max-width:480px){
+  body{padding:12px 8px 40px}
+  .hdr,.step{padding:18px}
+  .g2,.g3{grid-template-columns:1fr}
+  .tg{display:none}
+  .roi-num{font-size:40px}
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <!-- Header -->
+  <div class="hdr">
+    <svg class="logo" viewBox="0 0 40 40" fill="none">
+      <defs>
+        <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#7B5EA7"/>
+          <stop offset="100%" stop-color="#E8447A"/>
+        </linearGradient>
+      </defs>
+      <path d="M7 4 L7 36 L24 20 Z" fill="url(#lg)" opacity="0.95"/>
+      <path d="M33 4 L33 36 L16 20 Z" fill="url(#lg)" opacity="0.55"/>
+    </svg>
+    <div class="brand">
+      <div class="bn">Karafun</div>
+      <div class="bs">Business &middot; Simulateur ROI</div>
+    </div>
+    <div class="tg">Estimez votre retour sur investissement</div>
+  </div>
+
+  <!-- Step 1 : Projet -->
+  <div class="step on" id="s1">
+    <div class="prog">
+      <div class="dot on"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="ttl">Votre projet</div>
+    <div class="sub">Configurez vos boxes et votre exploitation</div>
+
+    <div class="sh">Localisation</div>
+    <div class="g2">
+      <div class="f">
+        <label class="lbl">Ville du projet</label>
+        <input type="text" id="city" placeholder="Paris, Lyon, Bordeaux..." oninput="onCityInput()">
+        <div class="loyer-info" id="loyer-info"></div>
+      </div>
+      <div class="f">
+        <label class="lbl">Nombre de boxes</label>
+        <div class="sv">
+          <div class="sv-val" id="nb-v">2 boxes</div>
+          <input type="range" id="nb" min="1" max="20" value="2" step="1">
+          <div class="sl"><span>1</span><span>20</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sh">Tarification</div>
+    <div class="g3">
+      <div class="f">
+        <label class="lbl">Tarif/h semaine</label>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="pw" value="80" min="5"></div>
+      </div>
+      <div class="f">
+        <label class="lbl">Tarif/h week-end</label>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="pwe" value="100" min="5"></div>
+      </div>
+      <div class="f">
+        <label class="lbl">Dur&eacute;e session</label>
+        <div class="pw rs"><input type="number" id="dur" value="1.5" min="0.5" max="4" step="0.5"><span class="sfx">h</span></div>
+      </div>
+    </div>
+
+    <div class="sh">Exploitation</div>
+    <div class="g3">
+      <div class="f">
+        <label class="lbl">Occupation</label>
+        <div class="sv">
+          <div class="sv-val" id="occ-v">55%</div>
+          <input type="range" id="occ" min="10" max="100" value="55" step="5">
+          <div class="sl"><span>10%</span><span>100%</span></div>
+        </div>
+      </div>
+      <div class="f">
+        <label class="lbl">Heures/jour</label>
+        <div class="pw rs"><input type="number" id="hpd" value="8" min="4" max="24"><span class="sfx">h</span></div>
+      </div>
+      <div class="f">
+        <label class="lbl">Jours/semaine</label>
+        <select id="dpw">
+          <option value="5">5 j (lun-ven)</option>
+          <option value="6" selected>6 j (lun-sam)</option>
+          <option value="7">7 jours</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn" onclick="go(2)">Etape suivante &mdash; Charges &rarr;</button>
+  </div>
+
+  <!-- Step 2 : Charges -->
+  <div class="step" id="s2">
+    <div class="prog">
+      <div class="dot done"></div>
+      <div class="dot on"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="ttl">Charges &amp; Investissement</div>
+    <div class="sub">Renseignez vos co&ucirc;ts pour un calcul pr&eacute;cis</div>
+
+    <div class="sh">Investissement initial</div>
+    <div class="g2">
+      <div class="f">
+        <label class="lbl">Am&eacute;nagement / box</label>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="ibox" value="7000" step="500"></div>
+        <span class="hint">Travaux, d&eacute;co, insonorisation</span>
+      </div>
+      <div class="f">
+        <label class="lbl">Mat&eacute;riel / box</label>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="imat" value="4000" step="500"></div>
+        <span class="hint">Ecrans, micros, sono, PC</span>
+      </div>
+      <div class="f">
+        <label class="lbl">Frais de structure</label>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="istr" value="1000" step="500"></div>
+        <span class="hint">Logiciel r&eacute;sa, caisse</span>
+      </div>
+      <div class="f">
+        <label class="lbl">Amortissement sur</label>
+        <div class="pw rs"><input type="number" id="amort" value="5" min="1" max="15"><span class="sfx">ans</span></div>
+      </div>
+    </div>
+
+    <div class="sh">Charges fixes mensuelles</div>
+    <div class="g2">
+      <div class="f">
+        <label class="lbl">Loyer</label>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="rent" value="2000" step="100"></div>
+        <div class="hint" id="rent-hint">Saisissez une ville &eacute;tape 1 pour estimer</div>
+      </div>
+      <div class="f">
+        <label class="lbl">Charges locatives</label>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="cloc" value="400" step="50"></div>
+      </div>
+      <div class="f">
+        <label class="lbl">Masse salariale</label>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="sal" value="3500" step="100"></div>
+        <span class="hint">Charges patronales incluses</span>
+      </div>
+      <div class="f">
+        <label class="lbl">Abonnement Karafun</label>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="kfsub" value="398" readonly style="opacity:.7;cursor:default;border-color:rgba(232,68,122,0.3);background:rgba(232,68,122,0.05);"></div>
+        <span class="hint" id="kfsub-hint">199 &euro; &times; 2 boxes = 398 &euro;/mois</span>
+      </div>
+    </div>
+
+    <div class="sh">Autres charges mensuelles</div>
+    <div class="g3">
+      <div class="f">
+        <label class="lbl">Energie</label>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="energy" value="300" step="50"></div>
+        <span class="hint" id="energy-hint">150 &euro; &times; 2 boxes</span>
+      </div>
+      <div class="f">
+        <label class="lbl">Assurance</label>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="insur" value="250" step="25"></div>
+      </div>
+      <div class="f">
+        <label class="lbl">Comptabilit&eacute;</label>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="acct" value="200" step="25"></div>
+      </div>
+      <div class="f">
+        <label class="lbl">Marketing</label>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="mktg" value="400" step="50"></div>
+      </div>
+      <div class="f">
+        <label class="lbl">Maintenance</label>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="maint" value="200" step="25"></div>
+      </div>
+      <div class="f">
+        <label class="lbl">Divers</label>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="misc" value="150" step="25"></div>
+      </div>
+    </div>
+
+    <div class="br">
+      <button class="btn btn-g" onclick="go(1)">&larr; Retour</button>
+      <button class="btn" onclick="go(3)">Obtenir mon r&eacute;sultat &rarr;</button>
+    </div>
+  </div>
+
+  <!-- Step 3 : Contact -->
+  <div class="step" id="s3">
+    <div class="prog">
+      <div class="dot done"></div>
+      <div class="dot done"></div>
+      <div class="dot on"></div>
+    </div>
+    <div class="ttl">Recevez votre analyse</div>
+    <div class="sub">Votre rapport ROI sera envoy&eacute; par email</div>
+
+    <div class="lcard">
+      <div class="lcard-t">Votre simulation est pr&ecirc;te</div>
+      <div class="lcard-b">Renseignez vos coordonn&eacute;es pour recevoir votre rapport complet. Un expert Karafun Business sera disponible pour vous accompagner.</div>
+    </div>
+
+    <div class="g1">
+      <div class="f">
+        <label class="lbl">Pr&eacute;nom</label>
+        <input type="text" id="lfirstname" placeholder="Jean">
+        <span class="err" id="e-firstname">Veuillez renseigner votre pr&eacute;nom</span>
+      </div>
+      <div class="f">
+        <label class="lbl">Nom</label>
+        <input type="text" id="llastname" placeholder="Dupont">
+        <span class="err" id="e-lastname">Veuillez renseigner votre nom</span>
+      </div>
+      <div class="f">
+        <label class="lbl">Email</label>
+        <input type="email" id="lemail" placeholder="jean@exemple.fr">
+        <span class="err" id="e-email">Email invalide</span>
+      </div>
+      <div class="f">
+        <label class="lbl">T&eacute;l&eacute;phone</label>
+        <input type="tel" id="lphone" placeholder="+33 6 12 34 56 78">
+        <span class="err" id="e-phone">T&eacute;l&eacute;phone requis</span>
+      </div>
+      <div class="f">
+        <label class="lbl">Stade du projet</label>
+        <select id="lstage">
+          <option value="etude">En phase d'&eacute;tude</option>
+          <option value="local">Recherche de local</option>
+          <option value="financement">Recherche de financement</option>
+          <option value="ouverture">Ouverture dans 6 mois</option>
+          <option value="existant">&Eacute;tablissement existant</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="notice" style="margin-top:16px;">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:1px;">
+        <circle cx="8" cy="8" r="7" stroke="rgba(123,94,167,0.7)" stroke-width="1.5"/>
+        <line x1="8" y1="7" x2="8" y2="11" stroke="rgba(123,94,167,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="8" cy="5" r="0.75" fill="rgba(123,94,167,0.7)"/>
+      </svg>
+      Donn&eacute;es trait&eacute;es conform&eacute;ment au RGPD. Jamais revendues.
+    </div>
+
+    <div class="cbw">
+      <input type="checkbox" id="optin" checked>
+      <label for="optin" class="cbl">J'accepte de recevoir des informations commerciales de Karafun Business.</label>
+    </div>
+    <span class="err" id="e-optin">Veuillez cocher cette case</span>
+
+    <div class="br">
+      <button class="btn btn-g" onclick="go(2)">&larr; Retour</button>
+      <button class="btn" onclick="doSubmit()">Recevoir mon analyse &rarr;</button>
+    </div>
+  </div>
+
+  <!-- Step 4 : Loading + Results -->
+  <div class="step" id="s4">
+    <div id="loading" class="spin-wrap">
+      <div class="spinner"></div>
+      <div style="font-size:15px;font-weight:500;margin-bottom:6px;">G&eacute;n&eacute;ration de votre rapport...</div>
+      <div id="load-msg" style="font-size:12px;color:var(--muted);">Calcul du ROI en cours...</div>
+    </div>
+    <div id="res"></div>
+  </div>
+
+</div>
+
+<footer>&copy; 2025 Karafun Business &mdash; <a href="https://business.karafun.com/fr/" target="_blank">business.karafun.com</a></footer>
+
+<script>
+// ─── State ───────────────────────────────────────────────────────────────────
+var cur = 1;
+var loyerEstime = null;
+var cityTimeout = null;
+
+// ─── Step navigation ─────────────────────────────────────────────────────────
+function go(n) {
+  document.getElementById('s' + cur).classList.remove('on');
+  cur = n;
+  document.getElementById('s' + n).classList.add('on');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── Sliders ─────────────────────────────────────────────────────────────────
+document.getElementById('nb').oninput = function () {
+  var n = parseInt(this.value);
+  document.getElementById('nb-v').textContent = n + (n > 1 ? ' boxes' : ' box');
+  var sub = n * 199;
+  document.getElementById('kfsub').value = sub;
+  document.getElementById('kfsub-hint').textContent = '199 \u20AC \u00D7 ' + n + (n > 1 ? ' boxes' : ' box') + ' = ' + sub + ' \u20AC/mois';
+  document.getElementById('energy').value = n * 150;
+  document.getElementById('energy-hint').textContent = '150 \u20AC \u00D7 ' + n + ' box' + (n > 1 ? 'es' : '');
+  if (loyerEstime !== null) updateLoyer(loyerEstime, n);
+};
+
+document.getElementById('occ').oninput = function () {
+  document.getElementById('occ-v').textContent = this.value + '%';
+};
+
+// ─── City / loyer estimation ──────────────────────────────────────────────────
+var LOYER_PAR_VILLE = {
+  'paris': 60, 'lyon': 22, 'marseille': 18, 'toulouse': 17, 'nice': 22,
+  'nantes': 16, 'montpellier': 15, 'strasbourg': 18, 'bordeaux': 20,
+  'lille': 18, 'rennes': 16, 'reims': 12, 'toulon': 14, 'grenoble': 16,
+  'dijon': 13, 'angers': 14, 'nimes': 13, 'brest': 12, 'tours': 13,
+  'amiens': 12, 'limoges': 10, 'perpignan': 11, 'metz': 13, 'orleans': 13,
+  'mulhouse': 11, 'caen': 12, 'rouen': 14, 'nancy': 13, 'avignon': 14,
+  'pau': 12, 'bayonne': 14, 'annecy': 18, 'biarritz': 20, 'cannes': 30,
+  'versailles': 30, 'nanterre': 22, 'neuilly-sur-seine': 45,
+  'levallois-perret': 38, 'boulogne-billancourt': 35, 'saint-denis': 18,
+  'cergy': 14, 'marne-la-vallee': 18
+};
+
+function onCityInput() {
+  clearTimeout(cityTimeout);
+  var c = document.getElementById('city').value.trim();
+  if (!c || c.length < 3) {
+    document.getElementById('loyer-info').textContent = '';
+    return;
+  }
+  cityTimeout = setTimeout(function () { estimateLoyer(c); }, 500);
+}
+
+function estimateLoyer(city) {
+  var nb = parseInt(document.getElementById('nb').value) || 2;
+  var cn = city.toLowerCase().trim();
+  var vv = LOYER_PAR_VILLE[cn];
+  if (!vv) {
+    var keys = Object.keys(LOYER_PAR_VILLE);
+    for (var i = 0; i < keys.length; i++) {
+      if (cn.indexOf(keys[i]) >= 0 || keys[i].indexOf(cn) >= 0) {
+        vv = LOYER_PAR_VILLE[keys[i]];
+        break;
+      }
+    }
+  }
+  if (!vv) {
+    vv = 13;
+    document.getElementById('loyer-info').textContent = '~ ' + vv + ' \u20AC/m\u00B2/mois (estimation moyenne)';
+  } else {
+    document.getElementById('loyer-info').textContent = '~ ' + vv + ' \u20AC/m\u00B2/mois estim\u00E9 \u00E0 ' + city;
+  }
+  loyerEstime = vv;
+  updateLoyer(vv, nb);
+}
+
+function updateLoyer(vv, nb) {
+  // Surface estimée : 20m² par box + 30m² parties communes
+  var surface = nb * 20 + 30;
+  var loyer = vv * surface;
+  document.getElementById('rent').value = loyer;
+  document.getElementById('rent-hint').textContent =
+    surface + ' m\u00B2 \u00D7 ' + vv + ' \u20AC/m\u00B2 = ' +
+    loyer.toLocaleString('fr-FR') + ' \u20AC/mois';
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+function v(id) {
+  return parseFloat(document.getElementById(id).value) || 0;
+}
+
+function fmt(n) {
+  return new Intl.NumberFormat('fr-FR', {
+    style: 'currency',
+    currency: 'EUR',
+    maximumFractionDigits: 0
+  }).format(n);
+}
+
+function fmtPbk(years) {
+  if (!isFinite(years) || years <= 0) return 'N/A';
+  return years.toFixed(1) + ' ans';
+}
+
+// ─── Calcul ROI ───────────────────────────────────────────────────────────────
+function calc() {
+  var nb    = v('nb');
+  var occ   = v('occ') / 100;
+  var hpd   = v('hpd');
+  var dpw   = v('dpw');
+  var pw    = v('pw');
+  var pwe   = v('pwe');
+  var dur   = v('dur') || 1.5;  // évite division par zéro
+
+  // Répartition semaine / week-end
+  var wd   = Math.min(dpw, 5);       // jours semaine
+  var we   = Math.max(0, dpw - 5);   // jours week-end
+  var days = dpw * 52;               // jours d'exploitation / an
+  var pct  = wd / dpw;               // proportion jours semaine
+
+  var avgP  = pw * pct + pwe * (1 - pct); // prix moyen pondéré / heure
+  var spd   = (hpd / dur) * occ;          // sessions par jour par box
+
+  var revY = spd * avgP * dur * days * nb;
+  var revM = revY / 12;
+
+  var invest  = (v('ibox') + v('imat')) * nb + v('istr');
+  var amort   = v('amort') || 5;
+  var amortM  = invest / (amort * 12);
+
+  var fixed   = v('rent') + v('cloc') + v('sal') + v('kfsub');
+  var varC    = v('energy') + v('insur') + v('acct') + v('mktg') + v('maint') + v('misc');
+  var charges = fixed + varC + amortM;
+
+  var net    = revM - charges;
+  var roi    = invest > 0 ? (net * 12 / invest) * 100 : 0;
+  var pbkM   = net > 0 ? invest / net : Infinity;   // remboursement en mois
+  var pbkY   = pbkM / 12;                            // remboursement en ans
+  var margin = revM > 0 ? (net / revM) * 100 : 0;
+
+  // Scénario boissons (+40% CA)
+  var revMb  = revM * 1.4;
+  var netB   = revMb - charges;
+  var roiB   = invest > 0 ? (netB * 12 / invest) * 100 : 0;
+  var pbkMb  = netB > 0 ? invest / netB : Infinity;
+  var pbkYb  = pbkMb / 12;
+
+  return {
+    nb: nb, invest: invest, revM: revM, charges: charges,
+    net: net, roi: roi, pbkM: pbkM, pbkY: pbkY, margin: margin,
+    rent: v('rent'), cloc: v('cloc'), sal: v('sal'), kf: v('kfsub'),
+    energy: v('energy'), insur: v('insur'), acct: v('acct'),
+    mktg: v('mktg'), maint: v('maint'), misc: v('misc'), amortM: amortM,
+    revMb: revMb, netB: netB, roiB: roiB, pbkMb: pbkMb, pbkYb: pbkYb
+  };
+}
+
+// ─── DOM helpers ──────────────────────────────────────────────────────────────
+function mk(tag, cls, html) {
+  var el = document.createElement(tag);
+  if (cls) el.className = cls;
+  if (html) el.innerHTML = html;
+  return el;
+}
+
+function mRow(label, value) {
+  var r = mk('div', 'crow');
+  r.innerHTML = '<span class="cn">' + label + '</span><span>' + value + '</span>';
+  return r;
+}
+
+// ─── PDF ──────────────────────────────────────────────────────────────────────
+function downloadPDF() {
+  var d = window._pdfData;
+  if (!d) return;
+  var r = d.r, name = d.name, q = d.q;
+  try {
+    var doc = new window.jspdf.jsPDF();
+    var y = 20;
+    doc.setFontSize(20);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Karafun Business', 20, y); y += 8;
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(120, 94, 167);
+    doc.text('Rapport ROI - ' + name, 20, y); y += 6;
+    doc.setDrawColor(232, 68, 122);
+    doc.setLineWidth(0.5);
+    doc.line(20, y, 190, y); y += 10;
+    doc.setTextColor(0, 0, 0);
+    var lines = [
+      'ROI annuel : ' + r.roi.toFixed(1) + '%',
+      'Investissement : ' + fmt(r.invest),
+      'CA mensuel : ' + fmt(r.revM),
+      'Charges : ' + fmt(r.charges),
+      'Net/mois : ' + fmt(r.net),
+      'Marge : ' + r.margin.toFixed(1) + '%',
+      'Retour sur invest. : ' + fmtPbk(r.pbkY),
+      'CA avec boissons (+40%) : ' + fmt(r.revMb),
+      'Net avec boissons : ' + fmt(r.netB),
+      'ROI avec boissons : ' + r.roiB.toFixed(1) + '%',
+      'Qualification : ' + q
+    ];
+    lines.forEach(function (t) { doc.text(t, 20, y); y += 7; });
+    doc.setFontSize(9);
+    doc.setTextColor(150, 150, 150);
+    doc.text('business.karafun.com | 2025', 20, 285);
+    doc.save('karafun-roi.pdf');
+  } catch (e) {
+    alert('Erreur PDF : ' + e.message);
+  }
+}
+
+// ─── Affichage résultats ──────────────────────────────────────────────────────
+function showResults(r, name, analysis, q) {
+  document.getElementById('loading').style.display = 'none';
+  var res = document.getElementById('res');
+  res.innerHTML = '';
+
+  var nc = r.net >= 0 ? 'pos' : 'neg';
+  var mc = r.margin >= 0 ? 'pos' : 'neg';
+  var fn = name.split(' ')[0];
+
+  var w = mk('div');
+  w.style.padding = '0 0 8px';
+
+  // Titre
+  var top = mk('div');
+  top.style.cssText = 'text-align:center;padding:20px 28px 8px';
+  var ti = mk('div');
+  ti.style.cssText = "font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:8px";
+  ti.textContent = 'Votre analyse, ' + fn;
+  top.appendChild(ti);
+  w.appendChild(top);
+
+  var b = mk('div');
+  b.style.padding = '0 28px';
+
+  // Hero ROI
+  var hero = mk('div', 'hero');
+  hero.innerHTML = '<div class="roi-lbl">Retour sur investissement annuel</div>' +
+    '<div class="roi-num">' + r.roi.toFixed(1) + '%</div>';
+  var rs = mk('div', 'roi-sub');
+  rs.innerHTML = r.nb + ' box' + (r.nb > 1 ? 'es' : '') +
+    ' &middot; ' + fmt(r.invest) +
+    (isFinite(r.pbkY) && r.pbkY > 0
+      ? '<br>Remboursement en <strong style="color:#5DE8A6">' + r.pbkY.toFixed(1) + ' ans</strong>'
+      : '');
+  hero.appendChild(rs);
+  b.appendChild(hero);
+
+  // Métriques clés
+  var mets = mk('div', 'mets');
+  [
+    ['CA mensuel', 'met-v acc', fmt(r.revM)],
+    ['Charges/mois', 'met-v', fmt(r.charges)],
+    ['Net/mois', 'met-v ' + nc, fmt(r.net)],
+    ['Marge', 'met-v ' + mc, r.margin.toFixed(1) + '%']
+  ].forEach(function (d) {
+    var m = mk('div', 'met');
+    m.innerHTML = '<div class="met-l">' + d[0] + '</div><div class="' + d[1] + '">' + d[2] + '</div>';
+    mets.appendChild(m);
+  });
+  b.appendChild(mets);
+
+  // Boissons
+  var bb = mk('div', 'boissonbox');
+  var bt = mk('div', 'boissonbox-t');
+  bt.innerHTML = '&#127865; Impact des boissons &amp; cocktails';
+  var btx = mk('div', 'boissonbox-b');
+  btx.innerHTML = 'Le karaok&eacute; stimule la consommation de boissons. Les exploitants constatent en moyenne une ' +
+    '<strong style="color:var(--accent)">augmentation de 40% du CA</strong> avec une activit&eacute; boissons.';
+  var bm = mk('div', 'boisson-met');
+  [
+    ['CA avec boissons', 'acc', fmt(r.revMb)],
+    ['Net avec boissons', r.netB >= 0 ? 'pos' : 'neg', fmt(r.netB)],
+    ['ROI avec boissons', 'acc', r.roiB.toFixed(1) + '%']
+  ].forEach(function (d) {
+    var m = mk('div', 'met');
+    m.style.cssText = 'background:rgba(232,68,122,0.06);border-color:rgba(232,68,122,0.2)';
+    m.innerHTML = '<div class="met-l">' + d[0] + '</div><div class="met-v ' + d[1] + '">' + d[2] + '</div>';
+    bm.appendChild(m);
+  });
+  if (isFinite(r.pbkYb) && r.pbkYb > 0) {
+    var bp = mk('div', 'met');
+    bp.style.cssText = 'background:rgba(232,68,122,0.06);border-color:rgba(232,68,122,0.2)';
+    bp.innerHTML = '<div class="met-l">Remboursement</div><div class="met-v pos">' + r.pbkYb.toFixed(1) + ' ans</div>';
+    bm.appendChild(bp);
+  }
+  bb.appendChild(bt);
+  bb.appendChild(btx);
+  bb.appendChild(bm);
+  b.appendChild(bb);
+
+  // Détail charges
+  var sh = mk('div', 'sh');
+  sh.textContent = 'D\u00E9tail des charges';
+  b.appendChild(sh);
+  var ct = mk('div', 'ctab');
+  [
+    ['Loyer et charges', fmt(r.rent + r.cloc)],
+    ['Masse salariale', fmt(r.sal)],
+    ['Abonnement Karafun', fmt(r.kf)],
+    ['Energie', fmt(r.energy)],
+    ['Assurance', fmt(r.insur)],
+    ['Comptabilit\u00E9', fmt(r.acct)],
+    ['Marketing', fmt(r.mktg)],
+    ['Maintenance &amp; divers', fmt(r.maint + r.misc)],
+    ['Amortissement', fmt(r.amortM)]
+  ].forEach(function (d) { ct.appendChild(mRow(d[0], d[1])); });
+  var tot = mk('div', 'crow tot');
+  tot.innerHTML = '<span>Total mensuel</span><span>' + fmt(r.charges) + '</span>';
+  ct.appendChild(tot);
+  b.appendChild(ct);
+
+  // Analyse IA
+  if (analysis) {
+    var ai = mk('div', 'aibox');
+    ai.innerHTML = '<div class="aibox-t">Analyse personnalis\u00E9e</div>' +
+      '<div class="aibox-b">' + analysis + '</div>';
+    b.appendChild(ai);
+  }
+
+  // Bouton PDF
+  var pdfBtn = mk('button', 'btn');
+  pdfBtn.style.cssText = 'margin-top:0;background:#1E1E26;border:1px solid rgba(232,68,122,0.4);color:var(--accent)';
+  pdfBtn.textContent = 'T\u00E9l\u00E9charger mon rapport PDF';
+  pdfBtn.onclick = downloadPDF;
+  b.appendChild(pdfBtn);
+
+  // CTA Expert
+  var ea = mk('a');
+  ea.href = 'https://meetings-eu1.hubspot.com/meetings/acaupert?uuid=e4041660-e0bf-43e9-9a08-b26ddd6ddaee';
+  ea.target = '_blank';
+  ea.style.cssText = 'display:block;text-decoration:none';
+  var eb = mk('button', 'btn');
+  eb.style.marginTop = '8px';
+  eb.textContent = 'Parler \u00E0 un expert Karafun';
+  ea.appendChild(eb);
+  b.appendChild(ea);
+
+  // CTA Matériel
+  var ta = mk('a');
+  ta.href = 'https://karaoke-box-thomann.vercel.app/';
+  ta.target = '_blank';
+  ta.style.cssText = 'display:block;text-decoration:none;margin-top:8px';
+  var td = mk('div', 'cta-acheter');
+  td.innerHTML = '&#127899;&#65039; Je suis convaincu, j\'achète le matériel !<br><span style="font-size:12px;opacity:.8">Voir la sélection d\'équipement karaoke &rarr;</span>';
+  ta.appendChild(td);
+  b.appendChild(ta);
+
+  // Nouvelle simulation
+  var rb = mk('button', 'btn btn-g');
+  rb.textContent = 'Nouvelle simulation';
+  rb.onclick = function () { location.reload(); };
+  b.appendChild(rb);
+
+  w.appendChild(b);
+  res.appendChild(w);
+
+  // Stocker pour PDF
+  window._pdfData = { r: r, name: name, q: q };
+}
+
+// ─── Soumission formulaire ────────────────────────────────────────────────────
+async function doSubmit() {
+  var firstname = document.getElementById('lfirstname').value.trim();
+  var lastname  = document.getElementById('llastname').value.trim();
+  var email     = document.getElementById('lemail').value.trim();
+  var phone     = document.getElementById('lphone').value.trim();
+  var stageEl   = document.getElementById('lstage');
+  var stageVal  = stageEl.value;
+  var stageText = stageEl.options[stageEl.selectedIndex].text;
+  var city      = document.getElementById('city').value.trim();
+  var optin     = document.getElementById('optin').checked;
+
+  // Validation
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // FIX : regex correcte
+  var ok = true;
+
+  var eF  = document.getElementById('e-firstname');
+  var eLN = document.getElementById('e-lastname');
+  var eE  = document.getElementById('e-email');
+  var eT  = document.getElementById('e-phone');
+  var eO  = document.getElementById('e-optin');
+
+  eF.style.display  = firstname ? 'none' : 'block'; if (!firstname) ok = false;
+  eLN.style.display = lastname  ? 'none' : 'block'; if (!lastname)  ok = false;
+  eE.style.display  = (email && emailRegex.test(email)) ? 'none' : 'block'; if (!email || !emailRegex.test(email)) ok = false;
+  eT.style.display  = phone  ? 'none' : 'block'; if (!phone)  ok = false;
+  eO.style.display  = optin  ? 'none' : 'block'; if (!optin)  ok = false;
+
+  if (!ok) return;
+
+  var r    = calc();
+  var name = firstname + ' ' + lastname;
+
+  // Qualification lead
+  var stageScore = { 'etude': 1, 'local': 2, 'financement': 2, 'ouverture': 3, 'existant': 3 }[stageVal] || 1;
+  var q = (r.roi >= 20 && stageScore >= 2) ? 'Lead chaud'
+        : (r.roi >= 10 && stageScore >= 2) ? 'Lead tiède'
+        : 'Lead froid';
+
+  go(4);
+  document.getElementById('load-msg').textContent = 'Analyse en cours...';
+
+  // Prompt IA
+  var prompt = 'Génère une analyse personnalisée courte (4-5 paragraphes) en français pour ' + name +
+    ', porteur d\'un projet de ' + r.nb + ' box(es) karaoke.\n\n' +
+    'Données :\n' +
+    '- Investissement : ' + fmt(r.invest) + '\n' +
+    '- CA mensuel : ' + fmt(r.revM) + '\n' +
+    '- Charges : ' + fmt(r.charges) + '\n' +
+    '- Résultat net/mois : ' + fmt(r.net) + '\n' +
+    '- ROI annuel : ' + r.roi.toFixed(1) + '%\n' +
+    '- Retour invest. : ' + fmtPbk(r.pbkY) + '\n' +
+    '- Stade : ' + stageText +
+    (city ? '\n- Ville : ' + city : '') + '\n\n' +
+    'Ton : professionnel, chaleureux, direct. Pas de liste à puces. Uniquement du texte.';
+
+  var analysis = null;
+  try {
+    var ac = new AbortController();
+    var tid = setTimeout(function () { ac.abort(); }, 8000);
+    var aiRes = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: prompt }),
+      signal: ac.signal
+    });
+    clearTimeout(tid);
+    if (aiRes.ok) {
+      var aiData = await aiRes.json();
+      if (aiData && aiData.analysis) analysis = aiData.analysis;
+    }
+  } catch (e) {
+    // Analyse IA non bloquante : on continue sans
+  }
+
+  document.getElementById('load-msg').textContent = 'Enregistrement du lead...';
+
+  // HubSpot (non bloquant)
+  fetch('/api/hubspot', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      phone: phone,
+      city: city || '',
+      stage: stageText,
+      roi: r.roi,
+      revM: r.revM,
+      net: r.net,
+      invest: r.invest,
+      pbkY: isFinite(r.pbkY) ? r.pbkY : 0,
+      nb: r.nb,
+      qualification: q
+    })
+  }).catch(function (e) { console.warn('HubSpot:', e); });
+
+  showResults(r, name, analysis, q);
+}
+</script>
+</body>
+</html>
