@@ -82,7 +82,7 @@ module.exports = async function handler(req, res) {
     const dealProps = {
       dealname: dealName,
       pipeline: 'default',
-      dealstage: '1422196964',
+      dealstage: '1495240938',
       ...(roi ? { roi_annuel: String(Number(roi).toFixed(1)) } : {}),
       ...(revM ? { ca_mensuel_simule: String(Math.round(revM)) } : {}),
       ...(net ? { net_mensuel_simule: String(Math.round(net)) } : {}),
