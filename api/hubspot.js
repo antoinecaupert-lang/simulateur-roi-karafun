@@ -96,6 +96,7 @@ module.exports = async function handler(req, res) {
       dealname: dealName,
       pipeline: 'default',
       dealstage: '1495240938',
+      amount: nb ? String(Number(nb) * 199 * 12) : undefined,
       description
     };
 
