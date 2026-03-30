@@ -15,7 +15,7 @@ module.exports = async function handler(req, res) {
 
   // DEBUG TEMPORAIRE — à supprimer après vérification
   if (req.method === 'POST' && req.body && req.body.debug === 'token') {
-    return res.status(200).json({ tokenPreview: token.substring(0, 20) + '...', length: token.length, startsPat: token.startsWith('pat-') });
+    return res.status(200).json({ tokenPreview: token.substring(0, 20) + '...', length: token.length, startsPat: token.startsWith('pat-'), vercelUrl: process.env.VERCEL_URL, projectName: process.env.VERCEL_PROJECT_ID });
   }
 
   const { firstname, lastname, email, phone, city, stage, roi, revM, net, invest, pbkY, nb, qualification } = req.body || {};
