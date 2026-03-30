@@ -6,17 +6,8 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  let token = (process.env.HUBSPOT_TOKEN || '').trim();
+  const token = (process.env.HUBSPOT_TOKEN || '').trim();
   if (!token) return res.status(500).json({ error: 'Config manquante' });
-  // Si le token n'est pas au format pat-xxx, tenter un décodage base64
-  if (!token.startsWith('pat-')) {
-    try { token = Buffer.from(token, 'base64').toString('utf8').trim(); } catch(e) {}
-  }
-
-  // DEBUG TEMPORAIRE — à supprimer après vérification
-  if (req.method === 'POST' && req.body && req.body.debug === 'token') {
-    return res.status(200).json({ tokenPreview: token.substring(0, 20) + '...', length: token.length, startsPat: token.startsWith('pat-'), vercelUrl: process.env.VERCEL_URL, projectName: process.env.VERCEL_PROJECT_ID });
-  }
 
   const { firstname, lastname, email, phone, city, stage, roi, revM, net, invest, pbkY, nb, qualification } = req.body || {};
   if (!email || !firstname || !lastname) return res.status(400).json({ error: 'Champs requis' });
@@ -81,7 +72,7 @@ module.exports = async function handler(req, res) {
 
     // 2. Enroller le contact dans la séquence "Suite ROI FR"
     const enrollment = await hubspotRequest('POST', '/automation/v4/sequences/enrollments', {
-      sequenceId: 145725562,
+      sequenceId: 796519659,
       contactId: contactId
     });
     console.log('Sequence enrollment:', enrollment.status, JSON.stringify(enrollment.data));
