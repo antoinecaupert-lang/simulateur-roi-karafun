@@ -70,12 +70,19 @@ module.exports = async function handler(req, res) {
       console.log('Contact created:', contactId);
     }
 
-    // 2. Créer le deal
+    // 2. Enroller le contact dans la séquence "Suite ROI FR"
+    const enrollment = await hubspotRequest('POST', '/automation/v4/sequences/enrollments', {
+      sequenceId: 145725562,
+      contactId: contactId
+    });
+    console.log('Sequence enrollment:', enrollment.status, JSON.stringify(enrollment.data));
+
+    // 3. Créer le deal
     const dealName = `KaraFun X ${firstname} ${lastname}`;
     const dealProps = {
       dealname: dealName,
       pipeline: 'default',
-      dealstage: 'appointmentscheduled',
+      dealstage: '1422196964',
       ...(roi ? { roi_annuel: String(Number(roi).toFixed(1)) } : {}),
       ...(revM ? { ca_mensuel_simule: String(Math.round(revM)) } : {}),
       ...(net ? { net_mensuel_simule: String(Math.round(net)) } : {}),
@@ -92,13 +99,13 @@ module.exports = async function handler(req, res) {
     const dealId = deal.data.id;
     console.log('Deal created:', dealId);
 
-    // 3. Associer le deal au contact
+    // 4. Associer le deal au contact
     const assoc = await hubspotRequest('PUT', `/crm/v3/associations/deals/contacts/batch/create`, {
       inputs: [{ from: { id: dealId }, to: { id: contactId }, type: 'deal_to_contact' }]
     });
     console.log('Association:', assoc.status);
 
-    return res.status(200).json({ ok: true, contactId, dealId });
+    return res.status(200).json({ ok: true, contactId, dealId, enrolled: enrollment.status < 400 });
 
   } catch (err) {
     console.error('HubSpot error:', err.message);
