@@ -103,7 +103,15 @@ module.exports = async function handler(req, res) {
       amount: nb ? String(Number(nb) * 199 * 12) : undefined,
       hubspot_owner_id: isEliott ? '30315142' : '67082377',
       origine_deal: 'Simulateur ROI',
-      description
+      description,
+      roi_annuel: roi ? Number(Number(roi).toFixed(1)) : undefined,
+      ca_mensuel_simule: revM ? Math.round(revM) : undefined,
+      net_mensuel_simule: net ? Math.round(net) : undefined,
+      investissement_simule: invest ? Math.round(invest) : undefined,
+      retour_sur_investissement_ans: pbkY && isFinite(pbkY) ? Number(Number(pbkY).toFixed(1)) : undefined,
+      nombre_de_boxes_simule: nb ? Number(nb) : undefined,
+      stade_du_projet: stage || undefined,
+      qualification_lead: qualification || undefined
     };
 
     const deal = await hubspotRequest('POST', '/crm/v3/objects/deals', { properties: dealProps });
