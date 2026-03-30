@@ -6,12 +6,12 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const token = process.env.HUBSPOT_TOKEN;
+  const token = (process.env.HUBSPOT_TOKEN || '').trim();
   if (!token) return res.status(500).json({ error: 'Config manquante' });
 
   // DEBUG TEMPORAIRE — à supprimer après vérification
   if (req.method === 'POST' && req.body && req.body.debug === 'token') {
-    return res.status(200).json({ tokenPreview: token.substring(0, 20) + '...' });
+    return res.status(200).json({ tokenPreview: token.substring(0, 20) + '...', length: token.length });
   }
 
   const { firstname, lastname, email, phone, city, stage, roi, revM, net, invest, pbkY, nb, qualification } = req.body || {};
