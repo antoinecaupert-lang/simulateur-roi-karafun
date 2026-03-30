@@ -79,18 +79,23 @@ module.exports = async function handler(req, res) {
 
     // 3. Créer le deal
     const dealName = `KaraFun X ${firstname} ${lastname}`;
+    const description = [
+      roi ? `ROI : ${Number(roi).toFixed(1)}%` : null,
+      revM ? `CA/mois : ${Math.round(revM)} EUR` : null,
+      net ? `Net/mois : ${Math.round(net)} EUR` : null,
+      invest ? `Investissement : ${Math.round(invest)} EUR` : null,
+      pbkY && isFinite(pbkY) ? `Retour : ${Number(pbkY).toFixed(1)} ans` : null,
+      nb ? `Boxes : ${nb}` : null,
+      city ? `Ville : ${city}` : null,
+      stage ? `Stade : ${stage}` : null,
+      qualification ? `Qualification : ${qualification}` : null
+    ].filter(Boolean).join('\n');
+
     const dealProps = {
       dealname: dealName,
       pipeline: 'default',
       dealstage: '1495240938',
-      ...(roi ? { roi_annuel: String(Number(roi).toFixed(1)) } : {}),
-      ...(revM ? { ca_mensuel_simule: String(Math.round(revM)) } : {}),
-      ...(net ? { net_mensuel_simule: String(Math.round(net)) } : {}),
-      ...(invest ? { investissement_simule: String(Math.round(invest)) } : {}),
-      ...(pbkY && isFinite(pbkY) ? { retour_invest_annees: String(Number(pbkY).toFixed(1)) } : {}),
-      ...(nb ? { nb_boxes_simule: String(nb) } : {}),
-      ...(stage ? { stade_projet: stage } : {}),
-      ...(qualification ? { qualification_lead: qualification } : {})
+      description
     };
 
     const deal = await hubspotRequest('POST', '/crm/v3/objects/deals', { properties: dealProps });
