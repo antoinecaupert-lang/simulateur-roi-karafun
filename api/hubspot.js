@@ -1,5 +1,35 @@
 // api/hubspot.js — Vercel serverless function
-// Crée un contact dans HubSpot CRM (simple, un seul appel)
+const https = require('https');
+
+function post(url, token, body) {
+  return new Promise((resolve, reject) => {
+    const data = JSON.stringify(body);
+    const urlObj = new URL(url);
+    const options = {
+      hostname: urlObj.hostname,
+      path: urlObj.pathname,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+        'Content-Length': Buffer.byteLength(data)
+      },
+      timeout: 6000
+    };
+    const req = https.request(options, (res) => {
+      let raw = '';
+      res.on('data', (chunk) => raw += chunk);
+      res.on('end', () => {
+        try { resolve({ status: res.statusCode, body: JSON.parse(raw) }); }
+        catch (e) { resolve({ status: res.statusCode, body: raw }); }
+      });
+    });
+    req.on('timeout', () => { req.destroy(); reject(new Error('Request timeout')); });
+    req.on('error', reject);
+    req.write(data);
+    req.end();
+  });
+}
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -13,58 +43,29 @@ module.exports = async function handler(req, res) {
   if (!token) return res.status(500).json({ error: 'Config manquante' });
 
   const { firstname, lastname, email, phone, city, stage, roi, revM, net, invest, pbkY, nb, qualification } = req.body || {};
-
-  if (!email || !firstname || !lastname) {
-    return res.status(400).json({ error: 'Champs requis manquants' });
-  }
+  if (!email || !firstname || !lastname) return res.status(400).json({ error: 'Champs requis manquants' });
 
   const roiSummary = [
-    'ROI annuel : ' + (roi ? Number(roi).toFixed(1) + '%' : 'N/A'),
-    'CA mensuel : ' + (revM ? Math.round(revM) + ' EUR' : 'N/A'),
+    'ROI : ' + (roi ? Number(roi).toFixed(1) + '%' : 'N/A'),
+    'CA/mois : ' + (revM ? Math.round(revM) + ' EUR' : 'N/A'),
     'Net/mois : ' + (net ? Math.round(net) + ' EUR' : 'N/A'),
-    'Investissement : ' + (invest ? Math.round(invest) + ' EUR' : 'N/A'),
-    'Retour invest. : ' + (pbkY && isFinite(pbkY) ? Number(pbkY).toFixed(1) + ' ans' : 'N/A'),
+    'Invest : ' + (invest ? Math.round(invest) + ' EUR' : 'N/A'),
+    'Retour : ' + (pbkY && isFinite(pbkY) ? Number(pbkY).toFixed(1) + ' ans' : 'N/A'),
     'Boxes : ' + (nb || 'N/A'),
     'Ville : ' + (city || 'N/A'),
     'Stade : ' + (stage || 'N/A'),
     'Qualification : ' + (qualification || 'N/A')
-  ].join('\n');
+  ].join(' | ');
 
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000);
-
-    const response = await fetch('https://api.hubapi.com/crm/v3/objects/contacts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-      body: JSON.stringify({
-        properties: {
-          firstname,
-          lastname,
-          email,
-          phone: phone || '',
-          city: city || '',
-          message: roiSummary
-        }
-      }),
-      signal: controller.signal
+    const result = await post('https://api.hubapi.com/crm/v3/objects/contacts', token, {
+      properties: { firstname, lastname, email, phone: phone || '', city: city || '', message: roiSummary }
     });
-    clearTimeout(timeout);
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      console.error('HubSpot error:', JSON.stringify(data));
-      return res.status(500).json({ error: 'Contact failed', detail: data });
-    }
-
-    return res.status(200).json({ ok: true, contactId: data.id });
-
+    console.log('HubSpot response:', result.status, JSON.stringify(result.body));
+    if (result.status >= 400) return res.status(500).json({ error: 'Contact failed', detail: result.body });
+    return res.status(200).json({ ok: true, contactId: result.body.id });
   } catch (err) {
-    console.error('HubSpot exception:', err.message);
+    console.error('HubSpot error:', err.message);
     return res.status(500).json({ error: err.message });
   }
 };
