@@ -1,25 +1,35 @@
-// api/analyze.js — Vercel serverless function
-// Génère une analyse personnalisée via Claude (Anthropic)
+// api/analyze.js — Vercel Edge Function
+export const config = { runtime: 'edge' };
 
-module.exports = async function handler(req, res) {
-  // CORS
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+export default async function handler(request) {
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type'
+  };
 
-  if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (request.method === 'OPTIONS') {
+    return new Response(null, { status: 200, headers: corsHeaders });
+  }
+  if (request.method !== 'POST') {
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers: corsHeaders });
+  }
 
-  const { prompt } = req.body || {};
-  if (!prompt) return res.status(400).json({ error: 'No prompt' });
+  const body = await request.json();
+  const { prompt } = body || {};
+  if (!prompt) {
+    return new Response(JSON.stringify({ error: 'No prompt' }), { status: 400, headers: corsHeaders });
+  }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    console.error('ANTHROPIC_API_KEY manquante');
-    return res.status(200).json({ analysis: null });
+    return new Response(JSON.stringify({ analysis: null }), { status: 200, headers: corsHeaders });
   }
 
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -31,21 +41,23 @@ module.exports = async function handler(req, res) {
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 600,
         messages: [{ role: 'user', content: prompt }]
-      })
+      }),
+      signal: controller.signal
     });
+    clearTimeout(timeout);
 
     if (!response.ok) {
       const err = await response.text();
       console.error('Anthropic error:', response.status, err);
-      return res.status(200).json({ analysis: null });
+      return new Response(JSON.stringify({ analysis: null }), { status: 200, headers: corsHeaders });
     }
 
     const data = await response.json();
     const analysis = data?.content?.[0]?.text || null;
-    return res.status(200).json({ analysis });
+    return new Response(JSON.stringify({ analysis }), { status: 200, headers: corsHeaders });
 
   } catch (err) {
-    console.error('analyze error:', err);
-    return res.status(200).json({ analysis: null });
+    console.error('analyze error:', err.message);
+    return new Response(JSON.stringify({ analysis: null }), { status: 200, headers: corsHeaders });
   }
 }
