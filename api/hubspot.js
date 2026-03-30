@@ -71,10 +71,9 @@ module.exports = async function handler(req, res) {
     }
 
     // 2. Enroller le contact dans la séquence "Suite ROI FR"
-    const enrollment = await hubspotRequest('POST', '/automation/v4/sequences/enrollments', {
+    const enrollment = await hubspotRequest('POST', '/automation/v4/sequences/enrollments?userId=67082377', {
       sequenceId: 796519659,
       contactId: contactId,
-      userId: 67082377,
       senderEmail: 'antoine.caupert@recisio.com'
     });
     console.log('Sequence enrollment:', enrollment.status, JSON.stringify(enrollment.data));
