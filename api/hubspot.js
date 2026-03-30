@@ -12,37 +12,23 @@ module.exports = async function handler(req, res) {
   const { firstname, lastname, email, phone, city, stage, roi, revM, net, invest, pbkY, nb, qualification } = req.body || {};
   if (!email || !firstname || !lastname) return res.status(400).json({ error: 'Champs requis' });
 
-  const roiSummary = [
-    'ROI : ' + (roi ? Number(roi).toFixed(1) + '%' : 'N/A'),
-    'CA/mois : ' + (revM ? Math.round(revM) + ' EUR' : 'N/A'),
-    'Net/mois : ' + (net ? Math.round(net) + ' EUR' : 'N/A'),
-    'Invest : ' + (invest ? Math.round(invest) + ' EUR' : 'N/A'),
-    'Retour : ' + (pbkY && isFinite(pbkY) ? Number(pbkY).toFixed(1) + ' ans' : 'N/A'),
-    'Boxes : ' + (nb || 'N/A'),
-    'Ville : ' + (city || 'N/A'),
-    'Stade : ' + (stage || 'N/A'),
-    'Qualification : ' + (qualification || 'N/A')
-  ].join(' | ');
+  const https = require('https');
 
-  try {
-    const https = require('https');
-    const body = JSON.stringify({
-      properties: { firstname, lastname, email, phone: phone || '', city: city || '', message: roiSummary }
-    });
-
-    const result = await new Promise((resolve, reject) => {
+  function hubspotRequest(method, path, payload) {
+    return new Promise((resolve, reject) => {
+      const body = payload ? JSON.stringify(payload) : null;
       const options = {
         hostname: 'api.hubapi.com',
-        path: '/crm/v3/objects/contacts',
-        method: 'POST',
+        path,
+        method,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + token,
-          'Content-Length': Buffer.byteLength(body)
+          ...(body ? { 'Content-Length': Buffer.byteLength(body) } : {})
         },
         timeout: 7000
       };
-      const reqHttp = https.request(options, (r) => {
+      const req = https.request(options, (r) => {
         let raw = '';
         r.on('data', (c) => raw += c);
         r.on('end', () => {
@@ -50,16 +36,69 @@ module.exports = async function handler(req, res) {
           catch (e) { resolve({ status: r.statusCode, data: raw }); }
         });
       });
-      reqHttp.on('timeout', () => { reqHttp.destroy(); reject(new Error('HubSpot timeout')); });
-      reqHttp.on('error', reject);
-      reqHttp.write(body);
-      reqHttp.end();
+      req.on('timeout', () => { req.destroy(); reject(new Error('HubSpot timeout')); });
+      req.on('error', reject);
+      if (body) req.write(body);
+      req.end();
+    });
+  }
+
+  try {
+    // 1. Chercher le contact existant par email
+    const search = await hubspotRequest('POST', '/crm/v3/objects/contacts/search', {
+      filterGroups: [{ filters: [{ propertyName: 'email', operator: 'EQ', value: email }] }],
+      properties: ['email'],
+      limit: 1
     });
 
-    console.log('HubSpot:', result.status, JSON.stringify(result.data));
+    let contactId;
 
-    if (result.status >= 400) return res.status(500).json({ error: 'Contact failed', detail: result.data });
-    return res.status(200).json({ ok: true, contactId: result.data.id });
+    if (search.data.total > 0) {
+      // Mettre à jour le contact existant
+      contactId = search.data.results[0].id;
+      await hubspotRequest('PATCH', `/crm/v3/objects/contacts/${contactId}`, {
+        properties: { firstname, lastname, phone: phone || '', city: city || '' }
+      });
+      console.log('Contact updated:', contactId);
+    } else {
+      // Créer un nouveau contact
+      const created = await hubspotRequest('POST', '/crm/v3/objects/contacts', {
+        properties: { firstname, lastname, email, phone: phone || '', city: city || '' }
+      });
+      if (created.status >= 400) return res.status(500).json({ error: 'Contact creation failed', detail: created.data });
+      contactId = created.data.id;
+      console.log('Contact created:', contactId);
+    }
+
+    // 2. Créer le deal
+    const dealName = `KaraFun X ${firstname} ${lastname}`;
+    const dealProps = {
+      dealname: dealName,
+      pipeline: 'default',
+      dealstage: 'appointmentscheduled',
+      ...(roi ? { roi_annuel: String(Number(roi).toFixed(1)) } : {}),
+      ...(revM ? { ca_mensuel_simule: String(Math.round(revM)) } : {}),
+      ...(net ? { net_mensuel_simule: String(Math.round(net)) } : {}),
+      ...(invest ? { investissement_simule: String(Math.round(invest)) } : {}),
+      ...(pbkY && isFinite(pbkY) ? { retour_invest_annees: String(Number(pbkY).toFixed(1)) } : {}),
+      ...(nb ? { nb_boxes_simule: String(nb) } : {}),
+      ...(stage ? { stade_projet: stage } : {}),
+      ...(qualification ? { qualification_lead: qualification } : {})
+    };
+
+    const deal = await hubspotRequest('POST', '/crm/v3/objects/deals', { properties: dealProps });
+    if (deal.status >= 400) return res.status(500).json({ error: 'Deal creation failed', detail: deal.data });
+
+    const dealId = deal.data.id;
+    console.log('Deal created:', dealId);
+
+    // 3. Associer le deal au contact
+    const assoc = await hubspotRequest('PUT', `/crm/v3/associations/deals/contacts/batch/create`, {
+      inputs: [{ from: { id: dealId }, to: { id: contactId }, type: 'deal_to_contact' }]
+    });
+    console.log('Association:', assoc.status);
+
+    return res.status(200).json({ ok: true, contactId, dealId });
 
   } catch (err) {
     console.error('HubSpot error:', err.message);
