@@ -71,10 +71,14 @@ module.exports = async function handler(req, res) {
     }
 
     // 2. Enroller le contact dans la séquence "Suite ROI FR"
-    const enrollment = await hubspotRequest('POST', '/automation/v4/sequences/enrollments?userId=67082377', {
+    // < 5 boxes → Eliott Eliakim, >= 5 boxes → Antoine Caupert
+    const isEliott = nb && Number(nb) < 5;
+    const seqUserId = isEliott ? 30315142 : 67082377;
+    const seqSender = isEliott ? 'eliott@recisio.com' : 'antoine.caupert@recisio.com';
+    const enrollment = await hubspotRequest('POST', `/automation/v4/sequences/enrollments?userId=${seqUserId}`, {
       sequenceId: 796519659,
       contactId: contactId,
-      senderEmail: 'antoine.caupert@recisio.com'
+      senderEmail: seqSender
     });
     console.log('Sequence enrollment:', enrollment.status, JSON.stringify(enrollment.data));
 
@@ -97,6 +101,7 @@ module.exports = async function handler(req, res) {
       pipeline: 'default',
       dealstage: '1495240938',
       amount: nb ? String(Number(nb) * 199 * 12) : undefined,
+      hubspot_owner_id: isEliott ? '30315142' : '67082377',
       description
     };
 
