@@ -9,7 +9,7 @@ module.exports = async function handler(req, res) {
   const token = (process.env.HUBSPOT_TOKEN || '').trim();
   if (!token) return res.status(500).json({ error: 'Config manquante' });
 
-  const { firstname, lastname, email, phone, city, stage, roi, revM, net, invest, pbkY, nb, qualification } = req.body || {};
+  const { firstname, lastname, email, phone, city, country, stage, roi, revM, net, invest, pbkY, nb, qualification } = req.body || {};
   if (!email || !firstname || !lastname) return res.status(400).json({ error: 'Champs requis' });
 
   const https = require('https');
@@ -70,17 +70,22 @@ module.exports = async function handler(req, res) {
       console.log('Contact created:', contactId);
     }
 
-    // 2. Enroller le contact dans la séquence "Suite ROI FR"
-    // < 5 boxes → Eliott Eliakim, >= 5 boxes → Antoine Caupert
-    const isEliott = nb && Number(nb) < 5;
-    const seqUserId = isEliott ? 30315142 : 67082377;
-    const seqSender = isEliott ? 'eliott@recisio.com' : 'antoine.caupert@recisio.com';
-    const enrollment = await hubspotRequest('POST', `/automation/v4/sequences/enrollments?userId=${seqUserId}`, {
-      sequenceId: 796519659,
-      contactId: contactId,
-      senderEmail: seqSender
-    });
-    console.log('Sequence enrollment:', enrollment.status, JSON.stringify(enrollment.data));
+    // Routing : US/CA → USA Pipeline (Justin), autres → Main Pipeline (Eliott/Antoine)
+    const isUSA = ['US', 'CA'].includes((country || '').toUpperCase());
+    const isEliott = !isUSA && nb && Number(nb) < 5;
+
+    // 2. Enroller le contact dans la séquence (FR uniquement)
+    let enrollment = { status: 0 };
+    if (!isUSA) {
+      const seqUserId = isEliott ? 30315142 : 67082377;
+      const seqSender = isEliott ? 'eliott@recisio.com' : 'antoine.caupert@recisio.com';
+      enrollment = await hubspotRequest('POST', `/automation/v4/sequences/enrollments?userId=${seqUserId}`, {
+        sequenceId: 796519659,
+        contactId: contactId,
+        senderEmail: seqSender
+      });
+      console.log('Sequence enrollment:', enrollment.status, JSON.stringify(enrollment.data));
+    }
 
     // 3. Créer le deal
     const dealName = `KaraFun X ${firstname} ${lastname}`;
@@ -98,10 +103,10 @@ module.exports = async function handler(req, res) {
 
     const dealProps = {
       dealname: dealName,
-      pipeline: 'default',
-      dealstage: '1495240938',
+      pipeline: isUSA ? '1553664195' : 'default',
+      dealstage: isUSA ? '2123380974' : '1495240938',
       amount: nb ? String(Number(nb) * 199 * 12) : undefined,
-      hubspot_owner_id: isEliott ? '30315142' : '67082377',
+      hubspot_owner_id: isUSA ? '33005911' : (isEliott ? '30315142' : '67082377'),
       origine_deal: 'Simulateur ROI',
       description,
       roi_annuel: roi ? Number(Number(roi).toFixed(1)) : undefined,

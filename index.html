@@ -586,6 +586,7 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
 <script>
 // ─── i18n ────────────────────────────────────────────────────────────────────
 var LANG = 'fr';
+var COUNTRY_CODE = '';
 
 var TR = {
   brand_sub:       { fr:'Business · Simulateur ROI', 'en-us':'Business · ROI Simulator', 'en-gb':'Business · ROI Simulator', es:'Business · Simulador ROI', it:'Business · Simulatore ROI', de:'Business · ROI-Rechner' },
@@ -763,7 +764,8 @@ async function detectLang() {
     var res = await fetch('https://ipapi.co/json/', { signal: ctrl.signal });
     clearTimeout(tid);
     var data = await res.json();
-    LANG = mapCountryToLang((data.country_code || '').toUpperCase());
+    COUNTRY_CODE = (data.country_code || '').toUpperCase();
+    LANG = mapCountryToLang(COUNTRY_CODE);
   } catch(e) { LANG = 'en-gb'; }
   applyLang();
 }
@@ -1253,6 +1255,7 @@ async function doSubmit() {
       email: email,
       phone: phone,
       city: city || '',
+      country: COUNTRY_CODE,
       stage: stageText,
       roi: r.roi,
       revM: r.revM,
@@ -1339,7 +1342,7 @@ async function doSubmitSimple() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       firstname: firstname, lastname: lastname, email: email, phone: phone,
-      city: city || '', stage: 'Établissement existant — ' + typeText,
+      city: city || '', country: COUNTRY_CODE, stage: 'Établissement existant — ' + typeText,
       roi: r.roi, revM: r.revM, net: r.net, invest: r.invest,
       pbkY: isFinite(r.pbkY) ? r.pbkY : 0, nb: r.nb, qualification: q
     })
