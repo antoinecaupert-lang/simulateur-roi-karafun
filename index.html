@@ -479,20 +479,15 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
     <div class="ss-infobox" id="ss-infobox">10 m&sup2; = 1 box &middot; Avec 20 m&sup2;, vous pouvez installer <strong>2 boxes</strong></div>
 
     <div class="sh">Exploitation</div>
-    <div class="g2">
-      <div class="f">
-        <label class="lbl">Taux d'occupation</label>
-        <div class="sv">
-          <div class="sv-val" id="ss-occ-v">55%</div>
-          <input type="range" id="ss-occ" min="20" max="90" value="55" step="5" oninput="document.getElementById('ss-occ-v').textContent=this.value+'%'">
-          <div class="sl"><span>20%</span><span>90%</span></div>
-        </div>
-      </div>
-      <div class="f">
-        <label class="lbl">Tarif moyen / heure</label>
-        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="ss-prix" value="80" min="20" max="200" step="5"></div>
+    <div class="f">
+      <label class="lbl">Taux d'occupation</label>
+      <div class="sv">
+        <div class="sv-val" id="ss-occ-v">55%</div>
+        <input type="range" id="ss-occ" min="20" max="90" value="55" step="5" oninput="document.getElementById('ss-occ-v').textContent=this.value+'%'">
+        <div class="sl"><span>20%</span><span>90%</span></div>
       </div>
     </div>
+    <input type="hidden" id="ss-prix" value="100">
 
     <div class="sh">Localisation</div>
     <div class="f">
