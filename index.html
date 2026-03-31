@@ -182,29 +182,29 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
     </svg>
     <div class="brand">
       <div class="bn">Karafun</div>
-      <div class="bs">Business &middot; Simulateur ROI</div>
+      <div class="bs" data-i18n="brand_sub">Business · Simulateur ROI</div>
     </div>
-    <div class="tg">Estimez votre retour sur investissement</div>
+    <div class="tg" data-i18n="tagline">Estimez votre retour sur investissement</div>
   </div>
 
   <!-- Step 0 : Choix du simulateur -->
   <div class="step on" id="s0">
     <div style="padding:32px 28px 10px;text-align:center">
-      <div class="ttl">Votre projet</div>
-      <div class="sub">Sélectionnez votre situation pour accéder au simulateur adapté</div>
+      <div class="ttl" data-i18n="choice_title">Votre projet</div>
+      <div class="sub" data-i18n="choice_sub">Sélectionnez votre situation pour accéder au simulateur adapté</div>
     </div>
     <div style="padding:4px 28px 32px">
       <div class="choice-cards">
         <div class="choice-card" onclick="go(1)">
           <div class="choice-icon">🏗️</div>
-          <div class="choice-title">Projet d'ouverture</div>
-          <div class="choice-desc">Je crée un nouvel établissement dédié au karaoké box et je veux simuler la rentabilité complète.</div>
+          <div class="choice-title" data-i18n="choice_open_title">Projet d'ouverture</div>
+          <div class="choice-desc" data-i18n="choice_open_desc">Je crée un nouvel établissement dédié au karaoké box et je veux simuler la rentabilité complète.</div>
           <div class="choice-arrow">→</div>
         </div>
         <div class="choice-card" onclick="goSS(1)">
           <div class="choice-icon">🏠</div>
-          <div class="choice-title">Établissement existant</div>
-          <div class="choice-desc">J'ai déjà un bar, restaurant ou salle et je veux savoir combien mes m² disponibles peuvent rapporter.</div>
+          <div class="choice-title" data-i18n="choice_existing_title">Établissement existant</div>
+          <div class="choice-desc" data-i18n="choice_existing_desc">J'ai déjà un bar, restaurant ou salle et je veux savoir combien mes m² disponibles peuvent rapporter.</div>
           <div class="choice-arrow">→</div>
         </div>
       </div>
@@ -218,18 +218,18 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
       <div class="dot"></div>
       <div class="dot"></div>
     </div>
-    <div class="ttl">Votre projet</div>
-    <div class="sub">Configurez vos boxes et votre exploitation</div>
+    <div class="ttl" data-i18n="s1_title">Votre projet</div>
+    <div class="sub" data-i18n="s1_sub">Configurez vos boxes et votre exploitation</div>
 
-    <div class="sh">Localisation</div>
+    <div class="sh" data-i18n="s1_location">Localisation</div>
     <div class="g2">
       <div class="f">
-        <label class="lbl">Ville du projet</label>
-        <input type="text" id="city" placeholder="Paris, Lyon, Bordeaux..." oninput="onCityInput()">
+        <label class="lbl" data-i18n="s1_city_label">Ville du projet</label>
+        <input type="text" id="city" data-i18n-ph="s1_city_ph" placeholder="Paris, Lyon, Bordeaux..." oninput="onCityInput()">
         <div class="loyer-info" id="loyer-info"></div>
       </div>
       <div class="f">
-        <label class="lbl">Nombre de boxes</label>
+        <label class="lbl" data-i18n="s1_nb_label">Nombre de boxes</label>
         <div class="sv">
           <div class="sv-val" id="nb-v">2 boxes</div>
           <input type="range" id="nb" min="1" max="20" value="2" step="1">
@@ -238,26 +238,26 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
       </div>
     </div>
 
-    <div class="sh">Tarification</div>
+    <div class="sh" data-i18n="s1_pricing">Tarification</div>
     <div class="g3">
       <div class="f">
-        <label class="lbl">Tarif/h semaine</label>
+        <label class="lbl" data-i18n="s1_pw_label">Tarif/h semaine</label>
         <div class="pw"><span class="pfx">&euro;</span><input type="number" id="pw" value="80" min="5"></div>
       </div>
       <div class="f">
-        <label class="lbl">Tarif/h week-end</label>
+        <label class="lbl" data-i18n="s1_pwe_label">Tarif/h week-end</label>
         <div class="pw"><span class="pfx">&euro;</span><input type="number" id="pwe" value="100" min="5"></div>
       </div>
       <div class="f">
-        <label class="lbl">Dur&eacute;e session</label>
+        <label class="lbl" data-i18n="s1_dur_label">Durée session</label>
         <div class="pw rs"><input type="number" id="dur" value="1.5" min="0.5" max="4" step="0.5"><span class="sfx">h</span></div>
       </div>
     </div>
 
-    <div class="sh">Exploitation</div>
+    <div class="sh" data-i18n="s1_exploit">Exploitation</div>
     <div class="g3">
       <div class="f">
-        <label class="lbl">Occupation</label>
+        <label class="lbl" data-i18n="s1_occ_label">Occupation</label>
         <div class="sv">
           <div class="sv-val" id="occ-v">55%</div>
           <input type="range" id="occ" min="10" max="100" value="55" step="5">
@@ -265,22 +265,22 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
         </div>
       </div>
       <div class="f">
-        <label class="lbl">Heures/jour</label>
+        <label class="lbl" data-i18n="s1_hpd_label">Heures/jour</label>
         <div class="pw rs"><input type="number" id="hpd" value="8" min="4" max="24"><span class="sfx">h</span></div>
       </div>
       <div class="f">
-        <label class="lbl">Jours/semaine</label>
+        <label class="lbl" data-i18n="s1_dpw_label">Jours/semaine</label>
         <select id="dpw">
-          <option value="5">5 j (lun-ven)</option>
-          <option value="6" selected>6 j (lun-sam)</option>
-          <option value="7">7 jours</option>
+          <option value="5" data-i18n="s1_dpw_5">5 j (lun-ven)</option>
+          <option value="6" selected data-i18n="s1_dpw_6">6 j (lun-sam)</option>
+          <option value="7" data-i18n="s1_dpw_7">7 jours</option>
         </select>
       </div>
     </div>
 
     <div class="br">
-      <button class="btn btn-g" onclick="go(0)">&larr; Retour</button>
-      <button class="btn" onclick="go(2)">Charges &rarr;</button>
+      <button class="btn btn-g" onclick="go(0)" data-i18n="back">← Retour</button>
+      <button class="btn" onclick="go(2)" data-i18n="next_charges">Charges →</button>
     </div>
   </div>
 
@@ -291,87 +291,87 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
       <div class="dot on"></div>
       <div class="dot"></div>
     </div>
-    <div class="ttl">Charges &amp; Investissement</div>
-    <div class="sub">Renseignez vos co&ucirc;ts pour un calcul pr&eacute;cis</div>
+    <div class="ttl" data-i18n="s2_title">Charges &amp; Investissement</div>
+    <div class="sub" data-i18n="s2_sub">Renseignez vos coûts pour un calcul précis</div>
 
-    <div class="sh">Investissement initial</div>
+    <div class="sh" data-i18n="s2_invest">Investissement initial</div>
     <div class="g2">
       <div class="f">
-        <label class="lbl">Am&eacute;nagement / box</label>
+        <label class="lbl" data-i18n="s2_ibox_label">Aménagement / box</label>
         <div class="pw"><span class="pfx">&euro;</span><input type="number" id="ibox" value="7000" step="500"></div>
-        <span class="hint">Travaux, d&eacute;co, insonorisation</span>
+        <span class="hint" data-i18n="s2_ibox_hint">Travaux, déco, insonorisation</span>
       </div>
       <div class="f">
-        <label class="lbl">Mat&eacute;riel / box</label>
+        <label class="lbl" data-i18n="s2_imat_label">Matériel / box</label>
         <div class="pw"><span class="pfx">&euro;</span><input type="number" id="imat" value="4000" step="500"></div>
-        <span class="hint">Ecrans, micros, sono, PC</span>
+        <span class="hint" data-i18n="s2_imat_hint">Ecrans, micros, sono, PC</span>
       </div>
       <div class="f">
-        <label class="lbl">Frais de structure</label>
+        <label class="lbl" data-i18n="s2_istr_label">Frais de structure</label>
         <div class="pw"><span class="pfx">&euro;</span><input type="number" id="istr" value="1000" step="500"></div>
-        <span class="hint">Logiciel r&eacute;sa, caisse</span>
+        <span class="hint" data-i18n="s2_istr_hint">Logiciel résa, caisse</span>
       </div>
       <div class="f">
-        <label class="lbl">Amortissement sur</label>
-        <div class="pw rs"><input type="number" id="amort" value="5" min="1" max="15"><span class="sfx">ans</span></div>
+        <label class="lbl" data-i18n="s2_amort_label">Amortissement sur</label>
+        <div class="pw rs"><input type="number" id="amort" value="5" min="1" max="15"><span class="sfx" data-i18n="ans">ans</span></div>
       </div>
     </div>
 
-    <div class="sh">Charges fixes mensuelles</div>
+    <div class="sh" data-i18n="s2_fixed">Charges fixes mensuelles</div>
     <div class="g2">
       <div class="f">
-        <label class="lbl">Loyer</label>
+        <label class="lbl" data-i18n="s2_rent_label">Loyer</label>
         <div class="pw"><span class="pfx">&euro;</span><input type="number" id="rent" value="2000" step="100"></div>
-        <div class="hint" id="rent-hint">Saisissez une ville &eacute;tape 1 pour estimer</div>
+        <div class="hint" id="rent-hint" data-i18n="s2_rent_hint">Saisissez une ville étape 1 pour estimer</div>
       </div>
       <div class="f">
-        <label class="lbl">Charges locatives</label>
+        <label class="lbl" data-i18n="s2_cloc_label">Charges locatives</label>
         <div class="pw"><span class="pfx">&euro;</span><input type="number" id="cloc" value="400" step="50"></div>
       </div>
       <div class="f">
-        <label class="lbl">Masse salariale</label>
+        <label class="lbl" data-i18n="s2_sal_label">Masse salariale</label>
         <div class="pw"><span class="pfx">&euro;</span><input type="number" id="sal" value="3500" step="100"></div>
-        <span class="hint">Charges patronales incluses</span>
+        <span class="hint" data-i18n="s2_sal_hint">Charges patronales incluses</span>
       </div>
       <div class="f">
-        <label class="lbl">Abonnement Karafun</label>
+        <label class="lbl" data-i18n="s2_kfsub_label">Abonnement Karafun</label>
         <div class="pw"><span class="pfx">&euro;</span><input type="number" id="kfsub" value="398" readonly style="opacity:.7;cursor:default;border-color:rgba(232,68,122,0.3);background:rgba(232,68,122,0.05);"></div>
-        <span class="hint" id="kfsub-hint">199 &euro; &times; 2 boxes = 398 &euro;/mois</span>
+        <span class="hint" id="kfsub-hint">199 € × 2 boxes = 398 €/mois</span>
       </div>
     </div>
 
-    <div class="sh">Autres charges mensuelles</div>
+    <div class="sh" data-i18n="s2_other">Autres charges mensuelles</div>
     <div class="g3">
       <div class="f">
-        <label class="lbl">Energie</label>
+        <label class="lbl" data-i18n="s2_energy_label">Energie</label>
         <div class="pw"><span class="pfx">&euro;</span><input type="number" id="energy" value="300" step="50"></div>
-        <span class="hint" id="energy-hint">150 &euro; &times; 2 boxes</span>
+        <span class="hint" id="energy-hint">150 € × 2 boxes</span>
       </div>
       <div class="f">
-        <label class="lbl">Assurance</label>
+        <label class="lbl" data-i18n="s2_insur_label">Assurance</label>
         <div class="pw"><span class="pfx">&euro;</span><input type="number" id="insur" value="250" step="25"></div>
       </div>
       <div class="f">
-        <label class="lbl">Comptabilit&eacute;</label>
+        <label class="lbl" data-i18n="s2_acct_label">Comptabilité</label>
         <div class="pw"><span class="pfx">&euro;</span><input type="number" id="acct" value="200" step="25"></div>
       </div>
       <div class="f">
-        <label class="lbl">Marketing</label>
+        <label class="lbl" data-i18n="s2_mktg_label">Marketing</label>
         <div class="pw"><span class="pfx">&euro;</span><input type="number" id="mktg" value="400" step="50"></div>
       </div>
       <div class="f">
-        <label class="lbl">Maintenance</label>
+        <label class="lbl" data-i18n="s2_maint_label">Maintenance</label>
         <div class="pw"><span class="pfx">&euro;</span><input type="number" id="maint" value="200" step="25"></div>
       </div>
       <div class="f">
-        <label class="lbl">Divers</label>
+        <label class="lbl" data-i18n="s2_misc_label">Divers</label>
         <div class="pw"><span class="pfx">&euro;</span><input type="number" id="misc" value="150" step="25"></div>
       </div>
     </div>
 
     <div class="br">
-      <button class="btn btn-g" onclick="go(1)">&larr; Retour</button>
-      <button class="btn" onclick="go(3)">Obtenir mon r&eacute;sultat &rarr;</button>
+      <button class="btn btn-g" onclick="go(1)" data-i18n="back">← Retour</button>
+      <button class="btn" onclick="go(3)" data-i18n="next_result">Obtenir mon résultat →</button>
     </div>
   </div>
 
@@ -382,43 +382,43 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
       <div class="dot done"></div>
       <div class="dot on"></div>
     </div>
-    <div class="ttl">Recevez votre analyse</div>
-    <div class="sub">Votre rapport ROI sera envoy&eacute; par email</div>
+    <div class="ttl" data-i18n="s3_title">Recevez votre analyse</div>
+    <div class="sub" data-i18n="s3_sub">Votre rapport ROI sera envoyé par email</div>
 
     <div class="lcard">
-      <div class="lcard-t">Votre simulation est pr&ecirc;te</div>
-      <div class="lcard-b">Renseignez vos coordonn&eacute;es pour recevoir votre rapport complet. Un expert Karafun Business sera disponible pour vous accompagner.</div>
+      <div class="lcard-t" data-i18n="s3_lcard_t">Votre simulation est prête</div>
+      <div class="lcard-b" data-i18n="s3_lcard_b">Renseignez vos coordonnées pour recevoir votre rapport complet. Un expert Karafun Business sera disponible pour vous accompagner.</div>
     </div>
 
     <div class="g1">
       <div class="f">
-        <label class="lbl">Pr&eacute;nom</label>
-        <input type="text" id="lfirstname" placeholder="Jean">
-        <span class="err" id="e-firstname">Veuillez renseigner votre pr&eacute;nom</span>
+        <label class="lbl" data-i18n="firstname_label">Prénom</label>
+        <input type="text" id="lfirstname" data-i18n-ph="firstname_ph" placeholder="Jean">
+        <span class="err" id="e-firstname" data-i18n="firstname_err">Veuillez renseigner votre prénom</span>
       </div>
       <div class="f">
-        <label class="lbl">Nom</label>
-        <input type="text" id="llastname" placeholder="Dupont">
-        <span class="err" id="e-lastname">Veuillez renseigner votre nom</span>
+        <label class="lbl" data-i18n="lastname_label">Nom</label>
+        <input type="text" id="llastname" data-i18n-ph="lastname_ph" placeholder="Dupont">
+        <span class="err" id="e-lastname" data-i18n="lastname_err">Veuillez renseigner votre nom</span>
       </div>
       <div class="f">
         <label class="lbl">Email</label>
-        <input type="email" id="lemail" placeholder="jean@exemple.fr">
-        <span class="err" id="e-email">Email invalide</span>
+        <input type="email" id="lemail" data-i18n-ph="email_ph" placeholder="jean@exemple.fr">
+        <span class="err" id="e-email" data-i18n="email_err">Email invalide</span>
       </div>
       <div class="f">
-        <label class="lbl">T&eacute;l&eacute;phone</label>
-        <input type="tel" id="lphone" placeholder="+33 6 12 34 56 78">
-        <span class="err" id="e-phone">T&eacute;l&eacute;phone requis</span>
+        <label class="lbl" data-i18n="phone_label">Téléphone</label>
+        <input type="tel" id="lphone" data-i18n-ph="phone_ph" placeholder="+33 6 12 34 56 78">
+        <span class="err" id="e-phone" data-i18n="phone_err">Téléphone requis</span>
       </div>
       <div class="f">
-        <label class="lbl">Stade du projet</label>
+        <label class="lbl" data-i18n="stage_label">Stade du projet</label>
         <select id="lstage">
-          <option value="etude">En phase d'&eacute;tude</option>
-          <option value="local">Recherche de local</option>
-          <option value="financement">Recherche de financement</option>
-          <option value="ouverture">Ouverture dans 6 mois</option>
-          <option value="existant">&Eacute;tablissement existant</option>
+          <option value="etude" data-i18n="stage_etude">En phase d'étude</option>
+          <option value="local" data-i18n="stage_local">Recherche de local</option>
+          <option value="financement" data-i18n="stage_financement">Recherche de financement</option>
+          <option value="ouverture" data-i18n="stage_ouverture">Ouverture dans 6 mois</option>
+          <option value="existant" data-i18n="stage_existant">Établissement existant</option>
         </select>
       </div>
     </div>
@@ -429,18 +429,18 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
         <line x1="8" y1="7" x2="8" y2="11" stroke="rgba(123,94,167,0.7)" stroke-width="1.5" stroke-linecap="round"/>
         <circle cx="8" cy="5" r="0.75" fill="rgba(123,94,167,0.7)"/>
       </svg>
-      Donn&eacute;es trait&eacute;es conform&eacute;ment au RGPD. Jamais revendues.
+      <span data-i18n="rgpd">Données traitées conformément au RGPD. Jamais revendues.</span>
     </div>
 
     <div class="cbw">
       <input type="checkbox" id="optin" checked>
-      <label for="optin" class="cbl">J'accepte de recevoir des informations commerciales de Karafun Business.</label>
+      <label for="optin" class="cbl" data-i18n="optin_label">J'accepte de recevoir des informations commerciales de Karafun Business.</label>
     </div>
-    <span class="err" id="e-optin">Veuillez cocher cette case</span>
+    <span class="err" id="e-optin" data-i18n="optin_err">Veuillez cocher cette case</span>
 
     <div class="br">
-      <button class="btn btn-g" onclick="go(2)">&larr; Retour</button>
-      <button class="btn" onclick="doSubmit()">Recevoir mon analyse &rarr;</button>
+      <button class="btn btn-g" onclick="go(2)" data-i18n="back">← Retour</button>
+      <button class="btn" onclick="doSubmit()" data-i18n="s3_submit">Recevoir mon analyse →</button>
     </div>
   </div>
 
@@ -448,8 +448,8 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
   <div class="step" id="s4">
     <div id="loading" class="spin-wrap">
       <div class="spinner"></div>
-      <div style="font-size:15px;font-weight:500;margin-bottom:6px;">G&eacute;n&eacute;ration de votre rapport...</div>
-      <div id="load-msg" style="font-size:12px;color:var(--muted);">Calcul du ROI en cours...</div>
+      <div style="font-size:15px;font-weight:500;margin-bottom:6px;" data-i18n="loading_title">Génération de votre rapport...</div>
+      <div id="load-msg" style="font-size:12px;color:var(--muted);" data-i18n="loading_roi">Calcul du ROI en cours...</div>
     </div>
     <div id="res"></div>
   </div>
@@ -462,25 +462,25 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
       <div class="dot on"></div>
       <div class="dot"></div>
     </div>
-    <div class="ttl">Votre espace disponible</div>
-    <div class="sub">Estimez le potentiel de vos m² inoccup&eacute;s</div>
+    <div class="ttl" data-i18n="ss1_title">Votre espace disponible</div>
+    <div class="sub" data-i18n="ss1_sub">Estimez le potentiel de vos m² inoccupés</div>
 
-    <div class="sh">Surface disponible</div>
+    <div class="sh" data-i18n="ss1_surface">Surface disponible</div>
     <div class="g2">
       <div class="f">
-        <label class="lbl">M&sup2; disponibles</label>
-        <div class="pw rs"><input type="number" id="ss-m2" value="20" min="10" max="500" step="5" oninput="onM2Input()"><span class="sfx">m&sup2;</span></div>
+        <label class="lbl" data-i18n="ss1_m2_label">M² disponibles</label>
+        <div class="pw rs"><input type="number" id="ss-m2" value="20" min="10" max="500" step="5" oninput="onM2Input()"><span class="sfx">m²</span></div>
       </div>
       <div class="f">
-        <label class="lbl">Boxes estimées</label>
+        <label class="lbl" data-i18n="ss1_boxes_label">Boxes estimées</label>
         <div class="ss-boxes-display" id="ss-boxes-display">2 boxes</div>
       </div>
     </div>
     <div class="ss-infobox" id="ss-infobox">10 m&sup2; = 1 box &middot; Avec 20 m&sup2;, vous pouvez installer <strong>2 boxes</strong></div>
 
-    <div class="sh">Exploitation</div>
+    <div class="sh" data-i18n="s1_exploit">Exploitation</div>
     <div class="f">
-      <label class="lbl">Taux d'occupation</label>
+      <label class="lbl" data-i18n="ss1_occ_label">Taux d'occupation</label>
       <div class="sv">
         <div class="sv-val" id="ss-occ-v">55%</div>
         <input type="range" id="ss-occ" min="20" max="90" value="55" step="5" oninput="document.getElementById('ss-occ-v').textContent=this.value+'%'">
@@ -489,15 +489,15 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
     </div>
     <input type="hidden" id="ss-prix" value="100">
 
-    <div class="sh">Localisation</div>
+    <div class="sh" data-i18n="s1_location">Localisation</div>
     <div class="f">
-      <label class="lbl">Ville</label>
-      <input type="text" id="ss-city" placeholder="Paris, Lyon, Bordeaux...">
+      <label class="lbl" data-i18n="ss1_city_label">Ville</label>
+      <input type="text" id="ss-city" data-i18n-ph="s1_city_ph" placeholder="Paris, Lyon, Bordeaux...">
     </div>
 
     <div class="br">
-      <button class="btn btn-g" onclick="goSS(0)">&larr; Retour</button>
-      <button class="btn" onclick="goSS(2)">Voir mon potentiel &rarr;</button>
+      <button class="btn btn-g" onclick="goSS(0)" data-i18n="back">← Retour</button>
+      <button class="btn" onclick="goSS(2)" data-i18n="ss1_next">Voir mon potentiel →</button>
     </div>
   </div>
 
@@ -507,43 +507,43 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
       <div class="dot done"></div>
       <div class="dot on"></div>
     </div>
-    <div class="ttl">Recevez votre analyse</div>
-    <div class="sub">Vos coordonn&eacute;es pour acc&eacute;der aux r&eacute;sultats</div>
+    <div class="ttl" data-i18n="s3_title">Recevez votre analyse</div>
+    <div class="sub" data-i18n="s3_sub">Votre rapport ROI sera envoyé par email</div>
 
     <div class="lcard">
-      <div class="lcard-t">Votre simulation est pr&ecirc;te</div>
-      <div class="lcard-b">Renseignez vos coordonn&eacute;es pour d&eacute;couvrir le potentiel de revenus de vos m&sup2; disponibles. Un expert Karafun Business sera disponible pour vous accompagner.</div>
+      <div class="lcard-t" data-i18n="s3_lcard_t">Votre simulation est prête</div>
+      <div class="lcard-b" data-i18n="ss2_lcard_b">Renseignez vos coordonnées pour découvrir le potentiel de revenus de vos m² disponibles. Un expert Karafun Business sera disponible pour vous accompagner.</div>
     </div>
 
     <div class="g1">
       <div class="f">
-        <label class="lbl">Pr&eacute;nom</label>
-        <input type="text" id="ss-firstname" placeholder="Jean">
-        <span class="err" id="ss-e-firstname">Veuillez renseigner votre pr&eacute;nom</span>
+        <label class="lbl" data-i18n="firstname_label">Prénom</label>
+        <input type="text" id="ss-firstname" data-i18n-ph="firstname_ph" placeholder="Jean">
+        <span class="err" id="ss-e-firstname" data-i18n="firstname_err">Veuillez renseigner votre prénom</span>
       </div>
       <div class="f">
-        <label class="lbl">Nom</label>
-        <input type="text" id="ss-lastname" placeholder="Dupont">
-        <span class="err" id="ss-e-lastname">Veuillez renseigner votre nom</span>
+        <label class="lbl" data-i18n="lastname_label">Nom</label>
+        <input type="text" id="ss-lastname" data-i18n-ph="lastname_ph" placeholder="Dupont">
+        <span class="err" id="ss-e-lastname" data-i18n="lastname_err">Veuillez renseigner votre nom</span>
       </div>
       <div class="f">
         <label class="lbl">Email</label>
-        <input type="email" id="ss-email" placeholder="jean@exemple.fr">
-        <span class="err" id="ss-e-email">Email invalide</span>
+        <input type="email" id="ss-email" data-i18n-ph="email_ph" placeholder="jean@exemple.fr">
+        <span class="err" id="ss-e-email" data-i18n="email_err">Email invalide</span>
       </div>
       <div class="f">
-        <label class="lbl">T&eacute;l&eacute;phone</label>
-        <input type="tel" id="ss-phone" placeholder="+33 6 12 34 56 78">
-        <span class="err" id="ss-e-phone">T&eacute;l&eacute;phone requis</span>
+        <label class="lbl" data-i18n="phone_label">Téléphone</label>
+        <input type="tel" id="ss-phone" data-i18n-ph="phone_ph" placeholder="+33 6 12 34 56 78">
+        <span class="err" id="ss-e-phone" data-i18n="phone_err">Téléphone requis</span>
       </div>
       <div class="f">
-        <label class="lbl">Type d'&eacute;tablissement</label>
+        <label class="lbl" data-i18n="ss_type_label">Type d'établissement</label>
         <select id="ss-type">
-          <option value="bar">Bar / Caf&eacute;</option>
-          <option value="restaurant">Restaurant</option>
-          <option value="hotel">H&ocirc;tel</option>
-          <option value="salle">Salle de loisirs / divertissement</option>
-          <option value="autre">Autre</option>
+          <option value="bar" data-i18n="ss_type_bar">Bar / Café</option>
+          <option value="restaurant" data-i18n="ss_type_rest">Restaurant</option>
+          <option value="hotel" data-i18n="ss_type_hotel">Hôtel</option>
+          <option value="salle" data-i18n="ss_type_salle">Salle de loisirs / divertissement</option>
+          <option value="autre" data-i18n="ss_type_autre">Autre</option>
         </select>
       </div>
     </div>
@@ -554,18 +554,18 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
         <line x1="8" y1="7" x2="8" y2="11" stroke="rgba(123,94,167,0.7)" stroke-width="1.5" stroke-linecap="round"/>
         <circle cx="8" cy="5" r="0.75" fill="rgba(123,94,167,0.7)"/>
       </svg>
-      Donn&eacute;es trait&eacute;es conform&eacute;ment au RGPD. Jamais revendues.
+      <span data-i18n="rgpd">Données traitées conformément au RGPD. Jamais revendues.</span>
     </div>
 
     <div class="cbw">
       <input type="checkbox" id="ss-optin" checked>
-      <label for="ss-optin" class="cbl">J'accepte de recevoir des informations commerciales de Karafun Business.</label>
+      <label for="ss-optin" class="cbl" data-i18n="optin_label">J'accepte de recevoir des informations commerciales de Karafun Business.</label>
     </div>
-    <span class="err" id="ss-e-optin">Veuillez cocher cette case</span>
+    <span class="err" id="ss-e-optin" data-i18n="optin_err">Veuillez cocher cette case</span>
 
     <div class="br">
-      <button class="btn btn-g" onclick="goSS(1)">&larr; Retour</button>
-      <button class="btn" onclick="doSubmitSimple()">D&eacute;couvrir mon potentiel &rarr;</button>
+      <button class="btn btn-g" onclick="goSS(1)" data-i18n="back">← Retour</button>
+      <button class="btn" onclick="doSubmitSimple()" data-i18n="ss2_submit">Découvrir mon potentiel →</button>
     </div>
   </div>
 
@@ -573,17 +573,201 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
   <div class="step" id="ss3">
     <div id="ss-loading" class="spin-wrap">
       <div class="spinner"></div>
-      <div style="font-size:15px;font-weight:500;margin-bottom:6px;">Calcul en cours...</div>
-      <div id="ss-load-msg" style="font-size:12px;color:var(--muted);">Estimation du potentiel...</div>
+      <div style="font-size:15px;font-weight:500;margin-bottom:6px;" data-i18n="ss3_loading">Calcul en cours...</div>
+      <div id="ss-load-msg" style="font-size:12px;color:var(--muted);" data-i18n="ss3_loading_sub">Estimation du potentiel...</div>
     </div>
     <div id="ss-res"></div>
   </div>
 
 </div>
 
-<footer>&copy; 2025 Karafun Business &mdash; <a href="https://business.karafun.com/fr/" target="_blank">business.karafun.com</a></footer>
+<footer><span data-i18n="footer_txt">© 2025 Karafun Business</span> &mdash; <a href="https://business.karafun.com/fr/" target="_blank">business.karafun.com</a></footer>
 
 <script>
+// ─── i18n ────────────────────────────────────────────────────────────────────
+var LANG = 'fr';
+
+var TR = {
+  brand_sub:       { fr:'Business · Simulateur ROI', 'en-us':'Business · ROI Simulator', 'en-gb':'Business · ROI Simulator', es:'Business · Simulador ROI', it:'Business · Simulatore ROI', de:'Business · ROI-Rechner' },
+  tagline:         { fr:'Estimez votre retour sur investissement', 'en-us':'Estimate your return on investment', 'en-gb':'Estimate your return on investment', es:'Estime su retorno de inversión', it:'Stima il tuo ritorno sull\'investimento', de:'Schätzen Sie Ihren Return on Investment' },
+  choice_title:    { fr:'Votre projet', 'en-us':'Your project', 'en-gb':'Your project', es:'Su proyecto', it:'Il tuo progetto', de:'Ihr Projekt' },
+  choice_sub:      { fr:'Sélectionnez votre situation pour accéder au simulateur adapté', 'en-us':'Select your situation to access the right simulator', 'en-gb':'Select your situation to access the right simulator', es:'Seleccione su situación para acceder al simulador adecuado', it:'Seleziona la tua situazione per accedere al simulatore adatto', de:'Wählen Sie Ihre Situation für den passenden Simulator' },
+  choice_open_title:   { fr:'Projet d\'ouverture', 'en-us':'Opening project', 'en-gb':'Opening project', es:'Proyecto de apertura', it:'Progetto di apertura', de:'Eröffnungsprojekt' },
+  choice_open_desc:    { fr:'Je crée un nouvel établissement dédié au karaoké box et je veux simuler la rentabilité complète.', 'en-us':'I\'m creating a new establishment dedicated to karaoke boxes and want to simulate full profitability.', 'en-gb':'I\'m creating a new establishment dedicated to karaoke boxes and want to simulate full profitability.', es:'Creo un nuevo establecimiento dedicado al karaoke box y quiero simular la rentabilidad completa.', it:'Sto creando un nuovo locale dedicato alle karaoke box e voglio simulare la redditività completa.', de:'Ich eröffne ein neues Karaoke-Box-Etablissement und möchte die vollständige Rentabilität simulieren.' },
+  choice_existing_title: { fr:'Établissement existant', 'en-us':'Existing establishment', 'en-gb':'Existing establishment', es:'Establecimiento existente', it:'Locale esistente', de:'Bestehendes Etablissement' },
+  choice_existing_desc:  { fr:'J\'ai déjà un bar, restaurant ou salle et je veux savoir combien mes m² disponibles peuvent rapporter.', 'en-us':'I already have a bar, restaurant or venue and want to know how much my available m² can generate.', 'en-gb':'I already have a bar, restaurant or venue and want to know how much my available m² can generate.', es:'Ya tengo un bar, restaurante o sala y quiero saber cuánto pueden generar mis m² disponibles.', it:'Ho già un bar, ristorante o sala e voglio sapere quanto possono rendere i miei m² disponibili.', de:'Ich habe bereits eine Bar, ein Restaurant oder eine Halle und möchte wissen, wie viel meine verfügbaren m² einbringen können.' },
+  s1_title:        { fr:'Votre projet', 'en-us':'Your project', 'en-gb':'Your project', es:'Su proyecto', it:'Il tuo progetto', de:'Ihr Projekt' },
+  s1_sub:          { fr:'Configurez vos boxes et votre exploitation', 'en-us':'Configure your boxes and operations', 'en-gb':'Configure your boxes and operations', es:'Configure sus boxes y su explotación', it:'Configura le tue box e la tua attività', de:'Konfigurieren Sie Ihre Boxen und Ihren Betrieb' },
+  s1_location:     { fr:'Localisation', 'en-us':'Location', 'en-gb':'Location', es:'Localización', it:'Localizzazione', de:'Standort' },
+  s1_city_label:   { fr:'Ville du projet', 'en-us':'Project city', 'en-gb':'Project city', es:'Ciudad del proyecto', it:'Città del progetto', de:'Stadt des Projekts' },
+  s1_city_ph:      { fr:'Paris, Lyon, Bordeaux...', 'en-us':'New York, Los Angeles...', 'en-gb':'London, Manchester...', es:'Madrid, Barcelona...', it:'Roma, Milano...', de:'Berlin, München...' },
+  s1_nb_label:     { fr:'Nombre de boxes', 'en-us':'Number of boxes', 'en-gb':'Number of boxes', es:'Número de boxes', it:'Numero di box', de:'Anzahl der Boxen' },
+  s1_pricing:      { fr:'Tarification', 'en-us':'Pricing', 'en-gb':'Pricing', es:'Tarifación', it:'Tariffazione', de:'Preisgestaltung' },
+  s1_pw_label:     { fr:'Tarif/h semaine', 'en-us':'Weekday rate/h', 'en-gb':'Weekday rate/h', es:'Tarifa/h semana', it:'Tariffa/h feriale', de:'Wochentag-Tarif/h' },
+  s1_pwe_label:    { fr:'Tarif/h week-end', 'en-us':'Weekend rate/h', 'en-gb':'Weekend rate/h', es:'Tarifa/h fin de semana', it:'Tariffa/h weekend', de:'Wochenend-Tarif/h' },
+  s1_dur_label:    { fr:'Durée session', 'en-us':'Session duration', 'en-gb':'Session duration', es:'Duración sesión', it:'Durata sessione', de:'Sitzungsdauer' },
+  s1_exploit:      { fr:'Exploitation', 'en-us':'Operations', 'en-gb':'Operations', es:'Explotación', it:'Attività', de:'Betrieb' },
+  s1_occ_label:    { fr:'Occupation', 'en-us':'Occupancy', 'en-gb':'Occupancy', es:'Ocupación', it:'Occupazione', de:'Belegung' },
+  s1_hpd_label:    { fr:'Heures/jour', 'en-us':'Hours/day', 'en-gb':'Hours/day', es:'Horas/día', it:'Ore/giorno', de:'Stunden/Tag' },
+  s1_dpw_label:    { fr:'Jours/semaine', 'en-us':'Days/week', 'en-gb':'Days/week', es:'Días/semana', it:'Giorni/settimana', de:'Tage/Woche' },
+  s1_dpw_5:        { fr:'5 j (lun-ven)', 'en-us':'5 d (Mon-Fri)', 'en-gb':'5 d (Mon-Fri)', es:'5 d (lun-vie)', it:'5 g (lun-ven)', de:'5 T (Mo-Fr)' },
+  s1_dpw_6:        { fr:'6 j (lun-sam)', 'en-us':'6 d (Mon-Sat)', 'en-gb':'6 d (Mon-Sat)', es:'6 d (lun-sáb)', it:'6 g (lun-sab)', de:'6 T (Mo-Sa)' },
+  s1_dpw_7:        { fr:'7 jours', 'en-us':'7 days', 'en-gb':'7 days', es:'7 días', it:'7 giorni', de:'7 Tage' },
+  next_charges:    { fr:'Charges →', 'en-us':'Costs →', 'en-gb':'Costs →', es:'Gastos →', it:'Costi →', de:'Kosten →' },
+  back:            { fr:'← Retour', 'en-us':'← Back', 'en-gb':'← Back', es:'← Volver', it:'← Indietro', de:'← Zurück' },
+  s2_title:        { fr:'Charges & Investissement', 'en-us':'Costs & Investment', 'en-gb':'Costs & Investment', es:'Gastos & Inversión', it:'Costi & Investimento', de:'Kosten & Investition' },
+  s2_sub:          { fr:'Renseignez vos coûts pour un calcul précis', 'en-us':'Enter your costs for an accurate calculation', 'en-gb':'Enter your costs for an accurate calculation', es:'Ingrese sus costos para un cálculo preciso', it:'Inserisci i tuoi costi per un calcolo preciso', de:'Geben Sie Ihre Kosten für eine genaue Berechnung ein' },
+  s2_invest:       { fr:'Investissement initial', 'en-us':'Initial investment', 'en-gb':'Initial investment', es:'Inversión inicial', it:'Investimento iniziale', de:'Erstinvestition' },
+  s2_ibox_label:   { fr:'Aménagement / box', 'en-us':'Fit-out / box', 'en-gb':'Fit-out / box', es:'Acondicionamiento / box', it:'Allestimento / box', de:'Einrichtung / Box' },
+  s2_ibox_hint:    { fr:'Travaux, déco, insonorisation', 'en-us':'Works, decor, soundproofing', 'en-gb':'Works, décor, soundproofing', es:'Obras, decoración, insonorización', it:'Lavori, arredo, insonorizzazione', de:'Arbeiten, Dekor, Schalldämmung' },
+  s2_imat_label:   { fr:'Matériel / box', 'en-us':'Equipment / box', 'en-gb':'Equipment / box', es:'Material / box', it:'Attrezzatura / box', de:'Ausstattung / Box' },
+  s2_imat_hint:    { fr:'Ecrans, micros, sono, PC', 'en-us':'Screens, mics, sound, PC', 'en-gb':'Screens, mics, sound, PC', es:'Pantallas, micros, sonido, PC', it:'Schermi, microfoni, audio, PC', de:'Bildschirme, Mikros, Sound, PC' },
+  s2_istr_label:   { fr:'Frais de structure', 'en-us':'Structure costs', 'en-gb':'Structure costs', es:'Gastos de estructura', it:'Costi di struttura', de:'Strukturkosten' },
+  s2_istr_hint:    { fr:'Logiciel résa, caisse', 'en-us':'Booking software, POS', 'en-gb':'Booking software, till', es:'Software de reservas, caja', it:'Software prenotazioni, cassa', de:'Buchungssoftware, Kasse' },
+  s2_amort_label:  { fr:'Amortissement sur', 'en-us':'Depreciation over', 'en-gb':'Depreciation over', es:'Amortización en', it:'Ammortamento su', de:'Abschreibung über' },
+  s2_fixed:        { fr:'Charges fixes mensuelles', 'en-us':'Monthly fixed costs', 'en-gb':'Monthly fixed costs', es:'Gastos fijos mensuales', it:'Costi fissi mensili', de:'Monatliche Fixkosten' },
+  s2_rent_label:   { fr:'Loyer', 'en-us':'Rent', 'en-gb':'Rent', es:'Alquiler', it:'Affitto', de:'Miete' },
+  s2_rent_hint:    { fr:'Saisissez une ville étape 1 pour estimer', 'en-us':'Enter a city in step 1 to estimate', 'en-gb':'Enter a city in step 1 to estimate', es:'Ingrese una ciudad en el paso 1 para estimar', it:'Inserisci una città al passo 1 per stimare', de:'Geben Sie in Schritt 1 eine Stadt ein' },
+  s2_cloc_label:   { fr:'Charges locatives', 'en-us':'Rental charges', 'en-gb':'Rental charges', es:'Cargas locativas', it:'Oneri locativi', de:'Mietnebenkosten' },
+  s2_sal_label:    { fr:'Masse salariale', 'en-us':'Payroll', 'en-gb':'Payroll', es:'Masa salarial', it:'Massa salariale', de:'Lohnkosten' },
+  s2_sal_hint:     { fr:'Charges patronales incluses', 'en-us':'Employer contributions included', 'en-gb':'Employer contributions included', es:'Contribuciones patronales incluidas', it:'Contributi datoriali inclusi', de:'Arbeitgeberanteile inklusive' },
+  s2_kfsub_label:  { fr:'Abonnement Karafun', 'en-us':'KaraFun subscription', 'en-gb':'KaraFun subscription', es:'Suscripción Karafun', it:'Abbonamento Karafun', de:'KaraFun-Abonnement' },
+  s2_other:        { fr:'Autres charges mensuelles', 'en-us':'Other monthly costs', 'en-gb':'Other monthly costs', es:'Otros gastos mensuales', it:'Altri costi mensili', de:'Weitere monatliche Kosten' },
+  s2_energy_label: { fr:'Energie', 'en-us':'Energy', 'en-gb':'Energy', es:'Energía', it:'Energia', de:'Energie' },
+  s2_insur_label:  { fr:'Assurance', 'en-us':'Insurance', 'en-gb':'Insurance', es:'Seguro', it:'Assicurazione', de:'Versicherung' },
+  s2_acct_label:   { fr:'Comptabilité', 'en-us':'Accounting', 'en-gb':'Accountancy', es:'Contabilidad', it:'Contabilità', de:'Buchhaltung' },
+  s2_mktg_label:   { fr:'Marketing', 'en-us':'Marketing', 'en-gb':'Marketing', es:'Marketing', it:'Marketing', de:'Marketing' },
+  s2_maint_label:  { fr:'Maintenance', 'en-us':'Maintenance', 'en-gb':'Maintenance', es:'Mantenimiento', it:'Manutenzione', de:'Wartung' },
+  s2_misc_label:   { fr:'Divers', 'en-us':'Miscellaneous', 'en-gb':'Miscellaneous', es:'Varios', it:'Varie', de:'Sonstiges' },
+  next_result:     { fr:'Obtenir mon résultat →', 'en-us':'Get my results →', 'en-gb':'Get my results →', es:'Obtener mi resultado →', it:'Ottenere il mio risultato →', de:'Mein Ergebnis erhalten →' },
+  s3_title:        { fr:'Recevez votre analyse', 'en-us':'Receive your analysis', 'en-gb':'Receive your analysis', es:'Reciba su análisis', it:'Ricevi la tua analisi', de:'Erhalten Sie Ihre Analyse' },
+  s3_sub:          { fr:'Votre rapport ROI sera envoyé par email', 'en-us':'Your ROI report will be sent by email', 'en-gb':'Your ROI report will be sent by email', es:'Su informe ROI será enviado por email', it:'Il tuo report ROI sarà inviato per email', de:'Ihr ROI-Bericht wird per E-Mail gesendet' },
+  s3_lcard_t:      { fr:'Votre simulation est prête', 'en-us':'Your simulation is ready', 'en-gb':'Your simulation is ready', es:'Su simulación está lista', it:'La tua simulazione è pronta', de:'Ihre Simulation ist bereit' },
+  s3_lcard_b:      { fr:'Renseignez vos coordonnées pour recevoir votre rapport complet. Un expert Karafun Business sera disponible pour vous accompagner.', 'en-us':'Enter your details to receive your full report. A KaraFun Business expert will be available to assist you.', 'en-gb':'Enter your details to receive your full report. A KaraFun Business expert will be available to assist you.', es:'Ingrese sus datos para recibir su informe completo. Un experto de Karafun Business estará disponible para acompañarle.', it:'Inserisci i tuoi dati per ricevere il rapporto completo. Un esperto KaraFun Business sarà disponibile per assisterti.', de:'Geben Sie Ihre Daten ein, um Ihren vollständigen Bericht zu erhalten. Ein KaraFun Business-Experte steht Ihnen zur Verfügung.' },
+  firstname_label: { fr:'Prénom', 'en-us':'First name', 'en-gb':'First name', es:'Nombre', it:'Nome', de:'Vorname' },
+  firstname_ph:    { fr:'Jean', 'en-us':'John', 'en-gb':'John', es:'Juan', it:'Giovanni', de:'Hans' },
+  firstname_err:   { fr:'Veuillez renseigner votre prénom', 'en-us':'Please enter your first name', 'en-gb':'Please enter your first name', es:'Por favor ingrese su nombre', it:'Per favore inserisci il tuo nome', de:'Bitte geben Sie Ihren Vornamen ein' },
+  lastname_label:  { fr:'Nom', 'en-us':'Last name', 'en-gb':'Surname', es:'Apellido', it:'Cognome', de:'Nachname' },
+  lastname_ph:     { fr:'Dupont', 'en-us':'Smith', 'en-gb':'Smith', es:'García', it:'Rossi', de:'Müller' },
+  lastname_err:    { fr:'Veuillez renseigner votre nom', 'en-us':'Please enter your last name', 'en-gb':'Please enter your surname', es:'Por favor ingrese su apellido', it:'Per favore inserisci il tuo cognome', de:'Bitte geben Sie Ihren Nachnamen ein' },
+  email_ph:        { fr:'jean@exemple.fr', 'en-us':'john@example.com', 'en-gb':'john@example.co.uk', es:'juan@ejemplo.es', it:'giovanni@esempio.it', de:'hans@beispiel.de' },
+  email_err:       { fr:'Email invalide', 'en-us':'Invalid email', 'en-gb':'Invalid email', es:'Email inválido', it:'Email non valido', de:'Ungültige E-Mail' },
+  phone_label:     { fr:'Téléphone', 'en-us':'Phone', 'en-gb':'Phone', es:'Teléfono', it:'Telefono', de:'Telefon' },
+  phone_ph:        { fr:'+33 6 12 34 56 78', 'en-us':'+1 555 123 4567', 'en-gb':'+44 7700 900000', es:'+34 612 345 678', it:'+39 312 345 678', de:'+49 151 12345678' },
+  phone_err:       { fr:'Téléphone requis', 'en-us':'Phone number required', 'en-gb':'Phone number required', es:'Teléfono requerido', it:'Telefono richiesto', de:'Telefonnummer erforderlich' },
+  stage_label:     { fr:'Stade du projet', 'en-us':'Project stage', 'en-gb':'Project stage', es:'Etapa del proyecto', it:'Fase del progetto', de:'Projektphase' },
+  stage_etude:     { fr:'En phase d\'étude', 'en-us':'In study phase', 'en-gb':'In study phase', es:'En fase de estudio', it:'In fase di studio', de:'In der Studienphase' },
+  stage_local:     { fr:'Recherche de local', 'en-us':'Looking for premises', 'en-gb':'Looking for premises', es:'Búsqueda de local', it:'Ricerca di locali', de:'Suche nach Räumlichkeiten' },
+  stage_financement: { fr:'Recherche de financement', 'en-us':'Seeking financing', 'en-gb':'Seeking financing', es:'Búsqueda de financiación', it:'Ricerca di finanziamenti', de:'Suche nach Finanzierung' },
+  stage_ouverture: { fr:'Ouverture dans 6 mois', 'en-us':'Opening in 6 months', 'en-gb':'Opening in 6 months', es:'Apertura en 6 meses', it:'Apertura tra 6 mesi', de:'Eröffnung in 6 Monaten' },
+  stage_existant:  { fr:'Établissement existant', 'en-us':'Existing establishment', 'en-gb':'Existing establishment', es:'Establecimiento existente', it:'Locale esistente', de:'Bestehendes Etablissement' },
+  rgpd:            { fr:'Données traitées conformément au RGPD. Jamais revendues.', 'en-us':'Data processed in accordance with GDPR. Never resold.', 'en-gb':'Data processed in accordance with UK GDPR. Never resold.', es:'Datos tratados conforme al RGPD. Nunca revendidos.', it:'Dati trattati in conformità al GDPR. Mai rivenduti.', de:'Daten gemäß DSGVO verarbeitet. Nie weiterverkauft.' },
+  optin_label:     { fr:'J\'accepte de recevoir des informations commerciales de Karafun Business.', 'en-us':'I agree to receive commercial information from KaraFun Business.', 'en-gb':'I agree to receive commercial information from KaraFun Business.', es:'Acepto recibir información comercial de Karafun Business.', it:'Accetto di ricevere informazioni commerciali da KaraFun Business.', de:'Ich stimme zu, kommerzielle Informationen von KaraFun Business zu erhalten.' },
+  optin_err:       { fr:'Veuillez cocher cette case', 'en-us':'Please check this box', 'en-gb':'Please check this box', es:'Por favor marque esta casilla', it:'Si prega di selezionare questa casella', de:'Bitte aktivieren Sie dieses Kontrollkästchen' },
+  s3_submit:       { fr:'Recevoir mon analyse →', 'en-us':'Receive my analysis →', 'en-gb':'Receive my analysis →', es:'Recibir mi análisis →', it:'Ricevere la mia analisi →', de:'Meine Analyse erhalten →' },
+  loading_title:   { fr:'Génération de votre rapport...', 'en-us':'Generating your report...', 'en-gb':'Generating your report...', es:'Generando su informe...', it:'Generazione del rapporto...', de:'Bericht wird erstellt...' },
+  loading_roi:     { fr:'Calcul du ROI en cours...', 'en-us':'Calculating ROI...', 'en-gb':'Calculating ROI...', es:'Calculando el ROI...', it:'Calcolo del ROI in corso...', de:'ROI wird berechnet...' },
+  loading_ai:      { fr:'Analyse en cours...', 'en-us':'Analysis in progress...', 'en-gb':'Analysis in progress...', es:'Análisis en curso...', it:'Analisi in corso...', de:'Analyse läuft...' },
+  loading_hs:      { fr:'Enregistrement du lead...', 'en-us':'Saving lead...', 'en-gb':'Saving lead...', es:'Guardando el lead...', it:'Salvataggio del lead...', de:'Lead wird gespeichert...' },
+  res_roi_lbl:     { fr:'Retour sur investissement annuel', 'en-us':'Annual return on investment', 'en-gb':'Annual return on investment', es:'Retorno anual sobre la inversión', it:'Ritorno sull\'investimento annuale', de:'Jährlicher Return on Investment' },
+  res_remb_prefix: { fr:'Remboursement en ', 'en-us':'Payback in ', 'en-gb':'Payback in ', es:'Recuperación en ', it:'Rimborso in ', de:'Amortisation in ' },
+  res_ca:          { fr:'CA mensuel', 'en-us':'Monthly revenue', 'en-gb':'Monthly revenue', es:'Ingresos mensuales', it:'Ricavi mensili', de:'Monatsumsatz' },
+  res_charges:     { fr:'Charges/mois', 'en-us':'Costs/month', 'en-gb':'Costs/month', es:'Gastos/mes', it:'Costi/mese', de:'Kosten/Monat' },
+  res_net:         { fr:'Net/mois', 'en-us':'Net/month', 'en-gb':'Net/month', es:'Neto/mes', it:'Netto/mese', de:'Netto/Monat' },
+  res_marge:       { fr:'Marge', 'en-us':'Margin', 'en-gb':'Margin', es:'Margen', it:'Margine', de:'Marge' },
+  res_boissons_title: { fr:'🍹 Impact des boissons & cocktails', 'en-us':'🍹 Impact of drinks & cocktails', 'en-gb':'🍹 Impact of drinks & cocktails', es:'🍹 Impacto de bebidas & cócteles', it:'🍹 Impatto delle bevande & cocktail', de:'🍹 Auswirkung von Getränken & Cocktails' },
+  res_boissons_text:  { fr:'Le karaoké stimule la consommation de boissons. Les exploitants constatent en moyenne une <strong style="color:var(--accent)">augmentation de 40% du CA</strong> avec une activité boissons.', 'en-us':'Karaoke stimulates drink consumption. Operators see on average a <strong style="color:var(--accent)">40% increase in revenue</strong> with a drinks offering.', 'en-gb':'Karaoke stimulates drink consumption. Operators see on average a <strong style="color:var(--accent)">40% increase in revenue</strong> with a drinks offering.', es:'El karaoke estimula el consumo de bebidas. Los operadores observan en promedio un <strong style="color:var(--accent)">aumento del 40% en los ingresos</strong> con una oferta de bebidas.', it:'Il karaoke stimola il consumo di bevande. Gli operatori registrano in media un <strong style="color:var(--accent)">aumento del 40% dei ricavi</strong> con un\'offerta bevande.', de:'Karaoke stimuliert den Getränkekonsum. Betreiber verzeichnen im Durchschnitt eine <strong style="color:var(--accent)">40%ige Umsatzsteigerung</strong> mit einem Getränkeangebot.' },
+  res_ca_bois:     { fr:'CA avec boissons', 'en-us':'Revenue with drinks', 'en-gb':'Revenue with drinks', es:'Ingresos con bebidas', it:'Ricavi con bevande', de:'Umsatz mit Getränken' },
+  res_net_bois:    { fr:'Net avec boissons', 'en-us':'Net with drinks', 'en-gb':'Net with drinks', es:'Neto con bebidas', it:'Netto con bevande', de:'Netto mit Getränken' },
+  res_roi_bois:    { fr:'ROI avec boissons', 'en-us':'ROI with drinks', 'en-gb':'ROI with drinks', es:'ROI con bebidas', it:'ROI con bevande', de:'ROI mit Getränken' },
+  res_remb_lbl:    { fr:'Remboursement', 'en-us':'Payback', 'en-gb':'Payback', es:'Recuperación', it:'Rimborso', de:'Amortisation' },
+  res_charges_title: { fr:'Détail des charges', 'en-us':'Cost breakdown', 'en-gb':'Cost breakdown', es:'Detalle de gastos', it:'Dettaglio dei costi', de:'Kostenaufschlüsselung' },
+  res_loyer_cloc:  { fr:'Loyer et charges', 'en-us':'Rent and charges', 'en-gb':'Rent and charges', es:'Alquiler y cargas', it:'Affitto e oneri', de:'Miete und Nebenkosten' },
+  res_sal:         { fr:'Masse salariale', 'en-us':'Payroll', 'en-gb':'Payroll', es:'Masa salarial', it:'Massa salariale', de:'Lohnkosten' },
+  res_kfsub:       { fr:'Abonnement Karafun', 'en-us':'KaraFun subscription', 'en-gb':'KaraFun subscription', es:'Suscripción Karafun', it:'Abbonamento Karafun', de:'KaraFun-Abonnement' },
+  res_amort:       { fr:'Amortissement', 'en-us':'Depreciation', 'en-gb':'Depreciation', es:'Amortización', it:'Ammortamento', de:'Abschreibung' },
+  res_total:       { fr:'Total mensuel', 'en-us':'Monthly total', 'en-gb':'Monthly total', es:'Total mensual', it:'Totale mensile', de:'Monatliche Gesamtkosten' },
+  res_ai_title:    { fr:'Analyse personnalisée', 'en-us':'Personalised analysis', 'en-gb':'Personalised analysis', es:'Análisis personalizado', it:'Analisi personalizzata', de:'Personalisierte Analyse' },
+  res_pdf_btn:     { fr:'Télécharger mon rapport PDF', 'en-us':'Download my PDF report', 'en-gb':'Download my PDF report', es:'Descargar mi informe PDF', it:'Scarica il mio report PDF', de:'Mein PDF-Bericht herunterladen' },
+  res_expert_btn:  { fr:'Parler à un expert Karafun', 'en-us':'Talk to a KaraFun expert', 'en-gb':'Talk to a KaraFun expert', es:'Hablar con un experto Karafun', it:'Parla con un esperto KaraFun', de:'Mit einem KaraFun-Experten sprechen' },
+  res_buy_btn:     { fr:'Je suis convaincu, j\'achète le matériel !', 'en-us':'I\'m convinced, I\'ll buy the equipment!', 'en-gb':'I\'m convinced, I\'ll buy the equipment!', es:'¡Estoy convencido, compro el material!', it:'Sono convinto, acquisto le attrezzature!', de:'Ich bin überzeugt, ich kaufe die Ausrüstung!' },
+  res_buy_sub:     { fr:'Voir la sélection d\'équipement karaoke →', 'en-us':'View karaoke equipment selection →', 'en-gb':'View karaoke equipment selection →', es:'Ver la selección de equipos de karaoke →', it:'Vedi la selezione di attrezzature karaoke →', de:'Karaoke-Ausstattung ansehen →' },
+  res_new_sim:     { fr:'Nouvelle simulation', 'en-us':'New simulation', 'en-gb':'New simulation', es:'Nueva simulación', it:'Nuova simulazione', de:'Neue Simulation' },
+  ans:             { fr:'ans', 'en-us':'years', 'en-gb':'years', es:'años', it:'anni', de:'Jahre' },
+  your_analysis:   { fr:'Votre analyse, ', 'en-us':'Your analysis, ', 'en-gb':'Your analysis, ', es:'Su análisis, ', it:'La tua analisi, ', de:'Ihre Analyse, ' },
+  ss1_title:       { fr:'Votre espace disponible', 'en-us':'Your available space', 'en-gb':'Your available space', es:'Su espacio disponible', it:'Il tuo spazio disponibile', de:'Ihr verfügbarer Raum' },
+  ss1_sub:         { fr:'Estimez le potentiel de vos m² inoccupés', 'en-us':'Estimate the potential of your unused m²', 'en-gb':'Estimate the potential of your unused m²', es:'Estime el potencial de sus m² desocupados', it:'Stima il potenziale dei tuoi m² inutilizzati', de:'Schätzen Sie das Potenzial Ihrer ungenutzten m²' },
+  ss1_surface:     { fr:'Surface disponible', 'en-us':'Available space', 'en-gb':'Available space', es:'Superficie disponible', it:'Superficie disponibile', de:'Verfügbare Fläche' },
+  ss1_m2_label:    { fr:'M² disponibles', 'en-us':'Available m²', 'en-gb':'Available m²', es:'M² disponibles', it:'M² disponibili', de:'Verfügbare m²' },
+  ss1_boxes_label: { fr:'Boxes estimées', 'en-us':'Estimated boxes', 'en-gb':'Estimated boxes', es:'Boxes estimadas', it:'Box stimate', de:'Geschätzte Boxen' },
+  ss1_occ_label:   { fr:'Taux d\'occupation', 'en-us':'Occupancy rate', 'en-gb':'Occupancy rate', es:'Tasa de ocupación', it:'Tasso di occupazione', de:'Belegungsrate' },
+  ss1_city_label:  { fr:'Ville', 'en-us':'City', 'en-gb':'City', es:'Ciudad', it:'Città', de:'Stadt' },
+  ss1_next:        { fr:'Voir mon potentiel →', 'en-us':'See my potential →', 'en-gb':'See my potential →', es:'Ver mi potencial →', it:'Vedi il mio potenziale →', de:'Mein Potenzial sehen →' },
+  ss2_lcard_b:     { fr:'Renseignez vos coordonnées pour découvrir le potentiel de revenus de vos m² disponibles. Un expert Karafun Business sera disponible pour vous accompagner.', 'en-us':'Enter your details to discover the revenue potential of your available m². A KaraFun Business expert will be available to assist you.', 'en-gb':'Enter your details to discover the revenue potential of your available m². A KaraFun Business expert will be available to assist you.', es:'Ingrese sus datos para descubrir el potencial de ingresos de sus m² disponibles. Un experto de Karafun Business estará disponible para acompañarle.', it:'Inserisci i tuoi dati per scoprire il potenziale di ricavo dei tuoi m² disponibili. Un esperto KaraFun Business sarà disponibile per assisterti.', de:'Geben Sie Ihre Daten ein, um das Umsatzpotenzial Ihrer verfügbaren m² zu entdecken. Ein KaraFun Business-Experte steht Ihnen zur Verfügung.' },
+  ss_type_label:   { fr:'Type d\'établissement', 'en-us':'Type of establishment', 'en-gb':'Type of establishment', es:'Tipo de establecimiento', it:'Tipo di locale', de:'Art des Etablissements' },
+  ss_type_bar:     { fr:'Bar / Café', 'en-us':'Bar / Café', 'en-gb':'Bar / Café', es:'Bar / Café', it:'Bar / Caffè', de:'Bar / Café' },
+  ss_type_rest:    { fr:'Restaurant', 'en-us':'Restaurant', 'en-gb':'Restaurant', es:'Restaurante', it:'Ristorante', de:'Restaurant' },
+  ss_type_hotel:   { fr:'Hôtel', 'en-us':'Hotel', 'en-gb':'Hotel', es:'Hotel', it:'Hotel', de:'Hotel' },
+  ss_type_salle:   { fr:'Salle de loisirs / divertissement', 'en-us':'Entertainment / leisure venue', 'en-gb':'Entertainment / leisure venue', es:'Sala de ocio / entretenimiento', it:'Sala di svago / intrattenimento', de:'Freizeit- / Unterhaltungshalle' },
+  ss_type_autre:   { fr:'Autre', 'en-us':'Other', 'en-gb':'Other', es:'Otro', it:'Altro', de:'Sonstige' },
+  ss2_submit:      { fr:'Découvrir mon potentiel →', 'en-us':'Discover my potential →', 'en-gb':'Discover my potential →', es:'Descubrir mi potencial →', it:'Scoprire il mio potenziale →', de:'Mein Potenzial entdecken →' },
+  ss3_loading:     { fr:'Calcul en cours...', 'en-us':'Calculating...', 'en-gb':'Calculating...', es:'Calculando...', it:'Calcolo in corso...', de:'Wird berechnet...' },
+  ss3_loading_sub: { fr:'Estimation du potentiel...', 'en-us':'Estimating potential...', 'en-gb':'Estimating potential...', es:'Estimando el potencial...', it:'Stima del potenziale...', de:'Potenzial wird geschätzt...' },
+  ss_res_title_suffix: { fr:' voici votre potentiel', 'en-us':' here is your potential', 'en-gb':' here is your potential', es:' aquí está su potencial', it:' ecco il tuo potenziale', de:' hier ist Ihr Potenzial' },
+  ss_res_ca:       { fr:'CA mensuel estimé', 'en-us':'Estimated monthly revenue', 'en-gb':'Estimated monthly revenue', es:'Ingresos mensuales estimados', it:'Ricavi mensili stimati', de:'Geschätzter Monatsumsatz' },
+  ss_res_charges:  { fr:'Charges ajoutées', 'en-us':'Added costs', 'en-gb':'Added costs', es:'Gastos añadidos', it:'Costi aggiunti', de:'Zusätzliche Kosten' },
+  ss_res_net:      { fr:'Net/mois estimé', 'en-us':'Estimated net/month', 'en-gb':'Estimated net/month', es:'Neto/mes estimado', it:'Netto/mese stimato', de:'Geschätztes Netto/Monat' },
+  ss_res_invest:   { fr:'Investissement', 'en-us':'Investment', 'en-gb':'Investment', es:'Inversión', it:'Investimento', de:'Investition' },
+  ss_hypotheses:   { fr:'<strong>Hypothèses :</strong> 6h d\'exploitation/jour · 6 jours/semaine · Charges calculées hors loyer (déjà inclus dans votre exploitation)', 'en-us':'<strong>Assumptions:</strong> 6h operation/day · 6 days/week · Costs calculated excluding rent (already included in your operations)', 'en-gb':'<strong>Assumptions:</strong> 6h operation/day · 6 days/week · Costs calculated excluding rent (already included in your operations)', es:'<strong>Hipótesis:</strong> 6h de explotación/día · 6 días/semana · Gastos calculados sin alquiler (ya incluido en su explotación)', it:'<strong>Ipotesi:</strong> 6h di attività/giorno · 6 giorni/settimana · Costi calcolati escluso affitto (già incluso nella tua attività)', de:'<strong>Annahmen:</strong> 6h Betrieb/Tag · 6 Tage/Woche · Kosten ohne Miete berechnet (bereits in Ihrem Betrieb enthalten)' },
+  ss_charges_title:{ fr:'Charges mensuelles ajoutées', 'en-us':'Added monthly costs', 'en-gb':'Added monthly costs', es:'Gastos mensuales añadidos', it:'Costi mensili aggiunti', de:'Zusätzliche monatliche Kosten' },
+  ss_total:        { fr:'Total mensuel ajouté', 'en-us':'Total monthly added', 'en-gb':'Total monthly added', es:'Total mensual añadido', it:'Totale mensile aggiunto', de:'Monatlich hinzugefügte Gesamtkosten' },
+  loyer_avg_txt:   { fr:'~ {r} €/m²/mois (estimation moyenne)', 'en-us':'~ {r} €/m²/month (average estimate)', 'en-gb':'~ {r} €/m²/month (average estimate)', es:'~ {r} €/m²/mes (estimación media)', it:'~ {r} €/m²/mese (stima media)', de:'~ {r} €/m²/Monat (Durchschnittsschätzung)' },
+  loyer_city_txt:  { fr:'~ {r} €/m²/mois estimé à {c}', 'en-us':'~ {r} €/m²/month estimated for {c}', 'en-gb':'~ {r} €/m²/month estimated for {c}', es:'~ {r} €/m²/mes estimado en {c}', it:'~ {r} €/m²/mese stimato a {c}', de:'~ {r} €/m²/Monat geschätzt für {c}' },
+  loyer_calc_txt:  { fr:'{s} m² × {r} € = {l} €/mois', 'en-us':'{s} m² × {r} € = {l} €/month', 'en-gb':'{s} m² × {r} € = {l} €/month', es:'{s} m² × {r} € = {l} €/mes', it:'{s} m² × {r} € = {l} €/mese', de:'{s} m² × {r} € = {l} €/Monat' },
+  footer_txt:      { fr:'© 2025 Karafun Business', 'en-us':'© 2025 KaraFun Business', 'en-gb':'© 2025 KaraFun Business', es:'© 2025 Karafun Business', it:'© 2025 KaraFun Business', de:'© 2025 KaraFun Business' }
+};
+
+function t(key) {
+  return (TR[key] && (TR[key][LANG] || TR[key]['fr'])) || key;
+}
+
+function mapCountryToLang(cc) {
+  if (['FR','BE','LU','MC','MF','GP','MQ','GF','RE','PM','NC','PF','WF','BL','CI','SN','MA','TN','DZ','CM','CD','MG','ML','BF','NE','TD','GA','CG','BI','CF','GN','GW','KM','DJ','SC','MU'].indexOf(cc) >= 0) return 'fr';
+  if (cc === 'US') return 'en-us';
+  if (['GB','IE','AU','NZ','ZA','SG','IN','PK','NG','GH','KE','UG','TZ','ZW','MW','ZM','JM','TT','BB','BS','BZ','GY'].indexOf(cc) >= 0) return 'en-gb';
+  if (['ES','MX','AR','CO','CL','PE','VE','EC','BO','PY','UY','GT','HN','SV','NI','CR','PA','CU','DO','PR'].indexOf(cc) >= 0) return 'es';
+  if (['IT','SM','VA'].indexOf(cc) >= 0) return 'it';
+  if (['DE','AT','LI','CH'].indexOf(cc) >= 0) return 'de';
+  return 'en-gb';
+}
+
+function applyLang() {
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    el.textContent = t(el.getAttribute('data-i18n'));
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+    el.innerHTML = t(el.getAttribute('data-i18n-html'));
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(function(el) {
+    el.placeholder = t(el.getAttribute('data-i18n-ph'));
+  });
+  document.title = 'Simulateur ROI Karafun Business';
+  // Update page title based on lang
+  if (LANG !== 'fr') document.title = 'KaraFun Business ROI Simulator';
+}
+
+async function detectLang() {
+  try {
+    var ctrl = new AbortController();
+    var tid = setTimeout(function(){ ctrl.abort(); }, 3000);
+    var res = await fetch('https://ipapi.co/json/', { signal: ctrl.signal });
+    clearTimeout(tid);
+    var data = await res.json();
+    LANG = mapCountryToLang((data.country_code || '').toUpperCase());
+  } catch(e) { LANG = 'fr'; }
+  applyLang();
+}
+
 // ─── State ───────────────────────────────────────────────────────────────────
 var cur = 0;
 var loyerEstime = null;
@@ -620,20 +804,28 @@ function goSS(n) {
 function onM2Input() {
   var m2 = parseInt(document.getElementById('ss-m2').value) || 10;
   var nb = Math.max(1, Math.floor(m2 / 10));
-  document.getElementById('ss-boxes-display').textContent = nb + (nb > 1 ? ' boxes' : ' box');
+  var bx = nb > 1 ? (LANG === 'de' ? ' Boxen' : ' boxes') : (LANG === 'de' ? ' Box' : ' box');
+  document.getElementById('ss-boxes-display').textContent = nb + bx;
+  var tpl = t('ss_infobox_dynamic') || '10 m² = 1 box · {prefix} {m2} m², {action} <strong>{nb} box{es}</strong>';
+  // Build inline for simplicity
+  var prefix = { fr:'Avec', 'en-us':'With', 'en-gb':'With', es:'Con', it:'Con', de:'Mit' }[LANG] || 'Avec';
+  var action = { fr:'vous pouvez installer', 'en-us':'you can install', 'en-gb':'you can install', es:'puede instalar', it:'puoi installare', de:'können Sie installieren' }[LANG] || 'vous pouvez installer';
+  var es = nb > 1 ? (LANG === 'de' ? 'en' : (LANG === 'it' ? '' : 'es')) : '';
   document.getElementById('ss-infobox').innerHTML =
-    '10 m&sup2; = 1 box &middot; Avec ' + m2 + ' m&sup2;, vous pouvez installer <strong>' + nb + ' box' + (nb > 1 ? 'es' : '') + '</strong>';
+    '10 m² = 1 box · ' + prefix + ' ' + m2 + ' m², ' + action + ' <strong>' + nb + (LANG === 'de' ? ' Box' + es : ' box' + es) + '</strong>';
 }
 
 // ─── Sliders ─────────────────────────────────────────────────────────────────
 document.getElementById('nb').oninput = function () {
   var n = parseInt(this.value);
-  document.getElementById('nb-v').textContent = n + (n > 1 ? ' boxes' : ' box');
+  var bx = n > 1 ? (LANG === 'de' ? ' Boxen' : ' boxes') : (LANG === 'de' ? ' Box' : ' box');
+  var perMonth = { fr:'/mois', 'en-us':'/month', 'en-gb':'/month', es:'/mes', it:'/mese', de:'/Monat' }[LANG] || '/mois';
+  document.getElementById('nb-v').textContent = n + bx;
   var sub = n * 199;
   document.getElementById('kfsub').value = sub;
-  document.getElementById('kfsub-hint').textContent = '199 \u20AC \u00D7 ' + n + (n > 1 ? ' boxes' : ' box') + ' = ' + sub + ' \u20AC/mois';
+  document.getElementById('kfsub-hint').textContent = '199 € × ' + n + bx + ' = ' + sub + ' €' + perMonth;
   document.getElementById('energy').value = n * 150;
-  document.getElementById('energy-hint').textContent = '150 \u20AC \u00D7 ' + n + ' box' + (n > 1 ? 'es' : '');
+  document.getElementById('energy-hint').textContent = '150 € × ' + n + (LANG === 'de' ? ' Box' : ' box');
   if (loyerEstime !== null) updateLoyer(loyerEstime, n);
 };
 
@@ -680,22 +872,20 @@ function estimateLoyer(city) {
   }
   if (!vv) {
     vv = 13;
-    document.getElementById('loyer-info').textContent = '~ ' + vv + ' \u20AC/m\u00B2/mois (estimation moyenne)';
+    document.getElementById('loyer-info').textContent = t('loyer_avg_txt').replace('{r}', vv);
   } else {
-    document.getElementById('loyer-info').textContent = '~ ' + vv + ' \u20AC/m\u00B2/mois estim\u00E9 \u00E0 ' + city;
+    document.getElementById('loyer-info').textContent = t('loyer_city_txt').replace('{r}', vv).replace('{c}', city);
   }
   loyerEstime = vv;
   updateLoyer(vv, nb);
 }
 
 function updateLoyer(vv, nb) {
-  // Surface estimée : 20m² par box + 30m² parties communes
   var surface = nb * 20 + 30;
   var loyer = vv * surface;
   document.getElementById('rent').value = loyer;
   document.getElementById('rent-hint').textContent =
-    surface + ' m\u00B2 \u00D7 ' + vv + ' \u20AC/m\u00B2 = ' +
-    loyer.toLocaleString('fr-FR') + ' \u20AC/mois';
+    t('loyer_calc_txt').replace('{s}', surface).replace('{r}', vv).replace('{l}', loyer.toLocaleString('fr-FR'));
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -713,7 +903,7 @@ function fmt(n) {
 
 function fmtPbk(years) {
   if (!isFinite(years) || years <= 0) return 'N/A';
-  return years.toFixed(1) + ' ans';
+  return years.toFixed(1) + ' ' + t('ans');
 }
 
 // ─── Calcul ROI ───────────────────────────────────────────────────────────────
@@ -843,7 +1033,7 @@ function showResults(r, name, analysis, q) {
   top.style.cssText = 'text-align:center;padding:20px 28px 8px';
   var ti = mk('div');
   ti.style.cssText = "font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:8px";
-  ti.textContent = 'Votre analyse, ' + fn;
+  ti.textContent = t('your_analysis') + fn;
   top.appendChild(ti);
   w.appendChild(top);
 
@@ -852,13 +1042,13 @@ function showResults(r, name, analysis, q) {
 
   // Hero ROI
   var hero = mk('div', 'hero');
-  hero.innerHTML = '<div class="roi-lbl">Retour sur investissement annuel</div>' +
+  var bxs = r.nb > 1 ? (LANG === 'de' ? ' Boxen' : ' boxes') : (LANG === 'de' ? ' Box' : ' box');
+  hero.innerHTML = '<div class="roi-lbl">' + t('res_roi_lbl') + '</div>' +
     '<div class="roi-num">' + r.roi.toFixed(1) + '%</div>';
   var rs = mk('div', 'roi-sub');
-  rs.innerHTML = r.nb + ' box' + (r.nb > 1 ? 'es' : '') +
-    ' &middot; ' + fmt(r.invest) +
+  rs.innerHTML = r.nb + bxs + ' · ' + fmt(r.invest) +
     (isFinite(r.pbkY) && r.pbkY > 0
-      ? '<br>Remboursement en <strong style="color:#5DE8A6">' + r.pbkY.toFixed(1) + ' ans</strong>'
+      ? '<br>' + t('res_remb_prefix') + '<strong style="color:#5DE8A6">' + r.pbkY.toFixed(1) + ' ' + t('ans') + '</strong>'
       : '');
   hero.appendChild(rs);
   b.appendChild(hero);
@@ -866,10 +1056,10 @@ function showResults(r, name, analysis, q) {
   // Métriques clés
   var mets = mk('div', 'mets');
   [
-    ['CA mensuel', 'met-v acc', fmt(r.revM)],
-    ['Charges/mois', 'met-v', fmt(r.charges)],
-    ['Net/mois', 'met-v ' + nc, fmt(r.net)],
-    ['Marge', 'met-v ' + mc, r.margin.toFixed(1) + '%']
+    [t('res_ca'), 'met-v acc', fmt(r.revM)],
+    [t('res_charges'), 'met-v', fmt(r.charges)],
+    [t('res_net'), 'met-v ' + nc, fmt(r.net)],
+    [t('res_marge'), 'met-v ' + mc, r.margin.toFixed(1) + '%']
   ].forEach(function (d) {
     var m = mk('div', 'met');
     m.innerHTML = '<div class="met-l">' + d[0] + '</div><div class="' + d[1] + '">' + d[2] + '</div>';
@@ -880,15 +1070,14 @@ function showResults(r, name, analysis, q) {
   // Boissons
   var bb = mk('div', 'boissonbox');
   var bt = mk('div', 'boissonbox-t');
-  bt.innerHTML = '&#127865; Impact des boissons &amp; cocktails';
+  bt.innerHTML = t('res_boissons_title');
   var btx = mk('div', 'boissonbox-b');
-  btx.innerHTML = 'Le karaok&eacute; stimule la consommation de boissons. Les exploitants constatent en moyenne une ' +
-    '<strong style="color:var(--accent)">augmentation de 40% du CA</strong> avec une activit&eacute; boissons.';
+  btx.innerHTML = t('res_boissons_text');
   var bm = mk('div', 'boisson-met');
   [
-    ['CA avec boissons', 'acc', fmt(r.revMb)],
-    ['Net avec boissons', r.netB >= 0 ? 'pos' : 'neg', fmt(r.netB)],
-    ['ROI avec boissons', 'acc', r.roiB.toFixed(1) + '%']
+    [t('res_ca_bois'), 'acc', fmt(r.revMb)],
+    [t('res_net_bois'), r.netB >= 0 ? 'pos' : 'neg', fmt(r.netB)],
+    [t('res_roi_bois'), 'acc', r.roiB.toFixed(1) + '%']
   ].forEach(function (d) {
     var m = mk('div', 'met');
     m.style.cssText = 'background:rgba(232,68,122,0.06);border-color:rgba(232,68,122,0.2)';
@@ -898,7 +1087,7 @@ function showResults(r, name, analysis, q) {
   if (isFinite(r.pbkYb) && r.pbkYb > 0) {
     var bp = mk('div', 'met');
     bp.style.cssText = 'background:rgba(232,68,122,0.06);border-color:rgba(232,68,122,0.2)';
-    bp.innerHTML = '<div class="met-l">Remboursement</div><div class="met-v pos">' + r.pbkYb.toFixed(1) + ' ans</div>';
+    bp.innerHTML = '<div class="met-l">' + t('res_remb_lbl') + '</div><div class="met-v pos">' + r.pbkYb.toFixed(1) + ' ' + t('ans') + '</div>';
     bm.appendChild(bp);
   }
   bb.appendChild(bt);
@@ -908,29 +1097,29 @@ function showResults(r, name, analysis, q) {
 
   // Détail charges
   var sh = mk('div', 'sh');
-  sh.textContent = 'D\u00E9tail des charges';
+  sh.textContent = t('res_charges_title');
   b.appendChild(sh);
   var ct = mk('div', 'ctab');
   [
-    ['Loyer et charges', fmt(r.rent + r.cloc)],
-    ['Masse salariale', fmt(r.sal)],
-    ['Abonnement Karafun', fmt(r.kf)],
-    ['Energie', fmt(r.energy)],
-    ['Assurance', fmt(r.insur)],
-    ['Comptabilit\u00E9', fmt(r.acct)],
-    ['Marketing', fmt(r.mktg)],
-    ['Maintenance &amp; divers', fmt(r.maint + r.misc)],
-    ['Amortissement', fmt(r.amortM)]
+    [t('res_loyer_cloc'), fmt(r.rent + r.cloc)],
+    [t('res_sal'), fmt(r.sal)],
+    [t('res_kfsub'), fmt(r.kf)],
+    [t('s2_energy_label'), fmt(r.energy)],
+    [t('s2_insur_label'), fmt(r.insur)],
+    [t('s2_acct_label'), fmt(r.acct)],
+    [t('s2_mktg_label'), fmt(r.mktg)],
+    [t('s2_maint_label') + ' & ' + t('s2_misc_label'), fmt(r.maint + r.misc)],
+    [t('res_amort'), fmt(r.amortM)]
   ].forEach(function (d) { ct.appendChild(mRow(d[0], d[1])); });
   var tot = mk('div', 'crow tot');
-  tot.innerHTML = '<span>Total mensuel</span><span>' + fmt(r.charges) + '</span>';
+  tot.innerHTML = '<span>' + t('res_total') + '</span><span>' + fmt(r.charges) + '</span>';
   ct.appendChild(tot);
   b.appendChild(ct);
 
   // Analyse IA
   if (analysis) {
     var ai = mk('div', 'aibox');
-    ai.innerHTML = '<div class="aibox-t">Analyse personnalis\u00E9e</div>' +
+    ai.innerHTML = '<div class="aibox-t">' + t('res_ai_title') + '</div>' +
       '<div class="aibox-b">' + analysis + '</div>';
     b.appendChild(ai);
   }
@@ -938,7 +1127,7 @@ function showResults(r, name, analysis, q) {
   // Bouton PDF
   var pdfBtn = mk('button', 'btn');
   pdfBtn.style.cssText = 'margin-top:0;background:#1E1E26;border:1px solid rgba(232,68,122,0.4);color:var(--accent)';
-  pdfBtn.textContent = 'T\u00E9l\u00E9charger mon rapport PDF';
+  pdfBtn.textContent = t('res_pdf_btn');
   pdfBtn.onclick = downloadPDF;
   b.appendChild(pdfBtn);
 
@@ -949,7 +1138,7 @@ function showResults(r, name, analysis, q) {
   ea.style.cssText = 'display:block;text-decoration:none';
   var eb = mk('button', 'btn');
   eb.style.marginTop = '8px';
-  eb.textContent = 'Parler \u00E0 un expert Karafun';
+  eb.textContent = t('res_expert_btn');
   ea.appendChild(eb);
   b.appendChild(ea);
 
@@ -959,13 +1148,13 @@ function showResults(r, name, analysis, q) {
   ta.target = '_blank';
   ta.style.cssText = 'display:block;text-decoration:none;margin-top:8px';
   var td = mk('div', 'cta-acheter');
-  td.innerHTML = '&#127899;&#65039; Je suis convaincu, j\'achète le matériel !<br><span style="font-size:12px;opacity:.8">Voir la sélection d\'équipement karaoke &rarr;</span>';
+  td.innerHTML = '🎸 ' + t('res_buy_btn') + '<br><span style="font-size:12px;opacity:.8">' + t('res_buy_sub') + '</span>';
   ta.appendChild(td);
   b.appendChild(ta);
 
   // Nouvelle simulation
   var rb = mk('button', 'btn btn-g');
-  rb.textContent = 'Nouvelle simulation';
+  rb.textContent = t('res_new_sim');
   rb.onclick = function () { location.reload(); };
   b.appendChild(rb);
 
@@ -1016,10 +1205,11 @@ async function doSubmit() {
         : 'Lead froid';
 
   go(4);
-  document.getElementById('load-msg').textContent = 'Analyse en cours...';
+  document.getElementById('load-msg').textContent = t('loading_ai');
 
   // Prompt IA
-  var prompt = 'Génère une analyse personnalisée courte (4-5 paragraphes) en français pour ' + name +
+  var aiLang = { fr:'français', 'en-us':'English', 'en-gb':'English', es:'español', it:'italiano', de:'Deutsch' }[LANG] || 'français';
+  var prompt = 'Génère une analyse personnalisée courte (4-5 paragraphes) en ' + aiLang + ' pour ' + name +
     ', porteur d\'un projet de ' + r.nb + ' box(es) karaoke.\n\n' +
     'Données :\n' +
     '- Investissement : ' + fmt(r.invest) + '\n' +
@@ -1051,7 +1241,7 @@ async function doSubmit() {
     // Analyse IA non bloquante : on continue sans
   }
 
-  document.getElementById('load-msg').textContent = 'Enregistrement du lead...';
+  document.getElementById('load-msg').textContent = t('loading_hs');
 
   // HubSpot (non bloquant)
   fetch('/api/hubspot', {
@@ -1174,10 +1364,11 @@ function showResultsSimple(r, name, q, city, typeText) {
   top.style.cssText = 'text-align:center;padding:20px 28px 8px';
   var ti = mk('div');
   ti.style.cssText = "font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:4px";
-  ti.textContent = fn + ', voici votre potentiel';
+  ti.textContent = fn + t('ss_res_title_suffix');
   var ti2 = mk('div');
   ti2.style.cssText = 'font-size:12px;color:var(--muted);margin-top:4px';
-  ti2.textContent = r.m2 + ' m\u00B2 \u2192 ' + r.nb + ' box' + (r.nb > 1 ? 'es' : '') + (city ? ' \u00B7 ' + city : '') + (typeText ? ' \u00B7 ' + typeText : '');
+  var bxs2 = r.nb > 1 ? (LANG === 'de' ? ' Boxen' : ' boxes') : (LANG === 'de' ? ' Box' : ' box');
+  ti2.textContent = r.m2 + ' m² → ' + r.nb + bxs2 + (city ? ' · ' + city : '') + (typeText ? ' · ' + typeText : '');
   top.appendChild(ti);
   top.appendChild(ti2);
   w.appendChild(top);
@@ -1187,12 +1378,14 @@ function showResultsSimple(r, name, q, city, typeText) {
 
   // Hero ROI
   var hero = mk('div', 'hero');
-  hero.innerHTML = '<div class="roi-lbl">Retour sur investissement annuel</div>' +
+  var bxs3 = r.nb > 1 ? (LANG === 'de' ? ' Boxen' : ' boxes') : (LANG === 'de' ? ' Box' : ' box');
+  var investSuffix = { fr:' d\'investissement', 'en-us':' investment', 'en-gb':' investment', es:' de inversión', it:' di investimento', de:' Investition' }[LANG] || ' d\'investissement';
+  hero.innerHTML = '<div class="roi-lbl">' + t('res_roi_lbl') + '</div>' +
     '<div class="roi-num">' + r.roi.toFixed(1) + '%</div>';
   var rs = mk('div', 'roi-sub');
-  rs.innerHTML = r.nb + ' box' + (r.nb > 1 ? 'es' : '') + ' \u00B7 ' + fmt(r.invest) + ' d\u2019investissement' +
+  rs.innerHTML = r.nb + bxs3 + ' · ' + fmt(r.invest) + investSuffix +
     (isFinite(r.pbkY) && r.pbkY > 0
-      ? '<br>Remboursement en <strong style="color:#5DE8A6">' + r.pbkY.toFixed(1) + ' ans</strong>'
+      ? '<br>' + t('res_remb_prefix') + '<strong style="color:#5DE8A6">' + r.pbkY.toFixed(1) + ' ' + t('ans') + '</strong>'
       : '');
   hero.appendChild(rs);
   b.appendChild(hero);
@@ -1200,10 +1393,10 @@ function showResultsSimple(r, name, q, city, typeText) {
   // Métriques
   var mets = mk('div', 'mets');
   [
-    ['CA mensuel estimé', 'met-v acc', fmt(r.revM)],
-    ['Charges ajoutées', 'met-v', fmt(r.charges)],
-    ['Net/mois estimé', 'met-v ' + nc, fmt(r.net)],
-    ['Investissement', 'met-v', fmt(r.invest)]
+    [t('ss_res_ca'), 'met-v acc', fmt(r.revM)],
+    [t('ss_res_charges'), 'met-v', fmt(r.charges)],
+    [t('ss_res_net'), 'met-v ' + nc, fmt(r.net)],
+    [t('ss_res_invest'), 'met-v', fmt(r.invest)]
   ].forEach(function (d) {
     var m = mk('div', 'met');
     m.innerHTML = '<div class="met-l">' + d[0] + '</div><div class="' + d[1] + '">' + d[2] + '</div>';
@@ -1215,24 +1408,24 @@ function showResultsSimple(r, name, q, city, typeText) {
   var ib = mk('div');
   ib.className = 'ss-infobox';
   ib.style.marginBottom = '14px';
-  ib.innerHTML = '<strong>Hypoth\u00E8ses :</strong> 6h d\u2019exploitation/jour \u00B7 6 jours/semaine \u00B7 Charges calcul\u00E9es hors loyer (d\u00E9j\u00E0 inclus dans votre exploitation)';
+  ib.innerHTML = t('ss_hypotheses');
   b.appendChild(ib);
 
   // Détail charges ajoutées
   var sh = mk('div', 'sh');
-  sh.textContent = 'Charges mensuelles ajout\u00E9es';
+  sh.textContent = t('ss_charges_title');
   b.appendChild(sh);
   var ct = mk('div', 'ctab');
   [
-    ['Abonnement KaraFun', fmt(r.kfsub)],
-    ['\u00C9nergie', fmt(r.energy)],
-    ['Marketing', fmt(200)],
-    ['Maintenance', fmt(150)],
-    ['Divers', fmt(100)],
-    ['Amortissement', fmt(r.amortM)]
+    [t('res_kfsub'), fmt(r.kfsub)],
+    [t('s2_energy_label'), fmt(r.energy)],
+    [t('s2_mktg_label'), fmt(200)],
+    [t('s2_maint_label'), fmt(150)],
+    [t('s2_misc_label'), fmt(100)],
+    [t('res_amort'), fmt(r.amortM)]
   ].forEach(function (d) { ct.appendChild(mRow(d[0], d[1])); });
   var tot = mk('div', 'crow tot');
-  tot.innerHTML = '<span>Total mensuel ajout\u00E9</span><span>' + fmt(r.charges) + '</span>';
+  tot.innerHTML = '<span>' + t('ss_total') + '</span><span>' + fmt(r.charges) + '</span>';
   ct.appendChild(tot);
   b.appendChild(ct);
 
@@ -1243,18 +1436,21 @@ function showResultsSimple(r, name, q, city, typeText) {
   ea.style.cssText = 'display:block;text-decoration:none;margin-top:14px';
   var eb = mk('button', 'btn');
   eb.style.marginTop = '0';
-  eb.textContent = 'Parler \u00E0 un expert Karafun';
+  eb.textContent = t('res_expert_btn');
   ea.appendChild(eb);
   b.appendChild(ea);
 
   var rb = mk('button', 'btn btn-g');
-  rb.textContent = 'Nouvelle simulation';
+  rb.textContent = t('res_new_sim');
   rb.onclick = function () { location.reload(); };
   b.appendChild(rb);
 
   w.appendChild(b);
   res.appendChild(w);
 }
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+detectLang();
 </script>
 </body>
 </html>
