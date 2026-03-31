@@ -142,6 +142,18 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--pink);flex-shrink
 /* Footer */
 footer{text-align:center;margin-top:24px;font-size:11px;color:rgba(245,244,255,0.2);position:relative;z-index:1}
 footer a{color:rgba(232,68,122,.5);text-decoration:none}
+/* Choice screen */
+.choice-cards{display:grid;gap:14px}
+.choice-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 56px 22px 20px;cursor:pointer;transition:border-color .2s,background .2s;text-align:left;position:relative}
+.choice-card:hover{border-color:var(--pink);background:rgba(232,68,122,0.05)}
+.choice-icon{font-size:26px;margin-bottom:10px}
+.choice-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin-bottom:5px}
+.choice-desc{font-size:12px;color:var(--muted);line-height:1.5}
+.choice-arrow{position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:22px;color:var(--pink);opacity:.6;transition:opacity .2s,right .2s}
+.choice-card:hover .choice-arrow{opacity:1;right:14px}
+/* Simple sim */
+.ss-boxes-display{font-size:22px;font-weight:700;color:var(--accent);padding:11px 12px;background:var(--input);border:1px solid var(--border);border-radius:10px;text-align:center;line-height:1.2}
+.ss-infobox{background:rgba(93,232,166,0.08);border:1px solid rgba(93,232,166,0.2);border-radius:10px;padding:12px 14px;font-size:12px;color:rgba(93,232,166,0.85);line-height:1.6;margin:10px 0}
 /* Responsive */
 @media(max-width:480px){
   body{padding:12px 8px 40px}
@@ -175,8 +187,32 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
     <div class="tg">Estimez votre retour sur investissement</div>
   </div>
 
+  <!-- Step 0 : Choix du simulateur -->
+  <div class="step on" id="s0">
+    <div style="padding:32px 28px 10px;text-align:center">
+      <div class="ttl">Votre projet</div>
+      <div class="sub">Sélectionnez votre situation pour accéder au simulateur adapté</div>
+    </div>
+    <div style="padding:4px 28px 32px">
+      <div class="choice-cards">
+        <div class="choice-card" onclick="go(1)">
+          <div class="choice-icon">🏗️</div>
+          <div class="choice-title">Projet d'ouverture</div>
+          <div class="choice-desc">Je crée un nouvel établissement dédié au karaoké box et je veux simuler la rentabilité complète.</div>
+          <div class="choice-arrow">→</div>
+        </div>
+        <div class="choice-card" onclick="goSS(1)">
+          <div class="choice-icon">🏠</div>
+          <div class="choice-title">Établissement existant</div>
+          <div class="choice-desc">J'ai déjà un bar, restaurant ou salle et je veux savoir combien mes m² disponibles peuvent rapporter.</div>
+          <div class="choice-arrow">→</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Step 1 : Projet -->
-  <div class="step on" id="s1">
+  <div class="step" id="s1">
     <div class="prog">
       <div class="dot on"></div>
       <div class="dot"></div>
@@ -242,7 +278,10 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
       </div>
     </div>
 
-    <button class="btn" onclick="go(2)">Etape suivante &mdash; Charges &rarr;</button>
+    <div class="br">
+      <button class="btn btn-g" onclick="go(0)">&larr; Retour</button>
+      <button class="btn" onclick="go(2)">Charges &rarr;</button>
+    </div>
   </div>
 
   <!-- Step 2 : Charges -->
@@ -415,22 +454,180 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
     <div id="res"></div>
   </div>
 
+  <!-- ═══ SIMULATEUR SIMPLE — Établissement existant ═══ -->
+
+  <!-- SS1 : Espace disponible -->
+  <div class="step" id="ss1">
+    <div class="prog">
+      <div class="dot on"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="ttl">Votre espace disponible</div>
+    <div class="sub">Estimez le potentiel de vos m² inoccup&eacute;s</div>
+
+    <div class="sh">Surface disponible</div>
+    <div class="g2">
+      <div class="f">
+        <label class="lbl">M&sup2; disponibles</label>
+        <div class="pw rs"><input type="number" id="ss-m2" value="20" min="10" max="500" step="5" oninput="onM2Input()"><span class="sfx">m&sup2;</span></div>
+      </div>
+      <div class="f">
+        <label class="lbl">Boxes estimées</label>
+        <div class="ss-boxes-display" id="ss-boxes-display">2 boxes</div>
+      </div>
+    </div>
+    <div class="ss-infobox" id="ss-infobox">10 m&sup2; = 1 box &middot; Avec 20 m&sup2;, vous pouvez installer <strong>2 boxes</strong></div>
+
+    <div class="sh">Exploitation</div>
+    <div class="g2">
+      <div class="f">
+        <label class="lbl">Taux d'occupation</label>
+        <div class="sv">
+          <div class="sv-val" id="ss-occ-v">55%</div>
+          <input type="range" id="ss-occ" min="20" max="90" value="55" step="5" oninput="document.getElementById('ss-occ-v').textContent=this.value+'%'">
+          <div class="sl"><span>20%</span><span>90%</span></div>
+        </div>
+      </div>
+      <div class="f">
+        <label class="lbl">Tarif moyen / heure</label>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="ss-prix" value="80" min="20" max="200" step="5"></div>
+      </div>
+    </div>
+
+    <div class="sh">Localisation</div>
+    <div class="f">
+      <label class="lbl">Ville</label>
+      <input type="text" id="ss-city" placeholder="Paris, Lyon, Bordeaux...">
+    </div>
+
+    <div class="br">
+      <button class="btn btn-g" onclick="goSS(0)">&larr; Retour</button>
+      <button class="btn" onclick="goSS(2)">Voir mon potentiel &rarr;</button>
+    </div>
+  </div>
+
+  <!-- SS2 : Contact -->
+  <div class="step" id="ss2">
+    <div class="prog">
+      <div class="dot done"></div>
+      <div class="dot on"></div>
+    </div>
+    <div class="ttl">Recevez votre analyse</div>
+    <div class="sub">Vos coordonn&eacute;es pour acc&eacute;der aux r&eacute;sultats</div>
+
+    <div class="lcard">
+      <div class="lcard-t">Votre simulation est pr&ecirc;te</div>
+      <div class="lcard-b">Renseignez vos coordonn&eacute;es pour d&eacute;couvrir le potentiel de revenus de vos m&sup2; disponibles. Un expert Karafun Business sera disponible pour vous accompagner.</div>
+    </div>
+
+    <div class="g1">
+      <div class="f">
+        <label class="lbl">Pr&eacute;nom</label>
+        <input type="text" id="ss-firstname" placeholder="Jean">
+        <span class="err" id="ss-e-firstname">Veuillez renseigner votre pr&eacute;nom</span>
+      </div>
+      <div class="f">
+        <label class="lbl">Nom</label>
+        <input type="text" id="ss-lastname" placeholder="Dupont">
+        <span class="err" id="ss-e-lastname">Veuillez renseigner votre nom</span>
+      </div>
+      <div class="f">
+        <label class="lbl">Email</label>
+        <input type="email" id="ss-email" placeholder="jean@exemple.fr">
+        <span class="err" id="ss-e-email">Email invalide</span>
+      </div>
+      <div class="f">
+        <label class="lbl">T&eacute;l&eacute;phone</label>
+        <input type="tel" id="ss-phone" placeholder="+33 6 12 34 56 78">
+        <span class="err" id="ss-e-phone">T&eacute;l&eacute;phone requis</span>
+      </div>
+      <div class="f">
+        <label class="lbl">Type d'&eacute;tablissement</label>
+        <select id="ss-type">
+          <option value="bar">Bar / Caf&eacute;</option>
+          <option value="restaurant">Restaurant</option>
+          <option value="hotel">H&ocirc;tel</option>
+          <option value="salle">Salle de loisirs / divertissement</option>
+          <option value="autre">Autre</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="notice" style="margin-top:16px;">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:1px;">
+        <circle cx="8" cy="8" r="7" stroke="rgba(123,94,167,0.7)" stroke-width="1.5"/>
+        <line x1="8" y1="7" x2="8" y2="11" stroke="rgba(123,94,167,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="8" cy="5" r="0.75" fill="rgba(123,94,167,0.7)"/>
+      </svg>
+      Donn&eacute;es trait&eacute;es conform&eacute;ment au RGPD. Jamais revendues.
+    </div>
+
+    <div class="cbw">
+      <input type="checkbox" id="ss-optin" checked>
+      <label for="ss-optin" class="cbl">J'accepte de recevoir des informations commerciales de Karafun Business.</label>
+    </div>
+    <span class="err" id="ss-e-optin">Veuillez cocher cette case</span>
+
+    <div class="br">
+      <button class="btn btn-g" onclick="goSS(1)">&larr; Retour</button>
+      <button class="btn" onclick="doSubmitSimple()">D&eacute;couvrir mon potentiel &rarr;</button>
+    </div>
+  </div>
+
+  <!-- SS3 : Résultats -->
+  <div class="step" id="ss3">
+    <div id="ss-loading" class="spin-wrap">
+      <div class="spinner"></div>
+      <div style="font-size:15px;font-weight:500;margin-bottom:6px;">Calcul en cours...</div>
+      <div id="ss-load-msg" style="font-size:12px;color:var(--muted);">Estimation du potentiel...</div>
+    </div>
+    <div id="ss-res"></div>
+  </div>
+
 </div>
 
 <footer>&copy; 2025 Karafun Business &mdash; <a href="https://business.karafun.com/fr/" target="_blank">business.karafun.com</a></footer>
 
 <script>
 // ─── State ───────────────────────────────────────────────────────────────────
-var cur = 1;
+var cur = 0;
 var loyerEstime = null;
 var cityTimeout = null;
+var curSS = 0;  // état simulateur simple
 
-// ─── Step navigation ─────────────────────────────────────────────────────────
+// ─── Step navigation (simulateur principal) ───────────────────────────────────
 function go(n) {
   document.getElementById('s' + cur).classList.remove('on');
   cur = n;
   document.getElementById('s' + n).classList.add('on');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── Step navigation (simulateur simple) ─────────────────────────────────────
+function goSS(n) {
+  if (curSS > 0) {
+    document.getElementById('ss' + curSS).classList.remove('on');
+  } else {
+    document.getElementById('s' + cur).classList.remove('on');
+  }
+  if (n === 0) {
+    curSS = 0;
+    cur = 0;
+    document.getElementById('s0').classList.add('on');
+  } else {
+    curSS = n;
+    document.getElementById('ss' + n).classList.add('on');
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── Simple sim : m² input ────────────────────────────────────────────────────
+function onM2Input() {
+  var m2 = parseInt(document.getElementById('ss-m2').value) || 10;
+  var nb = Math.max(1, Math.floor(m2 / 10));
+  document.getElementById('ss-boxes-display').textContent = nb + (nb > 1 ? ' boxes' : ' box');
+  document.getElementById('ss-infobox').innerHTML =
+    '10 m&sup2; = 1 box &middot; Avec ' + m2 + ' m&sup2;, vous pouvez installer <strong>' + nb + ' box' + (nb > 1 ? 'es' : '') + '</strong>';
 }
 
 // ─── Sliders ─────────────────────────────────────────────────────────────────
@@ -883,6 +1080,185 @@ async function doSubmit() {
   }).catch(function (e) { console.warn('HubSpot:', e); });
 
   showResults(r, name, analysis, q);
+}
+
+// ─── Simulateur simple : calcul ───────────────────────────────────────────────
+function calcSimple() {
+  var m2  = parseInt(document.getElementById('ss-m2').value) || 20;
+  var nb  = Math.max(1, Math.floor(m2 / 10));
+  var occ = parseInt(document.getElementById('ss-occ').value) / 100 || 0.55;
+  var px  = parseFloat(document.getElementById('ss-prix').value) || 80;
+
+  // Defaults établissement existant : 6h/j, 6j/semaine
+  var dur  = 1.5;
+  var hpd  = 6;
+  var dpw  = 6;
+  var days = dpw * 52;
+  var avgP = px * 0.8 + px * 1.25 * 0.2;   // 80% semaine + 20% week-end +25%
+  var spd  = (hpd / dur) * occ;
+  var revM = spd * avgP * dur * days * nb / 12;
+
+  // Investissement : matériel + aménagement léger (pas de loyer ni gros travaux)
+  var invest = nb * 5500 + 1000;
+  var amortM = invest / (5 * 12);
+  var kfsub  = nb * 199;
+  var energy = nb * 100;
+  var charges = kfsub + energy + 200 + 150 + 100 + amortM;
+
+  var net  = revM - charges;
+  var roi  = invest > 0 ? (net * 12 / invest) * 100 : 0;
+  var pbkM = net > 0 ? invest / net : Infinity;
+  var pbkY = pbkM / 12;
+
+  return { nb: nb, m2: m2, invest: invest, revM: revM, charges: charges,
+           net: net, roi: roi, pbkY: pbkY, kfsub: kfsub, energy: energy, amortM: amortM };
+}
+
+// ─── Simulateur simple : soumission ──────────────────────────────────────────
+async function doSubmitSimple() {
+  var firstname = document.getElementById('ss-firstname').value.trim();
+  var lastname  = document.getElementById('ss-lastname').value.trim();
+  var email     = document.getElementById('ss-email').value.trim();
+  var phone     = document.getElementById('ss-phone').value.trim();
+  var city      = document.getElementById('ss-city').value.trim();
+  var type      = document.getElementById('ss-type');
+  var typeText  = type.options[type.selectedIndex].text;
+  var optin     = document.getElementById('ss-optin').checked;
+
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  var ok = true;
+
+  var eF  = document.getElementById('ss-e-firstname');
+  var eLN = document.getElementById('ss-e-lastname');
+  var eE  = document.getElementById('ss-e-email');
+  var eT  = document.getElementById('ss-e-phone');
+  var eO  = document.getElementById('ss-e-optin');
+
+  eF.style.display  = firstname ? 'none' : 'block'; if (!firstname) ok = false;
+  eLN.style.display = lastname  ? 'none' : 'block'; if (!lastname)  ok = false;
+  eE.style.display  = (email && emailRegex.test(email)) ? 'none' : 'block'; if (!email || !emailRegex.test(email)) ok = false;
+  eT.style.display  = phone  ? 'none' : 'block'; if (!phone)  ok = false;
+  eO.style.display  = optin  ? 'none' : 'block'; if (!optin)  ok = false;
+
+  if (!ok) return;
+
+  var r    = calcSimple();
+  var name = firstname + ' ' + lastname;
+  var q    = r.roi >= 20 ? 'Lead chaud' : r.roi >= 10 ? 'Lead tiède' : 'Lead froid';
+
+  goSS(3);
+
+  // HubSpot (non bloquant)
+  fetch('/api/hubspot', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      firstname: firstname, lastname: lastname, email: email, phone: phone,
+      city: city || '', stage: 'Établissement existant — ' + typeText,
+      roi: r.roi, revM: r.revM, net: r.net, invest: r.invest,
+      pbkY: isFinite(r.pbkY) ? r.pbkY : 0, nb: r.nb, qualification: q
+    })
+  }).catch(function (e) { console.warn('HubSpot simple:', e); });
+
+  showResultsSimple(r, name, q, city, typeText);
+}
+
+// ─── Simulateur simple : affichage résultats ──────────────────────────────────
+function showResultsSimple(r, name, q, city, typeText) {
+  document.getElementById('ss-loading').style.display = 'none';
+  var res = document.getElementById('ss-res');
+  res.innerHTML = '';
+
+  var nc = r.net >= 0 ? 'pos' : 'neg';
+  var fn = name.split(' ')[0];
+
+  var w = mk('div');
+  w.style.padding = '0 0 8px';
+
+  var top = mk('div');
+  top.style.cssText = 'text-align:center;padding:20px 28px 8px';
+  var ti = mk('div');
+  ti.style.cssText = "font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:4px";
+  ti.textContent = fn + ', voici votre potentiel';
+  var ti2 = mk('div');
+  ti2.style.cssText = 'font-size:12px;color:var(--muted);margin-top:4px';
+  ti2.textContent = r.m2 + ' m\u00B2 \u2192 ' + r.nb + ' box' + (r.nb > 1 ? 'es' : '') + (city ? ' \u00B7 ' + city : '') + (typeText ? ' \u00B7 ' + typeText : '');
+  top.appendChild(ti);
+  top.appendChild(ti2);
+  w.appendChild(top);
+
+  var b = mk('div');
+  b.style.padding = '0 28px';
+
+  // Hero ROI
+  var hero = mk('div', 'hero');
+  hero.innerHTML = '<div class="roi-lbl">Retour sur investissement annuel</div>' +
+    '<div class="roi-num">' + r.roi.toFixed(1) + '%</div>';
+  var rs = mk('div', 'roi-sub');
+  rs.innerHTML = r.nb + ' box' + (r.nb > 1 ? 'es' : '') + ' \u00B7 ' + fmt(r.invest) + ' d\u2019investissement' +
+    (isFinite(r.pbkY) && r.pbkY > 0
+      ? '<br>Remboursement en <strong style="color:#5DE8A6">' + r.pbkY.toFixed(1) + ' ans</strong>'
+      : '');
+  hero.appendChild(rs);
+  b.appendChild(hero);
+
+  // Métriques
+  var mets = mk('div', 'mets');
+  [
+    ['CA mensuel estimé', 'met-v acc', fmt(r.revM)],
+    ['Charges ajoutées', 'met-v', fmt(r.charges)],
+    ['Net/mois estimé', 'met-v ' + nc, fmt(r.net)],
+    ['Investissement', 'met-v', fmt(r.invest)]
+  ].forEach(function (d) {
+    var m = mk('div', 'met');
+    m.innerHTML = '<div class="met-l">' + d[0] + '</div><div class="' + d[1] + '">' + d[2] + '</div>';
+    mets.appendChild(m);
+  });
+  b.appendChild(mets);
+
+  // Info hypothèses
+  var ib = mk('div');
+  ib.className = 'ss-infobox';
+  ib.style.marginBottom = '14px';
+  ib.innerHTML = '<strong>Hypoth\u00E8ses :</strong> 6h d\u2019exploitation/jour \u00B7 6 jours/semaine \u00B7 Charges calcul\u00E9es hors loyer (d\u00E9j\u00E0 inclus dans votre exploitation)';
+  b.appendChild(ib);
+
+  // Détail charges ajoutées
+  var sh = mk('div', 'sh');
+  sh.textContent = 'Charges mensuelles ajout\u00E9es';
+  b.appendChild(sh);
+  var ct = mk('div', 'ctab');
+  [
+    ['Abonnement KaraFun', fmt(r.kfsub)],
+    ['\u00C9nergie', fmt(r.energy)],
+    ['Marketing', fmt(200)],
+    ['Maintenance', fmt(150)],
+    ['Divers', fmt(100)],
+    ['Amortissement', fmt(r.amortM)]
+  ].forEach(function (d) { ct.appendChild(mRow(d[0], d[1])); });
+  var tot = mk('div', 'crow tot');
+  tot.innerHTML = '<span>Total mensuel ajout\u00E9</span><span>' + fmt(r.charges) + '</span>';
+  ct.appendChild(tot);
+  b.appendChild(ct);
+
+  // CTA
+  var ea = mk('a');
+  ea.href = 'https://meetings-eu1.hubspot.com/meetings/acaupert?uuid=e4041660-e0bf-43e9-9a08-b26ddd6ddaee';
+  ea.target = '_blank';
+  ea.style.cssText = 'display:block;text-decoration:none;margin-top:14px';
+  var eb = mk('button', 'btn');
+  eb.style.marginTop = '0';
+  eb.textContent = 'Parler \u00E0 un expert Karafun';
+  ea.appendChild(eb);
+  b.appendChild(ea);
+
+  var rb = mk('button', 'btn btn-g');
+  rb.textContent = 'Nouvelle simulation';
+  rb.onclick = function () { location.reload(); };
+  b.appendChild(rb);
+
+  w.appendChild(b);
+  res.appendChild(w);
 }
 </script>
 </body>
