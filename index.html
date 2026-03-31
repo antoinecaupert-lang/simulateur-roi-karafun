@@ -764,7 +764,7 @@ async function detectLang() {
     clearTimeout(tid);
     var data = await res.json();
     LANG = mapCountryToLang((data.country_code || '').toUpperCase());
-  } catch(e) { LANG = 'fr'; }
+  } catch(e) { LANG = 'en-gb'; }
   applyLang();
 }
 
