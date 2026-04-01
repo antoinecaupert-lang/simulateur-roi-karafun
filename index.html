@@ -1443,6 +1443,16 @@ function showResultsSimple(r, name, q, city, typeText) {
   ea.appendChild(eb);
   b.appendChild(ea);
 
+  // CTA Matériel
+  var ta = mk('a');
+  ta.href = '/thomann/';
+  ta.target = '_blank';
+  ta.style.cssText = 'display:block;text-decoration:none;margin-top:8px';
+  var td = mk('div', 'cta-acheter');
+  td.innerHTML = '🎸 ' + t('res_buy_btn') + '<br><span style="font-size:12px;opacity:.8">' + t('res_buy_sub') + '</span>';
+  ta.appendChild(td);
+  b.appendChild(ta);
+
   var rb = mk('button', 'btn btn-g');
   rb.textContent = t('res_new_sim');
   rb.onclick = function () { location.reload(); };
