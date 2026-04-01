@@ -63,9 +63,7 @@ body::after{content:'';position:fixed;bottom:-100px;left:-100px;width:500px;heig
 .product-price{font-size:13px;font-weight:600;white-space:nowrap;color:var(--accent)}
 .product-price span{font-size:10px;color:var(--muted);font-weight:400}
 .btn-add{background:transparent;color:var(--accent);border:1px solid rgba(232,68,122,0.4);border-radius:7px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block;transition:all .15s;font-family:'DM Sans',sans-serif}
-.btn-add:hover:not(.added):not(.loading){background:rgba(232,68,122,0.1);border-color:var(--pink)}
-.btn-add.added{background:rgba(93,232,166,0.12);border-color:rgba(93,232,166,0.4);color:#5DE8A6;cursor:default}
-.btn-add.loading{opacity:0.5;cursor:wait}
+.btn-add:hover{background:rgba(232,68,122,0.1);border-color:var(--pink)}
 
 /* Option cards */
 .options-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
@@ -114,6 +112,23 @@ body::after{content:'';position:fixed;bottom:-100px;left:-100px;width:500px;heig
 .recap-row.tva{font-size:11px}
 .recap-row.total-ttc{font-weight:700;font-size:15px;color:var(--accent);border-top:1px solid rgba(123,94,167,0.3);margin-top:4px;padding-top:10px}
 
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.open{display:flex}
+.modal{background:#17171C;border:1px solid var(--border);border-radius:20px;padding:28px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto}
+.modal-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:6px}
+.modal-sub{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+.modal-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.modal-item:last-of-type{border-bottom:none}
+.modal-item-name{font-size:13px;font-weight:500;flex:1}
+.modal-item-price{font-size:12px;color:var(--muted);white-space:nowrap;margin-right:8px}
+.modal-btn{background:transparent;color:var(--accent);border:1px solid rgba(232,68,122,0.4);border-radius:7px;padding:6px 14px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block;font-family:'DM Sans',sans-serif;transition:all .15s}
+.modal-btn:hover{background:rgba(232,68,122,0.1);border-color:var(--pink)}
+.modal-btn.done{background:rgba(93,232,166,0.12);border-color:rgba(93,232,166,0.4);color:#5DE8A6}
+.modal-close{width:100%;padding:11px;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:20px;transition:all .15s}
+.modal-close:hover{border-color:var(--pink);color:var(--text)}
+.modal-cart-btn{width:100%;padding:11px;background:var(--grad);border:none;border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:10px;transition:opacity .2s}
+.modal-cart-btn:hover{opacity:.88}
 /* Footer */
 footer{text-align:center;margin-top:24px;font-size:11px;color:rgba(245,244,255,0.2);position:relative;z-index:1}
 footer a{color:rgba(232,68,122,.5);text-decoration:none}
@@ -154,11 +169,11 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
     <!-- Section 1 : Base -->
     <div class="sh">Équipement de base · inclus dans toutes les configs</div>
     <div class="section">
-      <div class="product-row"><div class="product-info"><div class="product-name">Tascam US-2x2HR</div><div class="product-desc">Interface audio USB</div></div><div class="product-price">120,00 € <span>HT</span></div><button class="btn-add" onclick="addOne(this,'https://www.thomann.fr/basket_add.html?ar=506519&menge=1')">+ Ajouter</button></div>
-      <div class="product-row"><div class="product-info"><div class="product-name">Apple USB-C Digital AV Multiport</div><div class="product-desc">HDMI + USB + charge simultanée</div></div><div class="product-price">64,17 € <span>HT</span></div><button class="btn-add" onclick="addOne(this,'https://www.thomann.fr/basket_add.html?ar=565648&menge=1')">+ Ajouter</button></div>
+      <div class="product-row"><div class="product-info"><div class="product-name">Tascam US-2x2HR</div><div class="product-desc">Interface audio USB</div></div><div class="product-price">120,00 € <span>HT</span></div><a class="btn-add" href="https://www.thomann.fr/basket_add.html?ar=506519&menge=1" target="_blank">+ Ajouter</a></div>
+      <div class="product-row"><div class="product-info"><div class="product-name">Apple USB-C Digital AV Multiport</div><div class="product-desc">HDMI + USB + charge simultanée</div></div><div class="product-price">64,17 € <span>HT</span></div><a class="btn-add" href="https://www.thomann.fr/basket_add.html?ar=565648&menge=1" target="_blank">+ Ajouter</a></div>
       <div class="product-row"><div class="product-info"><div class="product-name">Apple iPad 128 Go Wi-Fi</div><div class="product-desc">Tablette pour le logiciel karaoké</div></div><div class="product-price">389,00 € <span>TTC</span></div><a class="btn-add" href="https://www.apple.com/fr/shop/buy-ipad/ipad" target="_blank" style="color:var(--muted);border-color:var(--border)">→ Apple Store</a></div>
-      <div class="product-row"><div class="product-info"><div class="product-name">Câbles XLR 6m × 2 — sssnake SM6BK</div><div class="product-desc">Récepteurs HF → interface audio</div></div><div class="product-price">9,67 € <span>HT</span></div><button class="btn-add" onclick="addOne(this,'https://www.thomann.fr/basket_add.html?ar=128512&menge=2')">+ Ajouter</button></div>
-      <div class="product-row"><div class="product-info"><div class="product-name">Câble Jack TRS → 2×XLR 3m — sssnake YPX2030</div><div class="product-desc">Interface → enceintes actives</div></div><div class="product-price">5,67 € <span>HT</span></div><button class="btn-add" onclick="addOne(this,'https://www.thomann.fr/basket_add.html?ar=157993&menge=1')">+ Ajouter</button></div>
+      <div class="product-row"><div class="product-info"><div class="product-name">Câbles XLR 6m × 2 — sssnake SM6BK</div><div class="product-desc">Récepteurs HF → interface audio</div></div><div class="product-price">9,67 € <span>HT</span></div><a class="btn-add" href="https://www.thomann.fr/basket_add.html?ar=128512&menge=2" target="_blank">+ Ajouter</a></div>
+      <div class="product-row"><div class="product-info"><div class="product-name">Câble Jack TRS → 2×XLR 3m — sssnake YPX2030</div><div class="product-desc">Interface → enceintes actives</div></div><div class="product-price">5,67 € <span>HT</span></div><a class="btn-add" href="https://www.thomann.fr/basket_add.html?ar=157993&menge=1" target="_blank">+ Ajouter</a></div>
     </div>
 
     <!-- Section 2 : Micros -->
@@ -170,7 +185,7 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
         <label class="option-card" data-price="582.50" data-name="LD Systems U506 HHC2" data-url="https://www.thomann.fr/basket_add.html?ar=433052&menge=1"><input type="radio" name="micros"><div class="option-label"><div class="option-badge pro">Pro</div><div class="option-name">LD Systems U506 HHC2</div><div class="option-spec">UHF 655–679 MHz · condensateurs</div></div><div class="option-price">582,50 € <span>HT</span></div></label>
       </div>
       <p class="selected-label">Sélectionné : <strong id="micros-selected-name">the t.bone freeU Twin HT 863</strong></p>
-      <button class="btn-add-selected" id="micros-btn" onclick="addOne(this, document.querySelector('#micros-options .option-card.selected').dataset.url)">+ Ajouter au panier</button>
+      <a class="btn-add-selected" id="micros-btn" href="https://www.thomann.fr/basket_add.html?ar=432866&menge=1" target="_blank">+ Ajouter au panier</a>
     </div>
 
     <!-- Section 3 : Enceintes -->
@@ -182,7 +197,7 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
         <label class="option-card" data-price="825.00" data-name="LD Systems Dave 12 G4X" data-url="https://www.thomann.fr/basket_add.html?ar=508861&menge=1"><input type="radio" name="enceintes"><div class="option-label"><div class="option-badge grande">Grande salle</div><div class="option-name">LD Systems Dave 12 G4X</div><div class="option-spec">Sub 12" 1030W + sats 8"</div></div><div class="option-price">825,00 € <span>HT</span></div></label>
       </div>
       <p class="selected-label">Sélectionné : <strong id="enceintes-selected-name">LD Systems Dave 8 Roadie</strong></p>
-      <button class="btn-add-selected" id="enceintes-btn" onclick="addOne(this, document.querySelector('#enceintes-options .option-card.selected').dataset.url)">+ Ajouter au panier</button>
+      <a class="btn-add-selected" id="enceintes-btn" href="https://www.thomann.fr/basket_add.html?ar=313331&menge=1" target="_blank">+ Ajouter au panier</a>
     </div>
 
     <!-- Récap -->
@@ -198,17 +213,23 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
 
     <!-- CTA -->
     <div class="cta-wrap">
-      <button class="btn-tout" id="btn-tout" onclick="toutAjouter(this)">🛒 Tout ajouter au panier Thomann</button>
-      <div class="progress-bar-wrap" id="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
-      <p class="status-msg" id="status-msg"></p>
-      <p class="btn-tout-hint">Ajoute tous les produits sélectionnés en un seul clic</p>
+      <button class="btn-tout" onclick="ouvrirModal()">🛒 Tout ajouter au panier Thomann</button>
+      <p class="btn-tout-hint">Ouvre chaque produit dans un onglet Thomann pour l'ajouter au panier</p>
     </div>
 
   </div><!-- /content -->
 </div><!-- /app -->
 
-<!-- Iframes cachés pour ajout panier sans popup -->
-<div id="iframe-pool" style="display:none;position:fixed;width:0;height:0;overflow:hidden"></div>
+<!-- Modal tout ajouter -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)fermerModal()">
+  <div class="modal">
+    <div class="modal-title">🛒 Ajouter au panier Thomann</div>
+    <div class="modal-sub">Cliquez sur "+" pour chaque article — chacun s'ouvre dans un onglet Thomann et est ajouté à votre panier.</div>
+    <div id="modal-items"></div>
+    <button class="modal-cart-btn" onclick="window.open('https://www.thomann.fr/fr/my_basket.html','_blank')">→ Voir mon panier Thomann</button>
+    <button class="modal-close" onclick="fermerModal()">Fermer</button>
+  </div>
+</div>
 
 <footer>&copy; 2025 Karafun Business &mdash; <a href="https://business.karafun.com/fr/" target="_blank">business.karafun.com</a></footer>
 
@@ -231,100 +252,50 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
     document.getElementById('recap-total-ttc').textContent = fmt(ht + tva);
   }
 
-  function setup(gid, nid) {
+  function setup(gid, nid, bid) {
     document.getElementById(gid).querySelectorAll('.option-card').forEach(c => {
       c.addEventListener('click', () => {
         document.getElementById(gid).querySelectorAll('.option-card').forEach(x => x.classList.remove('selected'));
         c.classList.add('selected'); c.querySelector('input').checked = true;
         document.getElementById(nid).textContent = c.dataset.name;
+        document.getElementById(bid).href = c.dataset.url;
         updateRecap();
       });
     });
   }
-  setup('micros-options', 'micros-selected-name');
-  setup('enceintes-options', 'enceintes-selected-name');
+  setup('micros-options', 'micros-selected-name', 'micros-btn');
+  setup('enceintes-options', 'enceintes-selected-name', 'enceintes-btn');
 
-  // Ajoute un article via iframe caché — partage les cookies Thomann du navigateur
-  function addViaIframe(url) {
-    return new Promise(function(resolve) {
-      var pool = document.getElementById('iframe-pool');
-      var iframe = document.createElement('iframe');
-      iframe.src = url;
-      var done = false;
-      var timer = setTimeout(function() {
-        if (!done) { done = true; pool.removeChild(iframe); resolve(); }
-      }, 3000);
-      iframe.onload = function() {
-        if (!done) {
-          done = true;
-          clearTimeout(timer);
-          setTimeout(function() {
-            try { pool.removeChild(iframe); } catch(e) {}
-            resolve();
-          }, 300);
-        }
-      };
-      pool.appendChild(iframe);
-    });
-  }
+  function ouvrirModal() {
+    const m = document.querySelector('#micros-options .option-card.selected');
+    const e = document.querySelector('#enceintes-options .option-card.selected');
 
-  // Ajouter un seul produit avec feedback visuel
-  async function addOne(btn, url) {
-    if (btn.classList.contains('added') || btn.classList.contains('loading')) return;
-    btn.classList.add('loading');
-    var orig = btn.textContent;
-    btn.textContent = '⏳';
-    await addViaIframe(url);
-    btn.classList.remove('loading');
-    btn.classList.add('added');
-    btn.textContent = '✓ Ajouté';
-    // Reset après 4s
-    setTimeout(function() {
-      btn.classList.remove('added');
-      btn.textContent = orig;
-    }, 4000);
-  }
-
-  // Tout ajouter
-  async function toutAjouter(btn) {
-    const BASE_URLS = [
-      'https://www.thomann.fr/basket_add.html?ar=506519&menge=1',
-      'https://www.thomann.fr/basket_add.html?ar=565648&menge=1',
-      'https://www.thomann.fr/basket_add.html?ar=128512&menge=2',
-      'https://www.thomann.fr/basket_add.html?ar=157993&menge=1',
+    const items = [
+      { name: 'Tascam US-2x2HR', price: '120,00 € HT', url: 'https://www.thomann.fr/basket_add.html?ar=506519&menge=1' },
+      { name: 'Apple USB-C Digital AV Multiport', price: '64,17 € HT', url: 'https://www.thomann.fr/basket_add.html?ar=565648&menge=1' },
+      { name: 'Câbles XLR 6m × 2', price: '9,67 € HT', url: 'https://www.thomann.fr/basket_add.html?ar=128512&menge=2' },
+      { name: 'Câble Jack TRS → 2×XLR 3m', price: '5,67 € HT', url: 'https://www.thomann.fr/basket_add.html?ar=157993&menge=1' },
+      { name: 'Micros : ' + m.dataset.name, price: parseFloat(m.dataset.price).toFixed(2).replace('.',',') + ' € HT', url: m.dataset.url },
+      { name: 'Enceintes : ' + e.dataset.name, price: parseFloat(e.dataset.price).toFixed(2).replace('.',',') + ' € HT', url: e.dataset.url },
     ];
-    const microsUrl = document.querySelector('#micros-options .option-card.selected').dataset.url;
-    const enceinteUrl = document.querySelector('#enceintes-options .option-card.selected').dataset.url;
-    const urls = [...BASE_URLS, microsUrl, enceinteUrl];
 
-    const progressWrap = document.getElementById('progress-wrap');
-    const progressBar = document.getElementById('progress-bar');
-    const statusMsg = document.getElementById('status-msg');
+    const container = document.getElementById('modal-items');
+    container.innerHTML = '';
+    items.forEach(function(item) {
+      var div = document.createElement('div');
+      div.className = 'modal-item';
+      div.innerHTML =
+        '<span class="modal-item-name">' + item.name + '</span>' +
+        '<span class="modal-item-price">' + item.price + '</span>' +
+        '<a class="modal-btn" href="' + item.url + '" target="_blank" onclick="this.classList.add(\'done\');this.textContent=\'✓\'">+ Ajouter</a>';
+      container.appendChild(div);
+    });
 
-    btn.disabled = true;
-    btn.textContent = '⏳ Ajout en cours...';
-    progressWrap.style.display = 'block';
-    progressBar.style.width = '0%';
-    statusMsg.textContent = 'Préparation du panier...';
+    document.getElementById('modal').classList.add('open');
+  }
 
-    for (let i = 0; i < urls.length; i++) {
-      statusMsg.textContent = 'Ajout article ' + (i + 1) + ' / ' + urls.length + '...';
-      await addViaIframe(urls[i]);
-      progressBar.style.width = Math.round(((i + 1) / urls.length) * 100) + '%';
-    }
-
-    statusMsg.textContent = '✓ Tous les articles ajoutés ! Ouverture du panier...';
-    progressBar.style.width = '100%';
-
-    // Ouvrir le panier dans un nouvel onglet (1 seul onglet, déclenché après le traitement)
-    window.open('https://www.thomann.fr/fr/my_basket.html', '_blank');
-
-    setTimeout(function() {
-      btn.disabled = false;
-      btn.textContent = '🛒 Tout ajouter au panier Thomann';
-      progressWrap.style.display = 'none';
-      statusMsg.textContent = '';
-    }, 2500);
+  function fermerModal() {
+    document.getElementById('modal').classList.remove('open');
   }
 </script>
 </body>
