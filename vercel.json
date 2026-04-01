@@ -2,6 +2,8 @@
   "version": 2,
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/thomann/(.*)", "dest": "/thomann/$1" },
+    { "src": "/thomann", "dest": "/thomann/index.html" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
