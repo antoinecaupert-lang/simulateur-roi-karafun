@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Équipement Karaoké Box — Ma sélection Thomann</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+  .page { max-width: 680px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 6px; }
+  .subtitle { color: #555; font-size: 0.92rem; margin-bottom: 32px; }
+  .section { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .step-badge { background: #1a1a1a; color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 700; flex-shrink: 0; }
+  .section-title { font-size: 1rem; font-weight: 600; }
+  .section-sub { font-size: 0.8rem; color: #888; margin-top: 2px; }
+  .product-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f0f0f0; gap: 12px; }
+  .product-row:last-child { border-bottom: none; }
+  .product-info { flex: 1; }
+  .product-name { font-size: 0.92rem; font-weight: 600; }
+  .product-desc { font-size: 0.78rem; color: #888; margin-top: 2px; }
+  .product-price { font-size: 0.9rem; font-weight: 600; white-space: nowrap; }
+  .product-price span { font-size: 0.72rem; color: #888; font-weight: 400; }
+  .btn-add { background: #1a1a1a; color: #fff; border: none; border-radius: 7px; padding: 7px 14px; font-size: 0.78rem; font-weight: 600; cursor: pointer; white-space: nowrap; text-decoration: none; display: inline-block; transition: background .15s; }
+  .btn-add:hover { background: #333; }
+  .options-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .option-card { border: 2px solid #e8e8e8; border-radius: 9px; padding: 14px 16px; cursor: pointer; transition: border-color .15s, background .15s; display: flex; align-items: center; gap: 14px; }
+  .option-card:hover { border-color: #bbb; }
+  .option-card.selected { border-color: #1a1a1a; background: #fafafa; }
+  .option-card input[type=radio] { accent-color: #1a1a1a; width: 16px; height: 16px; flex-shrink: 0; }
+  .option-label { flex: 1; }
+  .option-badge { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #888; margin-bottom: 3px; }
+  .option-badge.budget { color: #2a7a2a; }
+  .option-badge.intermediaire { color: #c07000; }
+  .option-badge.pro { color: #9b1a1a; }
+  .option-badge.petite { color: #2a7a2a; }
+  .option-badge.recommande { color: #c07000; }
+  .option-badge.grande { color: #9b1a1a; }
+  .option-name { font-size: 0.88rem; font-weight: 600; }
+  .option-spec { font-size: 0.76rem; color: #888; margin-top: 2px; }
+  .option-price { font-size: 0.9rem; font-weight: 700; white-space: nowrap; }
+  .option-price span { font-size: 0.72rem; color: #888; font-weight: 400; }
+  .btn-add-selected { background: #1a1a1a; color: #fff; border: none; border-radius: 8px; padding: 10px 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; transition: background .15s; }
+  .btn-add-selected:hover { background: #333; }
+  .selected-label { font-size: 0.82rem; color: #555; margin-bottom: 10px; }
+  .selected-label strong { color: #1a1a1a; }
+  .btn-tout {
+    background: #1a1a1a; color: #fff; border: none; border-radius: 10px;
+    padding: 14px 32px; font-size: 1rem; font-weight: 700; cursor: pointer;
+    width: 100%; transition: background .15s, opacity .15s;
+  }
+  .btn-tout:hover:not(:disabled) { background: #333; }
+  .btn-tout:disabled { opacity: 0.6; cursor: not-allowed; }
+  .btn-tout-hint { font-size: 0.75rem; color: #888; margin-top: 8px; text-align: center; }
+  .progress-bar-wrap { height: 4px; background: #e8e8e8; border-radius: 2px; margin-top: 10px; overflow: hidden; display: none; }
+  .progress-bar { height: 100%; background: #1a1a1a; border-radius: 2px; width: 0%; transition: width .3s ease; }
+  .status-msg { font-size: 0.8rem; color: #555; text-align: center; margin-top: 6px; min-height: 18px; }
+  .recap { background: #1a1a1a; color: #fff; border-radius: 12px; padding: 24px; }
+  .recap h2 { font-size: 1rem; font-weight: 700; margin-bottom: 18px; }
+  .recap-row { display: flex; justify-content: space-between; font-size: 0.88rem; padding: 6px 0; border-bottom: 1px solid #333; }
+  .recap-row:last-of-type { border-bottom: none; }
+  .recap-row.total-ht { font-weight: 700; margin-top: 4px; font-size: 0.95rem; }
+  .recap-row.tva { color: #aaa; font-size: 0.82rem; }
+  .recap-row.total-ttc { font-weight: 700; font-size: 1.05rem; color: #fff; border-top: 1px solid #555; margin-top: 6px; padding-top: 10px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Votre installation karaoké box clé en main</h1>
+  <p class="subtitle">Sélectionnez vos micros et enceintes, puis cliquez sur le bouton pour tout ajouter au panier Thomann en un clic.</p>
+
+  <div class="section">
+    <div class="section-header"><div class="step-badge">1</div><div><div class="section-title">Équipement de base</div><div class="section-sub">Inclus dans toutes les configurations</div></div></div>
+    <div class="product-row"><div class="product-info"><div class="product-name">Tascam US-2x2HR</div><div class="product-desc">Interface audio USB</div></div><div class="product-price">120,00 € <span>HT</span></div><a class="btn-add" href="https://www.thomann.fr/basket_add.html?ar=506519&menge=1" target="_blank">+ Ajouter</a></div>
+    <div class="product-row"><div class="product-info"><div class="product-name">Apple USB-C Digital AV Multiport</div><div class="product-desc">HDMI + USB + charge simultanée</div></div><div class="product-price">64,17 € <span>HT</span></div><a class="btn-add" href="https://www.thomann.fr/basket_add.html?ar=565648&menge=1" target="_blank">+ Ajouter</a></div>
+    <div class="product-row"><div class="product-info"><div class="product-name">Apple iPad 128 Go Wi-Fi</div><div class="product-desc">Tablette pour le logiciel karaoké</div></div><div class="product-price">389,00 € <span>TTC</span></div><a class="btn-add" href="https://www.apple.com/fr/shop/buy-ipad/ipad" target="_blank" style="background:#555;">→ Apple Store</a></div>
+    <div class="product-row"><div class="product-info"><div class="product-name">Câbles XLR 6m × 2 — the sssnake SM6BK</div><div class="product-desc">Récepteurs HF → interface audio</div></div><div class="product-price">9,67 € <span>HT</span></div><a class="btn-add" href="https://www.thomann.fr/basket_add.html?ar=128512&menge=2" target="_blank">+ Ajouter</a></div>
+    <div class="product-row"><div class="product-info"><div class="product-name">Câble Jack TRS → 2×XLR 3m — sssnake YPX2030</div><div class="product-desc">Interface → enceintes actives</div></div><div class="product-price">5,67 € <span>HT</span></div><a class="btn-add" href="https://www.thomann.fr/basket_add.html?ar=157993&menge=1" target="_blank">+ Ajouter</a></div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="step-badge">2</div><div><div class="section-title">Micros sans fil</div><div class="section-sub">Choisissez 1 option</div></div></div>
+    <div class="options-grid" id="micros-options">
+      <label class="option-card selected" data-price="165.00" data-name="the t.bone freeU Twin HT 863" data-url="https://www.thomann.fr/basket_add.html?ar=432866&menge=1"><input type="radio" name="micros" checked><div class="option-label"><div class="option-badge budget">Budget</div><div class="option-name">the t.bone freeU Twin HT 863</div><div class="option-spec">UHF 863 MHz · 2 micros dynamiques</div></div><div class="option-price">165,00 € <span>HT</span></div></label>
+      <label class="option-card" data-price="582.50" data-name="LD Systems U505 HHC2" data-url="https://www.thomann.fr/basket_add.html?ar=433048&menge=1"><input type="radio" name="micros"><div class="option-label"><div class="option-badge intermediaire">Intermédiaire</div><div class="option-name">LD Systems U505 HHC2</div><div class="option-spec">UHF 584–607 MHz · condensateurs</div></div><div class="option-price">582,50 € <span>HT</span></div></label>
+      <label class="option-card" data-price="582.50" data-name="LD Systems U506 HHC2" data-url="https://www.thomann.fr/basket_add.html?ar=433052&menge=1"><input type="radio" name="micros"><div class="option-label"><div class="option-badge pro">Pro</div><div class="option-name">LD Systems U506 HHC2</div><div class="option-spec">UHF 655–679 MHz · condensateurs</div></div><div class="option-price">582,50 € <span>HT</span></div></label>
+    </div>
+    <p class="selected-label">Sélectionné : <strong id="micros-selected-name">the t.bone freeU Twin HT 863</strong></p>
+    <a class="btn-add-selected" id="micros-btn" href="https://www.thomann.fr/basket_add.html?ar=432866&menge=1" target="_blank">+ Ajouter au panier</a>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="step-badge">3</div><div><div class="section-title">Enceintes + caisson</div><div class="section-sub">Choisissez 1 option</div></div></div>
+    <div class="options-grid" id="enceintes-options">
+      <label class="option-card selected" data-price="390.00" data-name="LD Systems Dave 8 Roadie" data-url="https://www.thomann.fr/basket_add.html?ar=313331&menge=1"><input type="radio" name="enceintes" checked><div class="option-label"><div class="option-badge petite">Petite salle</div><div class="option-name">LD Systems Dave 8 Roadie</div><div class="option-spec">Sub 8" 150W + 2×100W · ~70 pers.</div></div><div class="option-price">390,00 € <span>HT</span></div></label>
+      <label class="option-card" data-price="612.50" data-name="LD Systems Dave 10 G4X" data-url="https://www.thomann.fr/basket_add.html?ar=508860&menge=1"><input type="radio" name="enceintes"><div class="option-label"><div class="option-badge recommande">Recommandé</div><div class="option-name">LD Systems Dave 10 G4X</div><div class="option-spec">Sub 10" 720W + sats 6,5"</div></div><div class="option-price">612,50 € <span>HT</span></div></label>
+      <label class="option-card" data-price="825.00" data-name="LD Systems Dave 12 G4X" data-url="https://www.thomann.fr/basket_add.html?ar=508861&menge=1"><input type="radio" name="enceintes"><div class="option-label"><div class="option-badge grande">Grande salle</div><div class="option-name">LD Systems Dave 12 G4X</div><div class="option-spec">Sub 12" 1030W + sats 8"</div></div><div class="option-price">825,00 € <span>HT</span></div></label>
+    </div>
+    <p class="selected-label">Sélectionné : <strong id="enceintes-selected-name">LD Systems Dave 8 Roadie</strong></p>
+    <a class="btn-add-selected" id="enceintes-btn" href="https://www.thomann.fr/basket_add.html?ar=313331&menge=1" target="_blank">+ Ajouter au panier</a>
+  </div>
+
+  <div style="margin-bottom:20px;">
+    <button class="btn-tout" id="btn-tout" onclick="toutAjouter(this)">🛒 Tout ajouter au panier Thomann</button>
+    <div class="progress-bar-wrap" id="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+    <p class="status-msg" id="status-msg"></p>
+    <p class="btn-tout-hint">Ajoute tous les produits sélectionnés en un seul clic</p>
+  </div>
+
+  <div class="recap">
+    <h2>Récapitulatif</h2>
+    <div class="recap-row"><span>Interface + adaptateur + câbles</span><span>199,51 € HT</span></div>
+    <div class="recap-row"><span id="recap-micros-label">Micros the t.bone freeU Twin</span><span id="recap-micros-price">165,00 € HT</span></div>
+    <div class="recap-row"><span id="recap-enceintes-label">Enceintes Dave 8 Roadie</span><span id="recap-enceintes-price">390,00 € HT</span></div>
+    <div class="recap-row total-ht"><span>Total HT</span><span id="recap-total-ht">754,51 € HT</span></div>
+    <div class="recap-row tva"><span>TVA 20%</span><span id="recap-tva">150,90 €</span></div>
+    <div class="recap-row total-ttc"><span>Total TTC</span><span id="recap-total-ttc">905,41 €</span></div>
+  </div>
+</div>
+<script>
+  const BASE = 199.51, TVA = 0.20;
+
+  function fmt(n) { return n.toFixed(2).replace('.', ',') + ' €'; }
+
+  function updateRecap() {
+    const m = document.querySelector('#micros-options .option-card.selected');
+    const e = document.querySelector('#enceintes-options .option-card.selected');
+    const mp = parseFloat(m.dataset.price), ep = parseFloat(e.dataset.price);
+    const ht = BASE + mp + ep, tva = ht * TVA;
+    document.getElementById('recap-micros-label').textContent = 'Micros ' + m.dataset.name;
+    document.getElementById('recap-micros-price').textContent = fmt(mp) + ' HT';
+    document.getElementById('recap-enceintes-label').textContent = 'Enceintes ' + e.dataset.name;
+    document.getElementById('recap-enceintes-price').textContent = fmt(ep) + ' HT';
+    document.getElementById('recap-total-ht').textContent = fmt(ht) + ' HT';
+    document.getElementById('recap-tva').textContent = fmt(tva);
+    document.getElementById('recap-total-ttc').textContent = fmt(ht + tva);
+  }
+
+  function setup(gid, nid, bid) {
+    document.getElementById(gid).querySelectorAll('.option-card').forEach(c => {
+      c.addEventListener('click', () => {
+        document.getElementById(gid).querySelectorAll('.option-card').forEach(x => x.classList.remove('selected'));
+        c.classList.add('selected'); c.querySelector('input').checked = true;
+        document.getElementById(nid).textContent = c.dataset.name;
+        document.getElementById(bid).href = c.dataset.url;
+        updateRecap();
+      });
+    });
+  }
+  setup('micros-options', 'micros-selected-name', 'micros-btn');
+  setup('enceintes-options', 'enceintes-selected-name', 'enceintes-btn');
+
+  async function toutAjouter(btn) {
+    const BASE_URLS = [
+      'https://www.thomann.fr/basket_add.html?ar=506519&menge=1',
+      'https://www.thomann.fr/basket_add.html?ar=565648&menge=1',
+      'https://www.thomann.fr/basket_add.html?ar=128512&menge=2',
+      'https://www.thomann.fr/basket_add.html?ar=157993&menge=1',
+    ];
+    const microsUrl = document.querySelector('#micros-options .option-card.selected').dataset.url;
+    const enceinteUrl = document.querySelector('#enceintes-options .option-card.selected').dataset.url;
+    const urls = [...BASE_URLS, microsUrl, enceinteUrl];
+
+    const progressWrap = document.getElementById('progress-wrap');
+    const progressBar = document.getElementById('progress-bar');
+    const statusMsg = document.getElementById('status-msg');
+
+    btn.disabled = true;
+    btn.textContent = '⏳ Ajout en cours...';
+    progressWrap.style.display = 'block';
+    progressBar.style.width = '0%';
+    statusMsg.textContent = 'Préparation du panier...';
+
+    // Ouvrir le panier Thomann dès le clic (dans le même contexte utilisateur)
+    const cartTab = window.open('about:blank', '_blank');
+
+    // Ajouter chaque article silencieusement via fetch
+    for (let i = 0; i < urls.length; i++) {
+      const pct = Math.round(((i + 1) / urls.length) * 100);
+      statusMsg.textContent = 'Ajout article ' + (i + 1) + ' / ' + urls.length + '...';
+      try {
+        await fetch(urls[i], { mode: 'no-cors', credentials: 'include' });
+      } catch (e) { /* non bloquant */ }
+      progressBar.style.width = pct + '%';
+      await new Promise(r => setTimeout(r, 250));
+    }
+
+    statusMsg.textContent = '✓ Ouverture du panier Thomann...';
+    progressBar.style.width = '100%';
+
+    // Rediriger le nouvel onglet vers le panier Thomann
+    if (cartTab) {
+      cartTab.location.href = 'https://www.thomann.fr/fr/my_basket.html';
+    } else {
+      // Si l'onglet a été bloqué, naviguer dans l'onglet actuel
+      window.location.href = 'https://www.thomann.fr/fr/my_basket.html';
+    }
+
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.textContent = '🛒 Tout ajouter au panier Thomann';
+      progressWrap.style.display = 'none';
+      statusMsg.textContent = '';
+    }, 2000);
+  }
+</script>
+</body>
+</html>
