@@ -139,6 +139,10 @@ input[type=checkbox]{width:15px;height:15px;accent-color:var(--pink);flex-shrink
 .cta-acheter:hover{opacity:.9;transform:translateY(-1px)}
 /* Loyer info */
 .loyer-info{font-size:10px;color:var(--accent);margin-top:4px;min-height:14px}
+/* Phone with dial code */
+.phone-wrap{display:flex;gap:0}
+.phone-cc{width:90px!important;border-radius:10px 0 0 10px!important;border-right:none!important;flex-shrink:0;font-size:13px!important;padding-right:4px!important}
+.phone-num{border-radius:0 10px 10px 0!important;flex:1}
 /* Footer */
 footer{text-align:center;margin-top:24px;font-size:11px;color:rgba(245,244,255,0.2);position:relative;z-index:1}
 footer a{color:rgba(232,68,122,.5);text-decoration:none}
@@ -403,8 +407,12 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
         <span class="err" id="e-email" data-i18n="email_err">Email invalide</span>
       </div>
       <div class="f">
-        <label class="lbl" data-i18n="phone_label">Téléphone <span style="font-weight:400;opacity:.5">(optionnel)</span></label>
-        <input type="tel" id="lphone" data-i18n-ph="phone_ph" placeholder="+33 6 12 34 56 78">
+        <label class="lbl" data-i18n="phone_label">Téléphone</label>
+        <div class="phone-wrap">
+          <select id="lphone-cc" class="phone-cc"></select>
+          <input type="tel" id="lphone" class="phone-num" placeholder="6 12 34 56 78">
+        </div>
+        <span class="err" id="e-phone" data-i18n="phone_err">Téléphone requis</span>
       </div>
       <div class="f">
         <label class="lbl" data-i18n="stage_label">Stade du projet</label>
@@ -524,8 +532,12 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
         <span class="err" id="ss-e-email" data-i18n="email_err">Email invalide</span>
       </div>
       <div class="f">
-        <label class="lbl" data-i18n="phone_label">Téléphone <span style="font-weight:400;opacity:.5">(optionnel)</span></label>
-        <input type="tel" id="ss-phone" data-i18n-ph="phone_ph" placeholder="+33 6 12 34 56 78">
+        <label class="lbl" data-i18n="phone_label">Téléphone</label>
+        <div class="phone-wrap">
+          <select id="ss-phone-cc" class="phone-cc"></select>
+          <input type="tel" id="ss-phone" class="phone-num" placeholder="6 12 34 56 78">
+        </div>
+        <span class="err" id="ss-e-phone" data-i18n="phone_err">Téléphone requis</span>
       </div>
       <div class="f">
         <label class="lbl" data-i18n="ss_type_label">Type d'établissement</label>
@@ -760,6 +772,63 @@ async function detectLang() {
     LANG = mapCountryToLang(COUNTRY_CODE);
   } catch(e) { LANG = 'en-gb'; }
   applyLang();
+  setPhoneCC();
+}
+
+// ─── Indicatifs téléphoniques ─────────────────────────────────────────────────
+var DIAL_CODES = [
+  {cc:'FR',code:'+33',flag:'🇫🇷'},{cc:'BE',code:'+32',flag:'🇧🇪'},
+  {cc:'CH',code:'+41',flag:'🇨🇭'},{cc:'LU',code:'+352',flag:'🇱🇺'},
+  {cc:'MC',code:'+377',flag:'🇲🇨'},{cc:'DE',code:'+49',flag:'🇩🇪'},
+  {cc:'AT',code:'+43',flag:'🇦🇹'},{cc:'ES',code:'+34',flag:'🇪🇸'},
+  {cc:'IT',code:'+39',flag:'🇮🇹'},{cc:'PT',code:'+351',flag:'🇵🇹'},
+  {cc:'GB',code:'+44',flag:'🇬🇧'},{cc:'IE',code:'+353',flag:'🇮🇪'},
+  {cc:'NL',code:'+31',flag:'🇳🇱'},{cc:'PL',code:'+48',flag:'🇵🇱'},
+  {cc:'CZ',code:'+420',flag:'🇨🇿'},{cc:'HU',code:'+36',flag:'🇭🇺'},
+  {cc:'RO',code:'+40',flag:'🇷🇴'},{cc:'GR',code:'+30',flag:'🇬🇷'},
+  {cc:'SE',code:'+46',flag:'🇸🇪'},{cc:'NO',code:'+47',flag:'🇳🇴'},
+  {cc:'DK',code:'+45',flag:'🇩🇰'},{cc:'FI',code:'+358',flag:'🇫🇮'},
+  {cc:'US',code:'+1',flag:'🇺🇸'},{cc:'CA',code:'+1',flag:'🇨🇦'},
+  {cc:'AU',code:'+61',flag:'🇦🇺'},{cc:'NZ',code:'+64',flag:'🇳🇿'},
+  {cc:'MA',code:'+212',flag:'🇲🇦'},{cc:'DZ',code:'+213',flag:'🇩🇿'},
+  {cc:'TN',code:'+216',flag:'🇹🇳'},{cc:'SN',code:'+221',flag:'🇸🇳'},
+  {cc:'CI',code:'+225',flag:'🇨🇮'},{cc:'CM',code:'+237',flag:'🇨🇲'},
+  {cc:'CD',code:'+243',flag:'🇨🇩'},{cc:'MG',code:'+261',flag:'🇲🇬'},
+  {cc:'MU',code:'+230',flag:'🇲🇺'},{cc:'RE',code:'+262',flag:'🇷🇪'},
+  {cc:'GP',code:'+590',flag:'🇬🇵'},{cc:'MQ',code:'+596',flag:'🇲🇶'},
+  {cc:'GF',code:'+594',flag:'🇬🇫'},{cc:'NC',code:'+687',flag:'🇳🇨'},
+  {cc:'PF',code:'+689',flag:'🇵🇫'},{cc:'JP',code:'+81',flag:'🇯🇵'},
+  {cc:'CN',code:'+86',flag:'🇨🇳'},{cc:'SG',code:'+65',flag:'🇸🇬'},
+  {cc:'AE',code:'+971',flag:'🇦🇪'},{cc:'SA',code:'+966',flag:'🇸🇦'},
+  {cc:'BR',code:'+55',flag:'🇧🇷'},{cc:'MX',code:'+52',flag:'🇲🇽'},
+  {cc:'AR',code:'+54',flag:'🇦🇷'},{cc:'ZA',code:'+27',flag:'🇿🇦'}
+];
+
+function buildPhoneCCs() {
+  ['lphone-cc', 'ss-phone-cc'].forEach(function(id) {
+    var sel = document.getElementById(id);
+    if (!sel) return;
+    DIAL_CODES.forEach(function(d) {
+      var opt = document.createElement('option');
+      opt.value = d.code;
+      opt.textContent = d.flag + ' ' + d.code;
+      sel.appendChild(opt);
+    });
+  });
+  setPhoneCC();
+}
+
+function setPhoneCC() {
+  var cc = COUNTRY_CODE || 'FR';
+  var found = null;
+  for (var i = 0; i < DIAL_CODES.length; i++) {
+    if (DIAL_CODES[i].cc === cc) { found = DIAL_CODES[i]; break; }
+  }
+  var code = found ? found.code : '+33';
+  ['lphone-cc', 'ss-phone-cc'].forEach(function(id) {
+    var sel = document.getElementById(id);
+    if (sel) sel.value = code;
+  });
 }
 
 // ─── State ───────────────────────────────────────────────────────────────────
@@ -1207,17 +1276,22 @@ async function doSubmit() {
   var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   var ok = true;
 
+  var phoneCC  = document.getElementById('lphone-cc').value;
+  var phoneNum = document.getElementById('lphone').value.trim();
+  var phone    = phoneCC + ' ' + phoneNum;
+
   var eF = document.getElementById('e-firstname');
   var eE = document.getElementById('e-email');
+  var eT = document.getElementById('e-phone');
   var eO = document.getElementById('e-optin');
 
   eF.style.display = firstname ? 'none' : 'block'; if (!firstname) ok = false;
   eE.style.display = (email && emailRegex.test(email)) ? 'none' : 'block'; if (!email || !emailRegex.test(email)) ok = false;
+  eT.style.display = phoneNum ? 'none' : 'block'; if (!phoneNum) ok = false;
   eO.style.display = optin ? 'none' : 'block'; if (!optin) ok = false;
 
   if (!ok) return;
 
-  var phone = document.getElementById('lphone').value.trim();
   var r    = calc();
   var name = firstname;
 
@@ -1328,17 +1402,22 @@ async function doSubmitSimple() {
   var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   var ok = true;
 
+  var phoneCC  = document.getElementById('ss-phone-cc').value;
+  var phoneNum = document.getElementById('ss-phone').value.trim();
+  var phone    = phoneCC + ' ' + phoneNum;
+
   var eF = document.getElementById('ss-e-firstname');
   var eE = document.getElementById('ss-e-email');
+  var eT = document.getElementById('ss-e-phone');
   var eO = document.getElementById('ss-e-optin');
 
   eF.style.display = firstname ? 'none' : 'block'; if (!firstname) ok = false;
   eE.style.display = (email && emailRegex.test(email)) ? 'none' : 'block'; if (!email || !emailRegex.test(email)) ok = false;
+  eT.style.display = phoneNum ? 'none' : 'block'; if (!phoneNum) ok = false;
   eO.style.display = optin ? 'none' : 'block'; if (!optin) ok = false;
 
   if (!ok) return;
 
-  var phone = document.getElementById('ss-phone').value.trim();
   var r    = calcSimple();
   var name = firstname;
 
@@ -1506,6 +1585,7 @@ function showResultsSimple(r, name, city, typeText) {
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
+buildPhoneCCs();
 detectLang();
 </script>
 </body>
