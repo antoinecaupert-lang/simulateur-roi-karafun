@@ -396,10 +396,17 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
     </div>
 
     <div class="g1">
-      <div class="f">
-        <label class="lbl" data-i18n="firstname_label">Prénom</label>
-        <input type="text" id="lfirstname" data-i18n-ph="firstname_ph" placeholder="Jean">
-        <span class="err" id="e-firstname" data-i18n="firstname_err">Veuillez renseigner votre prénom</span>
+      <div class="g2">
+        <div class="f">
+          <label class="lbl" data-i18n="firstname_label">Prénom</label>
+          <input type="text" id="lfirstname" data-i18n-ph="firstname_ph" placeholder="Jean">
+          <span class="err" id="e-firstname" data-i18n="firstname_err">Veuillez renseigner votre prénom</span>
+        </div>
+        <div class="f">
+          <label class="lbl" data-i18n="lastname_label">Nom</label>
+          <input type="text" id="llastname" data-i18n-ph="lastname_ph" placeholder="Dupont">
+          <span class="err" id="e-lastname" data-i18n="lastname_err">Veuillez renseigner votre nom</span>
+        </div>
       </div>
       <div class="f">
         <label class="lbl">Email</label>
@@ -521,10 +528,17 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
     </div>
 
     <div class="g1">
-      <div class="f">
-        <label class="lbl" data-i18n="firstname_label">Prénom</label>
-        <input type="text" id="ss-firstname" data-i18n-ph="firstname_ph" placeholder="Jean">
-        <span class="err" id="ss-e-firstname" data-i18n="firstname_err">Veuillez renseigner votre prénom</span>
+      <div class="g2">
+        <div class="f">
+          <label class="lbl" data-i18n="firstname_label">Prénom</label>
+          <input type="text" id="ss-firstname" data-i18n-ph="firstname_ph" placeholder="Jean">
+          <span class="err" id="ss-e-firstname" data-i18n="firstname_err">Veuillez renseigner votre prénom</span>
+        </div>
+        <div class="f">
+          <label class="lbl" data-i18n="lastname_label">Nom</label>
+          <input type="text" id="ss-lastname" data-i18n-ph="lastname_ph" placeholder="Dupont">
+          <span class="err" id="ss-e-lastname" data-i18n="lastname_err">Veuillez renseigner votre nom</span>
+        </div>
       </div>
       <div class="f">
         <label class="lbl">Email</label>
@@ -1276,24 +1290,27 @@ async function doSubmit() {
   var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   var ok = true;
 
+  var lastname = document.getElementById('llastname').value.trim();
   var phoneCC  = document.getElementById('lphone-cc').value;
   var phoneNum = document.getElementById('lphone').value.trim();
   var phone    = phoneCC + ' ' + phoneNum;
 
-  var eF = document.getElementById('e-firstname');
-  var eE = document.getElementById('e-email');
-  var eT = document.getElementById('e-phone');
-  var eO = document.getElementById('e-optin');
+  var eF  = document.getElementById('e-firstname');
+  var eLN = document.getElementById('e-lastname');
+  var eE  = document.getElementById('e-email');
+  var eT  = document.getElementById('e-phone');
+  var eO  = document.getElementById('e-optin');
 
-  eF.style.display = firstname ? 'none' : 'block'; if (!firstname) ok = false;
-  eE.style.display = (email && emailRegex.test(email)) ? 'none' : 'block'; if (!email || !emailRegex.test(email)) ok = false;
-  eT.style.display = phoneNum ? 'none' : 'block'; if (!phoneNum) ok = false;
-  eO.style.display = optin ? 'none' : 'block'; if (!optin) ok = false;
+  eF.style.display  = firstname ? 'none' : 'block'; if (!firstname) ok = false;
+  eLN.style.display = lastname  ? 'none' : 'block'; if (!lastname)  ok = false;
+  eE.style.display  = (email && emailRegex.test(email)) ? 'none' : 'block'; if (!email || !emailRegex.test(email)) ok = false;
+  eT.style.display  = phoneNum ? 'none' : 'block'; if (!phoneNum) ok = false;
+  eO.style.display  = optin ? 'none' : 'block'; if (!optin) ok = false;
 
   if (!ok) return;
 
   var r    = calc();
-  var name = firstname;
+  var name = firstname + ' ' + lastname;
 
   go(4);
   document.getElementById('load-msg').textContent = t('loading_ai');
@@ -1340,9 +1357,9 @@ async function doSubmit() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       firstname: firstname,
-      lastname: '',
+      lastname: lastname,
       email: email,
-      phone: phone || '',
+      phone: phone,
       city: city || '',
       country: COUNTRY_CODE,
       stage: stageText,
@@ -1402,24 +1419,27 @@ async function doSubmitSimple() {
   var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   var ok = true;
 
+  var lastname = document.getElementById('ss-lastname').value.trim();
   var phoneCC  = document.getElementById('ss-phone-cc').value;
   var phoneNum = document.getElementById('ss-phone').value.trim();
   var phone    = phoneCC + ' ' + phoneNum;
 
-  var eF = document.getElementById('ss-e-firstname');
-  var eE = document.getElementById('ss-e-email');
-  var eT = document.getElementById('ss-e-phone');
-  var eO = document.getElementById('ss-e-optin');
+  var eF  = document.getElementById('ss-e-firstname');
+  var eLN = document.getElementById('ss-e-lastname');
+  var eE  = document.getElementById('ss-e-email');
+  var eT  = document.getElementById('ss-e-phone');
+  var eO  = document.getElementById('ss-e-optin');
 
-  eF.style.display = firstname ? 'none' : 'block'; if (!firstname) ok = false;
-  eE.style.display = (email && emailRegex.test(email)) ? 'none' : 'block'; if (!email || !emailRegex.test(email)) ok = false;
-  eT.style.display = phoneNum ? 'none' : 'block'; if (!phoneNum) ok = false;
-  eO.style.display = optin ? 'none' : 'block'; if (!optin) ok = false;
+  eF.style.display  = firstname ? 'none' : 'block'; if (!firstname) ok = false;
+  eLN.style.display = lastname  ? 'none' : 'block'; if (!lastname)  ok = false;
+  eE.style.display  = (email && emailRegex.test(email)) ? 'none' : 'block'; if (!email || !emailRegex.test(email)) ok = false;
+  eT.style.display  = phoneNum ? 'none' : 'block'; if (!phoneNum) ok = false;
+  eO.style.display  = optin ? 'none' : 'block'; if (!optin) ok = false;
 
   if (!ok) return;
 
   var r    = calcSimple();
-  var name = firstname;
+  var name = firstname + ' ' + lastname;
 
   goSS(3);
 
@@ -1428,7 +1448,7 @@ async function doSubmitSimple() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      firstname: firstname, lastname: '', email: email, phone: phone || '',
+      firstname: firstname, lastname: lastname, email: email, phone: phone,
       city: city || '', country: COUNTRY_CODE, stage: 'Établissement existant — ' + typeText,
       roi: r.roi, revM: r.revM, net: r.net, invest: r.invest,
       pbkY: isFinite(r.pbkY) ? r.pbkY : 0, nb: r.nb
