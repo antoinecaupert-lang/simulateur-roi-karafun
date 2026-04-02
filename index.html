@@ -403,6 +403,10 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
         <span class="err" id="e-email" data-i18n="email_err">Email invalide</span>
       </div>
       <div class="f">
+        <label class="lbl" data-i18n="phone_label">Téléphone <span style="font-weight:400;opacity:.5">(optionnel)</span></label>
+        <input type="tel" id="lphone" data-i18n-ph="phone_ph" placeholder="+33 6 12 34 56 78">
+      </div>
+      <div class="f">
         <label class="lbl" data-i18n="stage_label">Stade du projet</label>
         <select id="lstage">
           <option value="curieux" data-i18n="stage_curieux">Je suis curieux</option>
@@ -518,6 +522,10 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
         <label class="lbl">Email</label>
         <input type="email" id="ss-email" data-i18n-ph="email_ph" placeholder="jean@exemple.fr">
         <span class="err" id="ss-e-email" data-i18n="email_err">Email invalide</span>
+      </div>
+      <div class="f">
+        <label class="lbl" data-i18n="phone_label">Téléphone <span style="font-weight:400;opacity:.5">(optionnel)</span></label>
+        <input type="tel" id="ss-phone" data-i18n-ph="phone_ph" placeholder="+33 6 12 34 56 78">
       </div>
       <div class="f">
         <label class="lbl" data-i18n="ss_type_label">Type d'établissement</label>
@@ -1209,6 +1217,7 @@ async function doSubmit() {
 
   if (!ok) return;
 
+  var phone = document.getElementById('lphone').value.trim();
   var r    = calc();
   var name = firstname;
 
@@ -1259,7 +1268,7 @@ async function doSubmit() {
       firstname: firstname,
       lastname: '',
       email: email,
-      phone: '',
+      phone: phone || '',
       city: city || '',
       country: COUNTRY_CODE,
       stage: stageText,
@@ -1329,6 +1338,7 @@ async function doSubmitSimple() {
 
   if (!ok) return;
 
+  var phone = document.getElementById('ss-phone').value.trim();
   var r    = calcSimple();
   var name = firstname;
 
@@ -1339,7 +1349,7 @@ async function doSubmitSimple() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      firstname: firstname, lastname: '', email: email, phone: '',
+      firstname: firstname, lastname: '', email: email, phone: phone || '',
       city: city || '', country: COUNTRY_CODE, stage: 'Établissement existant — ' + typeText,
       roi: r.roi, revM: r.revM, net: r.net, invest: r.invest,
       pbkY: isFinite(r.pbkY) ? r.pbkY : 0, nb: r.nb
