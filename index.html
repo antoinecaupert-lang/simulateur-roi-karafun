@@ -259,8 +259,8 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
       <div class="f">
         <label class="lbl" data-i18n="s1_occ_label">Occupation</label>
         <div class="sv">
-          <div class="sv-val" id="occ-v">55%</div>
-          <input type="range" id="occ" min="10" max="100" value="45" step="5">
+          <div class="sv-val" id="occ-v">30%</div>
+          <input type="range" id="occ" min="10" max="100" value="30" step="5">
           <div class="sl"><span>10%</span><span>100%</span></div>
         </div>
       </div>
@@ -397,19 +397,9 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
         <span class="err" id="e-firstname" data-i18n="firstname_err">Veuillez renseigner votre prénom</span>
       </div>
       <div class="f">
-        <label class="lbl" data-i18n="lastname_label">Nom</label>
-        <input type="text" id="llastname" data-i18n-ph="lastname_ph" placeholder="Dupont">
-        <span class="err" id="e-lastname" data-i18n="lastname_err">Veuillez renseigner votre nom</span>
-      </div>
-      <div class="f">
         <label class="lbl">Email</label>
         <input type="email" id="lemail" data-i18n-ph="email_ph" placeholder="jean@exemple.fr">
         <span class="err" id="e-email" data-i18n="email_err">Email invalide</span>
-      </div>
-      <div class="f">
-        <label class="lbl" data-i18n="phone_label">Téléphone</label>
-        <input type="tel" id="lphone" data-i18n-ph="phone_ph" placeholder="+33 6 12 34 56 78">
-        <span class="err" id="e-phone" data-i18n="phone_err">Téléphone requis</span>
       </div>
       <div class="f">
         <label class="lbl" data-i18n="stage_label">Stade du projet</label>
@@ -483,8 +473,8 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
     <div class="f">
       <label class="lbl" data-i18n="ss1_occ_label">Taux d'occupation</label>
       <div class="sv">
-        <div class="sv-val" id="ss-occ-v">55%</div>
-        <input type="range" id="ss-occ" min="20" max="90" value="45" step="5" oninput="document.getElementById('ss-occ-v').textContent=this.value+'%'">
+        <div class="sv-val" id="ss-occ-v">30%</div>
+        <input type="range" id="ss-occ" min="20" max="90" value="30" step="5" oninput="document.getElementById('ss-occ-v').textContent=this.value+'%'">
         <div class="sl"><span>20%</span><span>90%</span></div>
       </div>
     </div>
@@ -523,19 +513,9 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
         <span class="err" id="ss-e-firstname" data-i18n="firstname_err">Veuillez renseigner votre prénom</span>
       </div>
       <div class="f">
-        <label class="lbl" data-i18n="lastname_label">Nom</label>
-        <input type="text" id="ss-lastname" data-i18n-ph="lastname_ph" placeholder="Dupont">
-        <span class="err" id="ss-e-lastname" data-i18n="lastname_err">Veuillez renseigner votre nom</span>
-      </div>
-      <div class="f">
         <label class="lbl">Email</label>
         <input type="email" id="ss-email" data-i18n-ph="email_ph" placeholder="jean@exemple.fr">
         <span class="err" id="ss-e-email" data-i18n="email_err">Email invalide</span>
-      </div>
-      <div class="f">
-        <label class="lbl" data-i18n="phone_label">Téléphone</label>
-        <input type="tel" id="ss-phone" data-i18n-ph="phone_ph" placeholder="+33 6 12 34 56 78">
-        <span class="err" id="ss-e-phone" data-i18n="phone_err">Téléphone requis</span>
       </div>
       <div class="f">
         <label class="lbl" data-i18n="ss_type_label">Type d'établissement</label>
@@ -679,7 +659,7 @@ var TR = {
   res_net:         { fr:'Net/mois', 'en-us':'Net/month', 'en-gb':'Net/month', es:'Neto/mes', it:'Netto/mese', de:'Netto/Monat' },
   res_marge:       { fr:'Marge', 'en-us':'Margin', 'en-gb':'Margin', es:'Margen', it:'Margine', de:'Marge' },
   res_boissons_title: { fr:'🍹 Impact des boissons & cocktails', 'en-us':'🍹 Impact of drinks & cocktails', 'en-gb':'🍹 Impact of drinks & cocktails', es:'🍹 Impacto de bebidas & cócteles', it:'🍹 Impatto delle bevande & cocktail', de:'🍹 Auswirkung von Getränken & Cocktails' },
-  res_boissons_text:  { fr:'Le karaoké stimule la consommation de boissons. Les exploitants constatent en moyenne une <strong style="color:var(--accent)">augmentation de 40% du CA</strong> avec une activité boissons.', 'en-us':'Karaoke stimulates drink consumption. Operators see on average a <strong style="color:var(--accent)">40% increase in revenue</strong> with a drinks offering.', 'en-gb':'Karaoke stimulates drink consumption. Operators see on average a <strong style="color:var(--accent)">40% increase in revenue</strong> with a drinks offering.', es:'El karaoke estimula el consumo de bebidas. Los operadores observan en promedio un <strong style="color:var(--accent)">aumento del 40% en los ingresos</strong> con una oferta de bebidas.', it:'Il karaoke stimola il consumo di bevande. Gli operatori registrano in media un <strong style="color:var(--accent)">aumento del 40% dei ricavi</strong> con un\'offerta bevande.', de:'Karaoke stimuliert den Getränkekonsum. Betreiber verzeichnen im Durchschnitt eine <strong style="color:var(--accent)">40%ige Umsatzsteigerung</strong> mit einem Getränkeangebot.' },
+  res_boissons_text:  { fr:'Le karaoké stimule la consommation de boissons. Les exploitants constatent en moyenne une <strong style="color:var(--accent)">augmentation de 25% du CA</strong> avec une activité boissons, pour un coût supplémentaire estimé à 5% du CA.', 'en-us':'Karaoke stimulates drink consumption. Operators see on average a <strong style="color:var(--accent)">25% increase in revenue</strong> with a drinks offering, with an estimated 5% additional cost.', 'en-gb':'Karaoke stimulates drink consumption. Operators see on average a <strong style="color:var(--accent)">25% increase in revenue</strong> with a drinks offering, with an estimated 5% additional cost.', es:'El karaoke estimula el consumo de bebidas. Los operadores observan en promedio un <strong style="color:var(--accent)">aumento del 25% en los ingresos</strong> con una oferta de bebidas, con un coste adicional estimado del 5%.', it:'Il karaoke stimola il consumo di bevande. Gli operatori registrano in media un <strong style="color:var(--accent)">aumento del 25% dei ricavi</strong> con un\'offerta bevande, con un costo aggiuntivo stimato del 5%.', de:'Karaoke stimuliert den Getränkekonsum. Betreiber verzeichnen im Durchschnitt eine <strong style="color:var(--accent)">25%ige Umsatzsteigerung</strong> mit einem Getränkeangebot, bei geschätzten 5% Zusatzkosten.' },
   res_ca_bois:     { fr:'CA avec boissons', 'en-us':'Revenue with drinks', 'en-gb':'Revenue with drinks', es:'Ingresos con bebidas', it:'Ricavi con bevande', de:'Umsatz mit Getränken' },
   res_net_bois:    { fr:'Net avec boissons', 'en-us':'Net with drinks', 'en-gb':'Net with drinks', es:'Neto con bebidas', it:'Netto con bevande', de:'Netto mit Getränken' },
   res_roi_bois:    { fr:'ROI avec boissons', 'en-us':'ROI with drinks', 'en-gb':'ROI with drinks', es:'ROI con bebidas', it:'ROI con bevande', de:'ROI mit Getränken' },
@@ -955,7 +935,7 @@ function calc() {
   var pbkYb    = pbkMb / 12;
 
   return {
-    nb: nb, invest: invest, revM: revM, charges: charges,
+    nb: nb, occ: occ, invest: invest, revM: revM, charges: charges,
     net: net, roi: roi, pbkM: pbkM, pbkY: pbkY, margin: margin,
     rent: v('rent'), cloc: v('cloc'), sal: v('sal'), kf: v('kfsub'),
     energy: v('energy'), insur: v('insur'), acct: v('acct'),
@@ -1071,6 +1051,41 @@ function showResults(r, name, analysis) {
   });
   b.appendChild(mets);
 
+  // Scénarios d'occupation
+  var occScen = mk('div');
+  occScen.style.cssText = 'background:rgba(93,232,166,0.06);border:1px solid rgba(93,232,166,0.18);border-radius:12px;padding:14px 16px;margin-bottom:14px';
+  var occTitle = mk('div');
+  occTitle.style.cssText = 'font-size:11px;font-weight:600;color:rgba(93,232,166,0.85);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px';
+  occTitle.textContent = '📊 Simulations selon le taux d\'occupation';
+  var occNote = mk('div');
+  occNote.style.cssText = 'font-size:11px;color:rgba(245,244,255,0.45);margin-bottom:12px;line-height:1.5';
+  var occPct = Math.round(r.occ * 100);
+  occNote.innerHTML = '<span style="color:rgba(255,180,100,0.9);font-weight:600">Base conservative utilisée : ' + occPct + '%</span> · Taux moyen constaté chez nos clients : <strong style="color:#5DE8A6">45%</strong>';
+  var occGrid = mk('div');
+  occGrid.style.cssText = 'display:grid;gap:6px';
+  [
+    { pct: 0.30, label: '30% — Base conservative', current: r.occ <= 0.35 },
+    { pct: 0.50, label: '50% — Scenario moyen',    current: r.occ > 0.35 && r.occ <= 0.65 },
+    { pct: 0.80, label: '80% — Scenario dynamique', current: r.occ > 0.65 }
+  ].forEach(function(s) {
+    var revScen    = r.revM / r.occ * s.pct;
+    var netScen    = revScen - r.charges;
+    var roiScen    = r.invest > 0 ? (netScen * 12 / r.invest) * 100 : 0;
+    var nc2        = netScen >= 0 ? '#5DE8A6' : '#FF6B6B';
+    var row = mk('div');
+    row.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:8px;font-size:12px;' +
+      (s.current ? 'background:rgba(93,232,166,0.12);border:1px solid rgba(93,232,166,0.3)' : 'background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)');
+    row.innerHTML = '<span style="color:var(--muted);flex:1">' + s.label + '</span>' +
+      '<span style="color:var(--accent);margin:0 10px">' + fmt(revScen) + '</span>' +
+      '<span style="color:' + nc2 + ';margin:0 10px">' + fmt(netScen) + '/mois</span>' +
+      '<span style="font-weight:700;color:' + (roiScen >= 0 ? '#5DE8A6' : '#FF6B6B') + '">' + roiScen.toFixed(0) + '% ROI</span>';
+    occGrid.appendChild(row);
+  });
+  occScen.appendChild(occTitle);
+  occScen.appendChild(occNote);
+  occScen.appendChild(occGrid);
+  b.appendChild(occScen);
+
   // Boissons
   var bb = mk('div', 'boissonbox');
   var bt = mk('div', 'boissonbox-t');
@@ -1172,35 +1187,28 @@ function showResults(r, name, analysis) {
 // ─── Soumission formulaire ────────────────────────────────────────────────────
 async function doSubmit() {
   var firstname = document.getElementById('lfirstname').value.trim();
-  var lastname  = document.getElementById('llastname').value.trim();
   var email     = document.getElementById('lemail').value.trim();
-  var phone     = document.getElementById('lphone').value.trim();
   var stageEl   = document.getElementById('lstage');
-  var stageVal  = stageEl.value;
   var stageText = stageEl.options[stageEl.selectedIndex].text;
   var city      = document.getElementById('city').value.trim();
   var optin     = document.getElementById('optin').checked;
 
   // Validation
-  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // FIX : regex correcte
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   var ok = true;
 
-  var eF  = document.getElementById('e-firstname');
-  var eLN = document.getElementById('e-lastname');
-  var eE  = document.getElementById('e-email');
-  var eT  = document.getElementById('e-phone');
-  var eO  = document.getElementById('e-optin');
+  var eF = document.getElementById('e-firstname');
+  var eE = document.getElementById('e-email');
+  var eO = document.getElementById('e-optin');
 
-  eF.style.display  = firstname ? 'none' : 'block'; if (!firstname) ok = false;
-  eLN.style.display = lastname  ? 'none' : 'block'; if (!lastname)  ok = false;
-  eE.style.display  = (email && emailRegex.test(email)) ? 'none' : 'block'; if (!email || !emailRegex.test(email)) ok = false;
-  eT.style.display  = phone  ? 'none' : 'block'; if (!phone)  ok = false;
-  eO.style.display  = optin  ? 'none' : 'block'; if (!optin)  ok = false;
+  eF.style.display = firstname ? 'none' : 'block'; if (!firstname) ok = false;
+  eE.style.display = (email && emailRegex.test(email)) ? 'none' : 'block'; if (!email || !emailRegex.test(email)) ok = false;
+  eO.style.display = optin ? 'none' : 'block'; if (!optin) ok = false;
 
   if (!ok) return;
 
   var r    = calc();
-  var name = firstname + ' ' + lastname;
+  var name = firstname;
 
   go(4);
   document.getElementById('load-msg').textContent = t('loading_ai');
@@ -1247,9 +1255,9 @@ async function doSubmit() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       firstname: firstname,
-      lastname: lastname,
+      lastname: '',
       email: email,
-      phone: phone,
+      phone: '',
       city: city || '',
       country: COUNTRY_CODE,
       stage: stageText,
@@ -1269,7 +1277,7 @@ async function doSubmit() {
 function calcSimple() {
   var m2  = parseInt(document.getElementById('ss-m2').value) || 20;
   var nb  = Math.max(1, Math.floor(m2 / 10));
-  var occ = parseInt(document.getElementById('ss-occ').value) / 100 || 0.45;
+  var occ = parseInt(document.getElementById('ss-occ').value) / 100 || 0.30;
   var px  = parseFloat(document.getElementById('ss-prix').value) || 80;
 
   // Defaults établissement existant : 6h/j, 6j/semaine
@@ -1293,16 +1301,14 @@ function calcSimple() {
   var pbkM = net > 0 ? invest / net : Infinity;
   var pbkY = pbkM / 12;
 
-  return { nb: nb, m2: m2, invest: invest, revM: revM, charges: charges,
+  return { nb: nb, m2: m2, occ: occ, invest: invest, revM: revM, charges: charges,
            net: net, roi: roi, pbkY: pbkY, kfsub: kfsub, energy: energy, amortM: amortM };
 }
 
 // ─── Simulateur simple : soumission ──────────────────────────────────────────
 async function doSubmitSimple() {
   var firstname = document.getElementById('ss-firstname').value.trim();
-  var lastname  = document.getElementById('ss-lastname').value.trim();
   var email     = document.getElementById('ss-email').value.trim();
-  var phone     = document.getElementById('ss-phone').value.trim();
   var city      = document.getElementById('ss-city').value.trim();
   var type      = document.getElementById('ss-type');
   var typeText  = type.options[type.selectedIndex].text;
@@ -1311,22 +1317,18 @@ async function doSubmitSimple() {
   var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   var ok = true;
 
-  var eF  = document.getElementById('ss-e-firstname');
-  var eLN = document.getElementById('ss-e-lastname');
-  var eE  = document.getElementById('ss-e-email');
-  var eT  = document.getElementById('ss-e-phone');
-  var eO  = document.getElementById('ss-e-optin');
+  var eF = document.getElementById('ss-e-firstname');
+  var eE = document.getElementById('ss-e-email');
+  var eO = document.getElementById('ss-e-optin');
 
-  eF.style.display  = firstname ? 'none' : 'block'; if (!firstname) ok = false;
-  eLN.style.display = lastname  ? 'none' : 'block'; if (!lastname)  ok = false;
-  eE.style.display  = (email && emailRegex.test(email)) ? 'none' : 'block'; if (!email || !emailRegex.test(email)) ok = false;
-  eT.style.display  = phone  ? 'none' : 'block'; if (!phone)  ok = false;
-  eO.style.display  = optin  ? 'none' : 'block'; if (!optin)  ok = false;
+  eF.style.display = firstname ? 'none' : 'block'; if (!firstname) ok = false;
+  eE.style.display = (email && emailRegex.test(email)) ? 'none' : 'block'; if (!email || !emailRegex.test(email)) ok = false;
+  eO.style.display = optin ? 'none' : 'block'; if (!optin) ok = false;
 
   if (!ok) return;
 
   var r    = calcSimple();
-  var name = firstname + ' ' + lastname;
+  var name = firstname;
 
   goSS(3);
 
@@ -1335,7 +1337,7 @@ async function doSubmitSimple() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      firstname: firstname, lastname: lastname, email: email, phone: phone,
+      firstname: firstname, lastname: '', email: email, phone: '',
       city: city || '', country: COUNTRY_CODE, stage: 'Établissement existant — ' + typeText,
       roi: r.roi, revM: r.revM, net: r.net, invest: r.invest,
       pbkY: isFinite(r.pbkY) ? r.pbkY : 0, nb: r.nb
@@ -1400,6 +1402,41 @@ function showResultsSimple(r, name, city, typeText) {
     mets.appendChild(m);
   });
   b.appendChild(mets);
+
+  // Scénarios d'occupation
+  var occScenSS = mk('div');
+  occScenSS.style.cssText = 'background:rgba(93,232,166,0.06);border:1px solid rgba(93,232,166,0.18);border-radius:12px;padding:14px 16px;margin-bottom:14px';
+  var occTitleSS = mk('div');
+  occTitleSS.style.cssText = 'font-size:11px;font-weight:600;color:rgba(93,232,166,0.85);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px';
+  occTitleSS.textContent = '📊 Simulations selon le taux d\'occupation';
+  var occNoteSS = mk('div');
+  occNoteSS.style.cssText = 'font-size:11px;color:rgba(245,244,255,0.45);margin-bottom:12px;line-height:1.5';
+  var occPctSS = Math.round(r.occ * 100);
+  occNoteSS.innerHTML = '<span style="color:rgba(255,180,100,0.9);font-weight:600">Base conservative utilisée : ' + occPctSS + '%</span> · Taux moyen constaté chez nos clients : <strong style="color:#5DE8A6">45%</strong>';
+  var occGridSS = mk('div');
+  occGridSS.style.cssText = 'display:grid;gap:6px';
+  [
+    { pct: 0.30, label: '30% — Base conservative', current: r.occ <= 0.35 },
+    { pct: 0.50, label: '50% — Scenario moyen',    current: r.occ > 0.35 && r.occ <= 0.65 },
+    { pct: 0.80, label: '80% — Scenario dynamique', current: r.occ > 0.65 }
+  ].forEach(function(s) {
+    var revScen   = r.revM / r.occ * s.pct;
+    var netScen   = revScen - r.charges;
+    var roiScen   = r.invest > 0 ? (netScen * 12 / r.invest) * 100 : 0;
+    var nc2       = netScen >= 0 ? '#5DE8A6' : '#FF6B6B';
+    var row = mk('div');
+    row.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:8px;font-size:12px;' +
+      (s.current ? 'background:rgba(93,232,166,0.12);border:1px solid rgba(93,232,166,0.3)' : 'background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)');
+    row.innerHTML = '<span style="color:var(--muted);flex:1">' + s.label + '</span>' +
+      '<span style="color:var(--accent);margin:0 10px">' + fmt(revScen) + '</span>' +
+      '<span style="color:' + nc2 + ';margin:0 10px">' + fmt(netScen) + '/mois</span>' +
+      '<span style="font-weight:700;color:' + (roiScen >= 0 ? '#5DE8A6' : '#FF6B6B') + '">' + roiScen.toFixed(0) + '% ROI</span>';
+    occGridSS.appendChild(row);
+  });
+  occScenSS.appendChild(occTitleSS);
+  occScenSS.appendChild(occNoteSS);
+  occScenSS.appendChild(occGridSS);
+  b.appendChild(occScenSS);
 
   // Info hypothèses
   var ib = mk('div');
