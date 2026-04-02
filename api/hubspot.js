@@ -9,7 +9,7 @@ module.exports = async function handler(req, res) {
   const token = (process.env.HUBSPOT_TOKEN || '').trim();
   if (!token) return res.status(500).json({ error: 'Config manquante' });
 
-  const { firstname, lastname, email, phone, city, country, stage, roi, revM, net, invest, pbkY, nb, qualification } = req.body || {};
+  const { firstname, lastname, email, phone, city, country, stage, roi, revM, net, invest, pbkY, nb } = req.body || {};
   if (!email || !firstname || !lastname) return res.status(400).json({ error: 'Champs requis' });
 
   const https = require('https');
@@ -97,8 +97,7 @@ module.exports = async function handler(req, res) {
       pbkY && isFinite(pbkY) ? `Retour : ${Number(pbkY).toFixed(1)} ans` : null,
       nb ? `Boxes : ${nb}` : null,
       city ? `Ville : ${city}` : null,
-      stage ? `Stade : ${stage}` : null,
-      qualification ? `Qualification : ${qualification}` : null
+      stage ? `Stade : ${stage}` : null
     ].filter(Boolean).join('\n');
 
     const dealProps = {
@@ -115,8 +114,7 @@ module.exports = async function handler(req, res) {
       investissement_simule: invest ? Math.round(invest) : undefined,
       retour_sur_investissement_ans: pbkY && isFinite(pbkY) ? Number(Number(pbkY).toFixed(1)) : undefined,
       nombre_de_boxes_simule: nb ? Number(nb) : undefined,
-      stade_du_projet: stage || undefined,
-      qualification_lead: qualification || undefined
+      stade_du_projet: stage || undefined
     };
 
     const deal = await hubspotRequest('POST', '/crm/v3/objects/deals', { properties: dealProps });

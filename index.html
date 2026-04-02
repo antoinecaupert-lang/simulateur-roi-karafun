@@ -242,11 +242,11 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
     <div class="g3">
       <div class="f">
         <label class="lbl" data-i18n="s1_pw_label">Tarif/h semaine</label>
-        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="pw" value="80" min="5"></div>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="pw" value="70" min="5"></div>
       </div>
       <div class="f">
         <label class="lbl" data-i18n="s1_pwe_label">Tarif/h week-end</label>
-        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="pwe" value="100" min="5"></div>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="pwe" value="90" min="5"></div>
       </div>
       <div class="f">
         <label class="lbl" data-i18n="s1_dur_label">Durée session</label>
@@ -260,13 +260,13 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
         <label class="lbl" data-i18n="s1_occ_label">Occupation</label>
         <div class="sv">
           <div class="sv-val" id="occ-v">55%</div>
-          <input type="range" id="occ" min="10" max="100" value="55" step="5">
+          <input type="range" id="occ" min="10" max="100" value="45" step="5">
           <div class="sl"><span>10%</span><span>100%</span></div>
         </div>
       </div>
       <div class="f">
         <label class="lbl" data-i18n="s1_hpd_label">Heures/jour</label>
-        <div class="pw rs"><input type="number" id="hpd" value="8" min="4" max="24"><span class="sfx">h</span></div>
+        <div class="pw rs"><input type="number" id="hpd" value="6" min="4" max="24"><span class="sfx">h</span></div>
       </div>
       <div class="f">
         <label class="lbl" data-i18n="s1_dpw_label">Jours/semaine</label>
@@ -298,17 +298,17 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
     <div class="g2">
       <div class="f">
         <label class="lbl" data-i18n="s2_ibox_label">Aménagement / box</label>
-        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="ibox" value="7000" step="500"></div>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="ibox" value="10000" step="500"></div>
         <span class="hint" data-i18n="s2_ibox_hint">Travaux, déco, insonorisation</span>
       </div>
       <div class="f">
         <label class="lbl" data-i18n="s2_imat_label">Matériel / box</label>
-        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="imat" value="4000" step="500"></div>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="imat" value="5000" step="500"></div>
         <span class="hint" data-i18n="s2_imat_hint">Ecrans, micros, sono, PC</span>
       </div>
       <div class="f">
         <label class="lbl" data-i18n="s2_istr_label">Frais de structure</label>
-        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="istr" value="1000" step="500"></div>
+        <div class="pw"><span class="pfx">&euro;</span><input type="number" id="istr" value="3000" step="500"></div>
         <span class="hint" data-i18n="s2_istr_hint">Logiciel résa, caisse</span>
       </div>
       <div class="f">
@@ -414,6 +414,7 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
       <div class="f">
         <label class="lbl" data-i18n="stage_label">Stade du projet</label>
         <select id="lstage">
+          <option value="curieux" data-i18n="stage_curieux">Je suis curieux</option>
           <option value="etude" data-i18n="stage_etude">En phase d'étude</option>
           <option value="local" data-i18n="stage_local">Recherche de local</option>
           <option value="financement" data-i18n="stage_financement">Recherche de financement</option>
@@ -483,11 +484,11 @@ footer a{color:rgba(232,68,122,.5);text-decoration:none}
       <label class="lbl" data-i18n="ss1_occ_label">Taux d'occupation</label>
       <div class="sv">
         <div class="sv-val" id="ss-occ-v">55%</div>
-        <input type="range" id="ss-occ" min="20" max="90" value="55" step="5" oninput="document.getElementById('ss-occ-v').textContent=this.value+'%'">
+        <input type="range" id="ss-occ" min="20" max="90" value="45" step="5" oninput="document.getElementById('ss-occ-v').textContent=this.value+'%'">
         <div class="sl"><span>20%</span><span>90%</span></div>
       </div>
     </div>
-    <input type="hidden" id="ss-prix" value="100">
+    <input type="hidden" id="ss-prix" value="80">
 
     <div class="sh" data-i18n="s1_location">Localisation</div>
     <div class="f">
@@ -657,6 +658,7 @@ var TR = {
   phone_ph:        { fr:'+33 6 12 34 56 78', 'en-us':'+1 555 123 4567', 'en-gb':'+44 7700 900000', es:'+34 612 345 678', it:'+39 312 345 678', de:'+49 151 12345678' },
   phone_err:       { fr:'Téléphone requis', 'en-us':'Phone number required', 'en-gb':'Phone number required', es:'Teléfono requerido', it:'Telefono richiesto', de:'Telefonnummer erforderlich' },
   stage_label:     { fr:'Stade du projet', 'en-us':'Project stage', 'en-gb':'Project stage', es:'Etapa del proyecto', it:'Fase del progetto', de:'Projektphase' },
+  stage_curieux:   { fr:'Je suis curieux', 'en-us':'Just exploring', 'en-gb':'Just exploring', es:'Solo explorando', it:'Solo esplorando', de:'Nur neugierig' },
   stage_etude:     { fr:'En phase d\'étude', 'en-us':'In study phase', 'en-gb':'In study phase', es:'En fase de estudio', it:'In fase di studio', de:'In der Studienphase' },
   stage_local:     { fr:'Recherche de local', 'en-us':'Looking for premises', 'en-gb':'Looking for premises', es:'Búsqueda de local', it:'Ricerca di locali', de:'Suche nach Räumlichkeiten' },
   stage_financement: { fr:'Recherche de financement', 'en-us':'Seeking financing', 'en-gb':'Seeking financing', es:'Búsqueda de financiación', it:'Ricerca di finanziamenti', de:'Suche nach Finanzierung' },
@@ -945,11 +947,12 @@ function calc() {
   var margin = revM > 0 ? (net / revM) * 100 : 0;
 
   // Scénario boissons (+40% CA)
-  var revMb  = revM * 1.4;
-  var netB   = revMb - charges;
-  var roiB   = invest > 0 ? (netB * 12 / invest) * 100 : 0;
-  var pbkMb  = netB > 0 ? invest / netB : Infinity;
-  var pbkYb  = pbkMb / 12;
+  var revMb    = revM * 1.25;
+  var chargesB = charges + revM * 0.05;
+  var netB     = revMb - chargesB;
+  var roiB     = invest > 0 ? (netB * 12 / invest) * 100 : 0;
+  var pbkMb    = netB > 0 ? invest / netB : Infinity;
+  var pbkYb    = pbkMb / 12;
 
   return {
     nb: nb, invest: invest, revM: revM, charges: charges,
@@ -979,7 +982,7 @@ function mRow(label, value) {
 function downloadPDF() {
   var d = window._pdfData;
   if (!d) return;
-  var r = d.r, name = d.name, q = d.q;
+  var r = d.r, name = d.name;
   try {
     var doc = new window.jspdf.jsPDF();
     var y = 20;
@@ -1002,10 +1005,9 @@ function downloadPDF() {
       'Net/mois : ' + fmt(r.net),
       'Marge : ' + r.margin.toFixed(1) + '%',
       'Retour sur invest. : ' + fmtPbk(r.pbkY),
-      'CA avec boissons (+40%) : ' + fmt(r.revMb),
+      'CA avec boissons (+25%) : ' + fmt(r.revMb),
       'Net avec boissons : ' + fmt(r.netB),
-      'ROI avec boissons : ' + r.roiB.toFixed(1) + '%',
-      'Qualification : ' + q
+      'ROI avec boissons : ' + r.roiB.toFixed(1) + '%'
     ];
     lines.forEach(function (t) { doc.text(t, 20, y); y += 7; });
     doc.setFontSize(9);
@@ -1018,7 +1020,7 @@ function downloadPDF() {
 }
 
 // ─── Affichage résultats ──────────────────────────────────────────────────────
-function showResults(r, name, analysis, q) {
+function showResults(r, name, analysis) {
   document.getElementById('loading').style.display = 'none';
   var res = document.getElementById('res');
   res.innerHTML = '';
@@ -1164,7 +1166,7 @@ function showResults(r, name, analysis, q) {
   res.appendChild(w);
 
   // Stocker pour PDF
-  window._pdfData = { r: r, name: name, q: q };
+  window._pdfData = { r: r, name: name };
 }
 
 // ─── Soumission formulaire ────────────────────────────────────────────────────
@@ -1199,12 +1201,6 @@ async function doSubmit() {
 
   var r    = calc();
   var name = firstname + ' ' + lastname;
-
-  // Qualification lead
-  var stageScore = { 'etude': 1, 'local': 2, 'financement': 2, 'ouverture': 3, 'existant': 3 }[stageVal] || 1;
-  var q = (r.roi >= 20 && stageScore >= 2) ? 'Lead chaud'
-        : (r.roi >= 10 && stageScore >= 2) ? 'Lead tiède'
-        : 'Lead froid';
 
   go(4);
   document.getElementById('load-msg').textContent = t('loading_ai');
@@ -1262,19 +1258,18 @@ async function doSubmit() {
       net: r.net,
       invest: r.invest,
       pbkY: isFinite(r.pbkY) ? r.pbkY : 0,
-      nb: r.nb,
-      qualification: q
+      nb: r.nb
     })
   }).catch(function (e) { console.warn('HubSpot:', e); });
 
-  showResults(r, name, analysis, q);
+  showResults(r, name, analysis);
 }
 
 // ─── Simulateur simple : calcul ───────────────────────────────────────────────
 function calcSimple() {
   var m2  = parseInt(document.getElementById('ss-m2').value) || 20;
   var nb  = Math.max(1, Math.floor(m2 / 10));
-  var occ = parseInt(document.getElementById('ss-occ').value) / 100 || 0.55;
+  var occ = parseInt(document.getElementById('ss-occ').value) / 100 || 0.45;
   var px  = parseFloat(document.getElementById('ss-prix').value) || 80;
 
   // Defaults établissement existant : 6h/j, 6j/semaine
@@ -1287,11 +1282,11 @@ function calcSimple() {
   var revM = spd * avgP * dur * days * nb / 12;
 
   // Investissement : matériel + aménagement léger (pas de loyer ni gros travaux)
-  var invest = nb * 5500 + 1000;
+  var invest = nb * 8500 + 2000;
   var amortM = invest / (5 * 12);
   var kfsub  = nb * 199;
   var energy = nb * 100;
-  var charges = kfsub + energy + 200 + 150 + 100 + amortM;
+  var charges = kfsub + energy + 250 + 180 + 150 + amortM;
 
   var net  = revM - charges;
   var roi  = invest > 0 ? (net * 12 / invest) * 100 : 0;
@@ -1332,7 +1327,6 @@ async function doSubmitSimple() {
 
   var r    = calcSimple();
   var name = firstname + ' ' + lastname;
-  var q    = r.roi >= 20 ? 'Lead chaud' : r.roi >= 10 ? 'Lead tiède' : 'Lead froid';
 
   goSS(3);
 
@@ -1344,15 +1338,15 @@ async function doSubmitSimple() {
       firstname: firstname, lastname: lastname, email: email, phone: phone,
       city: city || '', country: COUNTRY_CODE, stage: 'Établissement existant — ' + typeText,
       roi: r.roi, revM: r.revM, net: r.net, invest: r.invest,
-      pbkY: isFinite(r.pbkY) ? r.pbkY : 0, nb: r.nb, qualification: q
+      pbkY: isFinite(r.pbkY) ? r.pbkY : 0, nb: r.nb
     })
   }).catch(function (e) { console.warn('HubSpot simple:', e); });
 
-  showResultsSimple(r, name, q, city, typeText);
+  showResultsSimple(r, name, city, typeText);
 }
 
 // ─── Simulateur simple : affichage résultats ──────────────────────────────────
-function showResultsSimple(r, name, q, city, typeText) {
+function showResultsSimple(r, name, city, typeText) {
   document.getElementById('ss-loading').style.display = 'none';
   var res = document.getElementById('ss-res');
   res.innerHTML = '';
